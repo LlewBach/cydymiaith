@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cydymiaith</title>
+</head>
+
+<body>
+  {% for question in questions %}<br>
+  {{ question.category_name }}<br>
+  {{ question.question_text }}<br>
+  {% endfor %}
+</body>
+
+</html>
