@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h2>questions template</h2>
-
 {% for question in questions %}<br>
 {{ question.category_name }}<br>
 {{ question.question_text }}<br>
