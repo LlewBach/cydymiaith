@@ -16,22 +16,22 @@
   <!-- Top navbar -->
   <nav>
     <div class="nav-wrapper">
-      <a href="#!" class="brand-logo">Cydymiaith</a>
+      <a href="{{ url_for('get_questions') }}" class="brand-logo">Cydymiaith</a>
       <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fa-solid fa-bars"></i></a>
       <ul class="right hide-on-med-and-down">
         <li><a href="#">Home</a></li>
-        <li><a href="#">Q&As</a></li>
+        <li><a href="{{ url_for('get_questions') }}">Q&As</a></li>
         <li><a href="#">Log In</a></li>
-        <li><a href="#">Register</a></li>
+        <li><a href="{{ url_for('register') }}">Register</a></li>
       </ul>
     </div>
   </nav>
   <!-- Mobile sidenav -->
   <ul class="sidenav" id="mobile-demo">
     <li><a href="#">Home</a></li>
-    <li><a href="#">Q&As</a></li>
+    <li><a href="{{ url_for('get_questions') }}">Q&As</a></li>
     <li><a href="#">Log In</a></li>
-    <li><a href="#">Register</a></li>
+    <li><a href="{{ url_for('register') }}">Register</a></li>
   </ul>
 
   {% block content %}
