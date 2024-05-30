@@ -1,17 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+{% block content %}
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cydymiaith</title>
-</head>
+<h2>questions template</h2>
 
-<body>
-  {% for question in questions %}<br>
-  {{ question.category_name }}<br>
-  {{ question.question_text }}<br>
-  {% endfor %}
-</body>
+{% for question in questions %}<br>
+{{ question.category_name }}<br>
+{{ question.question_text }}<br>
+{% endfor %}
 
-</html>
+{% endblock %}
