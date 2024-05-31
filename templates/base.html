@@ -21,6 +21,7 @@
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fa-solid fa-bars"></i></a>
         <ul class="right hide-on-med-and-down">
           <li><a href="#">Home</a></li>
+          <li><a href="{{ url_for('profile', username=session['user']) }}">Profile</a></li>
           <li><a href="{{ url_for('get_questions') }}">Q&As</a></li>
           <li><a href="{{ url_for('login') }}">Log In</a></li>
           <li><a href="{{ url_for('register') }}">Register</a></li>
@@ -30,6 +31,7 @@
     <!-- Mobile sidenav -->
     <ul class="sidenav" id="mobile-demo">
       <li><a href="#">Home</a></li>
+      <li><a href="{{ url_for('profile', username=session['user']) }}">Profile</a></li>
       <li><a href="{{ url_for('get_questions') }}">Q&As</a></li>
       <li><a href="{{ url_for('login') }}">Log In</a></li>
       <li><a href="{{ url_for('register') }}">Register</a></li>
