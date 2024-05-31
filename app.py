@@ -107,6 +107,12 @@ def ask_question():
     return render_template("ask_question.html")
 
 
+@app.route("/edit_question/<question_id>", methods=["GET", "POST"])
+def edit_question(question_id):
+    question = mongo.db.questions.find_one({"_id": ObjectId(question_id)})
+    return render_template("edit_question.html", question=question)
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
