@@ -109,6 +109,17 @@ def ask_question():
 
 @app.route("/edit_question/<question_id>", methods=["GET", "POST"])
 def edit_question(question_id):
+    if request.method == "POST":
+        submit = {
+            "username": session["user"],
+            "title": request.form.get("title"),
+            "description": request.form.get("description"),
+            "timestamp": None
+        }
+        mongo.db.questions.update_one({"_id": ObjectId(question_id)}, {"$set": submit})
+        flash("Question updated")
+        return redirect(url_for('get_questions'))
+    
     question = mongo.db.questions.find_one({"_id": ObjectId(question_id)})
     return render_template("edit_question.html", question=question)
 
