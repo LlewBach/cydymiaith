@@ -3,7 +3,11 @@
 
 <h1>Browse questions or ask a new one!</h1>
 <div class="">
+  {% if session.user %}
   <a href="{{ url_for('ask_question') }}">Ask question</a>
+  {% else %}
+  <a href="{{ url_for('login') }}">Login to ask question</a>
+  {% endif %}
 </div>
 
 <!-- remember tooltips -->

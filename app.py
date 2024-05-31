@@ -91,8 +91,19 @@ def logout():
     return redirect(url_for("login"))
 
 
-@app.route("/ask_question")
+@app.route("/ask_question", methods=["GET", "POST"])
 def ask_question():
+    if request.method == "POST":
+        question = {
+            "username": session["user"],
+            "title": request.form.get("title"),
+            "description": request.form.get("description"),
+            "timestamp": None
+        }
+        mongo.db.questions.insert_one(question)
+        flash("Question posted to community:)")
+        return redirect(url_for('get_questions'))
+
     return render_template("ask_question.html")
 
 
