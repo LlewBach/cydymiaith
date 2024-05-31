@@ -73,7 +73,7 @@ def login():
     return render_template("login.html")
 
 
-@app.route("/profile/<username>", methods=["GET", "POST"])
+@app.route("/profile/<username>")
 def profile(username):
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
@@ -89,6 +89,11 @@ def logout():
     flash("Logged out")
     session.pop("user")
     return redirect(url_for("login"))
+
+
+@app.route("/ask_question")
+def ask_question():
+    return render_template("ask_question.html")
 
 
 if __name__ == "__main__":
