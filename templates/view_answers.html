@@ -1,18 +1,7 @@
 {% extends "base.html" %}
+
 {% block content %}
 
-<div class="center-align">
-  <h1>Q&As</h1>
-  {% if session.user %}
-  <a href="{{ url_for('ask_question') }}" class="btn-large">Ask question</a>
-  {% else %}
-  <a href="{{ url_for('login') }}">Login to ask question</a>
-  {% endif %}
-</div>
-
-<!-- remember tooltips -->
-
-{% for question in questions %}
 <div class="row">
   <div class="col s12">
     <div class="card blue-grey darken-1">
@@ -31,6 +20,25 @@
     </div>
   </div>
 </div>
-{% endfor %}
+
+<div class="row">
+  <form class="col s12" method="POST" action="{{ url_for('answer', question_id=question._id) }}">
+    <div class="row">
+      <div class="input-field col s12">
+        <textarea id="text" name="text" class="materialize-textarea"></textarea>
+        <label for="text">Add Comment</label>
+      </div>
+    </div>
+    <div>
+      <button type="submit">Add Comment</button>
+    </div>
+  </form>
+</div>
+
+<ul>
+  {% for answer in answers %}
+  <li>{{ answer.text }}</li>
+  {% endfor %}
+</ul>
 
 {% endblock %}

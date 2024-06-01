@@ -131,6 +131,25 @@ def delete_question(question_id):
     return redirect(url_for("get_questions"))
 
 
+@app.route("/view_answers/<question_id>")
+def view_answers(question_id):
+    question = mongo.db.questions.find_one({"_id": ObjectId(question_id)})
+    answers = list(mongo.db.answers.find({"question_id": ObjectId(question_id)}))
+    return render_template("view_answers.html", question=question, answers=answers)
+
+
+@app.route("/answer/<question_id>", methods=["GET", "POST"])
+def answer(question_id):
+    if request.method == "POST":
+        answer = {
+            "question_id": ObjectId(question_id),
+            "text": request.form.get("text"),
+            "username": session["user"]
+        }
+        mongo.db.answers.insert_one(answer)
+        return redirect(url_for("view_answers", question_id=question_id))
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
