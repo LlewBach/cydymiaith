@@ -22,6 +22,11 @@ mongo = PyMongo(app)
 
 
 @app.route("/")
+@app.route("/home")
+def home():
+    return render_template("home.html")
+
+
 @app.route("/get_questions")
 def get_questions():
     questions = list(mongo.db.questions.find().sort("_id", -1))
