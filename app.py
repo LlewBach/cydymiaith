@@ -98,7 +98,8 @@ def ask_question():
             "username": session["user"],
             "title": request.form.get("title"),
             "description": request.form.get("description"),
-            "timestamp": None
+            "timestamp": None,
+            "answer_count": 0
         }
         mongo.db.questions.insert_one(question)
         flash("Question posted to community:)")
@@ -135,7 +136,8 @@ def delete_question(question_id):
 def view_answers(question_id):
     question = mongo.db.questions.find_one({"_id": ObjectId(question_id)})
     answers = list(mongo.db.answers.find({"question_id": ObjectId(question_id)}))
-    return render_template("view_answers.html", question=question, answers=answers)
+    answer_count = len(answers)
+    return render_template("view_answers.html", question=question, answers=answers, answer_count=answer_count)
 
 
 @app.route("/answer/<question_id>", methods=["GET", "POST"])
@@ -147,6 +149,8 @@ def answer(question_id):
             "username": session["user"]
         }
         mongo.db.answers.insert_one(answer)
+        # Update answer_count
+        mongo.db.questions.update_one({'_id': ObjectId(question_id)}, {'$inc': {'answer_count': 1}})
         return redirect(url_for("view_answers", question_id=question_id))
     
 
@@ -171,6 +175,8 @@ def edit_answer(answer_id):
 @app.route("/delete_answer/<answer_id>")
 def delete_answer(answer_id):
     question_id = mongo.db.answers.find_one({"_id": ObjectId(answer_id)})["question_id"]
+    # Update answer_count
+    mongo.db.questions.update_one({'_id': ObjectId(question_id)}, {'$inc': {'answer_count': -1}})
     mongo.db.answers.delete_one({"_id": ObjectId(answer_id)})
     flash("Answer deleted")
     return redirect(url_for("view_answers", question_id=question_id))
