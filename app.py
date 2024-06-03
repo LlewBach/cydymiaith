@@ -5,6 +5,9 @@ from flask import (
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
+import humanize
+from datetime import datetime
+import pytz
 if os.path.exists("env.py"):
     import env
 
@@ -21,7 +24,11 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route("/get_questions")
 def get_questions():
-    questions = mongo.db.questions.find()
+    questions = list(mongo.db.questions.find())
+    for question in questions:
+        creation_time = question['_id'].generation_time.replace(tzinfo=pytz.utc)
+        question['time_ago'] = humanize.naturaltime(datetime.now(pytz.utc) - creation_time)
+
     return render_template("questions.html", questions=questions)
 
 
@@ -98,7 +105,6 @@ def ask_question():
             "username": session["user"],
             "title": request.form.get("title"),
             "description": request.form.get("description"),
-            "timestamp": None,
             "answer_count": 0
         }
         mongo.db.questions.insert_one(question)
@@ -135,6 +141,8 @@ def delete_question(question_id):
 @app.route("/view_answers/<question_id>")
 def view_answers(question_id):
     question = mongo.db.questions.find_one({"_id": ObjectId(question_id)})
+    creation_time = question['_id'].generation_time.replace(tzinfo=pytz.utc)
+    question['time_ago'] = humanize.naturaltime(datetime.now(pytz.utc) - creation_time)
     answers = list(mongo.db.answers.find({"question_id": ObjectId(question_id)}))
     answer_count = len(answers)
     return render_template("view_answers.html", question=question, answers=answers, answer_count=answer_count)

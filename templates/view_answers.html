@@ -10,7 +10,7 @@
         <p>{{ question.description }}</p>
       </div>
       <div class="card-action">
-        <p style="display:inline;">{{ question.date }}</p>
+        <p style="display:inline;">{{ question.time_ago }}</p>
         <p>{{ answer_count }} Answers</p>
         {% if session.user == question.username %}
         <a href="{{ url_for('edit_question', question_id=question._id) }}">Edit</a>
