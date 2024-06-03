@@ -24,7 +24,7 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route("/get_questions")
 def get_questions():
-    questions = list(mongo.db.questions.find())
+    questions = list(mongo.db.questions.find().sort("_id", -1))
     for question in questions:
         creation_time = question['_id'].generation_time.replace(tzinfo=pytz.utc)
         question['time_ago'] = humanize.naturaltime(datetime.now(pytz.utc) - creation_time)
