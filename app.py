@@ -148,6 +148,24 @@ def answer(question_id):
         }
         mongo.db.answers.insert_one(answer)
         return redirect(url_for("view_answers", question_id=question_id))
+    
+
+@app.route("/edit_answer/<answer_id>", methods=["GET", "POST"])
+def edit_answer(answer_id):
+    question_id = mongo.db.answers.find_one({"_id": ObjectId(answer_id)})["question_id"]
+
+    if request.method == "POST":
+        answer = {
+            "question_id": question_id,
+            "text": request.form.get("text"),
+            "username": session["user"]
+        }
+        mongo.db.answers.update_one({"_id": ObjectId(answer_id)}, {"$set": answer})
+        return redirect(url_for("view_answers", question_id=question_id))
+    
+    question = mongo.db.questions.find_one({"_id": ObjectId(question_id)})
+    answers = list(mongo.db.answers.find({"question_id": ObjectId(question_id)}))
+    return render_template("edit_answer.html", question=question, answers=answers, answer_id=ObjectId(answer_id))
 
 
 if __name__ == "__main__":
