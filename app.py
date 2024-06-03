@@ -168,6 +168,14 @@ def edit_answer(answer_id):
     return render_template("edit_answer.html", question=question, answers=answers, answer_id=ObjectId(answer_id))
 
 
+@app.route("/delete_answer/<answer_id>")
+def delete_answer(answer_id):
+    question_id = mongo.db.answers.find_one({"_id": ObjectId(answer_id)})["question_id"]
+    mongo.db.answers.delete_one({"_id": ObjectId(answer_id)})
+    flash("Answer deleted")
+    return redirect(url_for("view_answers", question_id=question_id))
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
