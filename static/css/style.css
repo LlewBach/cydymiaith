@@ -1,3 +1,39 @@
+.ask-button {
+  margin-bottom: 20px;
+}
+
+.question-row {
+  margin: 0px;
+}
+
+.question-row:last-of-type {
+  margin-bottom: 20px;
+  /* padding: 0px; */
+}
+
 .card-content {
   word-wrap: break-word;
+}
+
+.card .card-action {
+  padding: 5px 24px;
+}
+
+.card .card-action .row {
+  margin-bottom: 0;
+}
+
+.card .card-action p {
+  margin: 0;
+}
+
+.card .card-action a {
+  color: red !important;
+  font-size: 14px;
+  margin: 0px !important;
+}
+
+.card-action .col {
+  border: 1px solid red;
+  text-align: center;
 }
