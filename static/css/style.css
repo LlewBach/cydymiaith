@@ -37,3 +37,10 @@
   border: 1px solid red;
   text-align: center;
 }
+
+.modal,
+.modal a {
+  color: red;
+  text-align: center;
+  font-size: 14px;
+}
