@@ -22,13 +22,14 @@
             </div>
           </div>
           <div class="col s4">
-            <a href="{{ url_for('view_answers', question_id=question._id) }}">{{ question.answer_count }} Comments</a>
+            <a href="{{ url_for('answers.view_answers', question_id=question._id) }}">{{ question.answer_count }}
+              Comments</a>
           </div>
           {% if session.user == question.username %}
           <div class="col s4">
             <div class="row">
               <div class="col s12 m6">
-                <a href="{{ url_for('edit_question', question_id=question._id) }}">Edit</a>
+                <a href="{{ url_for('questions.edit_question', question_id=question._id) }}">Edit</a>
               </div>
               <div class="col s12 m6">
                 <a href="#modal1" class="modal-trigger">Delete</a>
@@ -39,7 +40,7 @@
                   </div>
                   <div class="modal-footer">
                     <a class="modal-close">Cancel</a>
-                    <a href="{{ url_for('delete_question', question_id=question._id) }}"
+                    <a href="{{ url_for('questions.delete_question', question_id=question._id) }}"
                       class="modal-close waves-effect waves-green btn-flat">Confirm</a>
                   </div>
                 </div>
@@ -54,7 +55,7 @@
 </div>
 
 <div class="row">
-  <form class="col s12" method="POST" action="{{ url_for('answer', question_id=question._id) }}">
+  <form class="col s12" method="POST" action="{{ url_for('answers.answer', question_id=question._id) }}">
     <div class="row">
       <div class="input-field col s12">
         <textarea id="text" name="text" class="materialize-textarea"></textarea>
@@ -75,7 +76,7 @@
         {{ answer.text }}
       </div>
       <div class="col s3 right-align">
-        <a href="{{ url_for('edit_answer', answer_id=answer._id) }}">Edit</a>
+        <a href="{{ url_for('answers.edit_answer', answer_id=answer._id) }}">Edit</a>
         <a href="#modal2" class="modal-trigger">Delete</a>
         <!-- Modal Structure -->
         <div id="modal2" class="modal">
@@ -85,7 +86,7 @@
           </div>
           <div class="modal-footer">
             <a class="modal-close waves-effect waves-red btn-flat" href="#!">Cancel</a>
-            <a href="{{ url_for('delete_answer', answer_id=answer._id) }}"
+            <a href="{{ url_for('answers.delete_answer', answer_id=answer._id) }}"
               class="modal-close waves-effect waves-green btn-flat">Confirm</a>
           </div>
         </div>
