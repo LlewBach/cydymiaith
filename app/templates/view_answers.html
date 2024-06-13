@@ -77,9 +77,9 @@
       </div>
       <div class="col s3 right-align">
         <a href="{{ url_for('answers.edit_answer', answer_id=answer._id) }}">Edit</a>
-        <a href="#modal2" class="modal-trigger">Delete</a>
+        <a href="#modal{{ answer._id }}" class="modal-trigger">Delete</a>
         <!-- Modal Structure -->
-        <div id="modal2" class="modal">
+        <div id="modal{{ answer._id }}" class="modal">
           <div class="modal-content">
             <h4>Are you sure?</h4>
             <p>Please cancel or confirm deletion.</p>

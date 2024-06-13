@@ -43,10 +43,10 @@
                 <a href="{{ url_for('questions.edit_question', question_id=question._id) }}">Edit</a>
               </div>
               <div class="col s12 m6">
-                <a href="#modal1" class="modal-trigger">Delete</a>
+                <a href="#modal{{ question._id }}" class="modal-trigger">Delete</a>
                 <!-- {{ url_for('questions.delete_question', question_id=question._id) }} -->
                 <!-- Modal Structure -->
-                <div id="modal1" class="modal">
+                <div id="modal{{ question._id }}" class="modal">
                   <div class="modal-content">
                     <h4>Are you sure?</h4>
                     <p>Cancel or confirm deletion</p>
