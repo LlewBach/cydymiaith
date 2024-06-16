@@ -12,18 +12,17 @@ class Answer:
     def find_answers_by_question_id(question_id):
         """Retrieve an answer from the database by question_id."""
         answers = list(mongo.db.answers.find({"question_id": ObjectId(question_id)}))
-        if answers:
-            return answers
-        return None
+        print(answers)
+        return answers
 
     
     @staticmethod
     def count_answers(answers):
-        return len(answers)
+        return len(answers)    
     
 
     @staticmethod
-    def find_ques_id_from_ans_id(answer_id):
+    def find_question_id(answer_id):
         question_id = mongo.db.answers.find_one({"_id": ObjectId(answer_id)})["question_id"]
         return question_id
     
