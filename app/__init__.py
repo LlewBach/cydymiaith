@@ -15,10 +15,10 @@ def create_app():
 
     mongo.init_app(app)
 
-    from .views.auth import auth_bp
-    from .views.questions import questions_bp
-    from .views.profiles import profiles_bp
-    from .views.answers import answers_bp
+    from .auth.views import auth_bp
+    from .questions.views import questions_bp
+    from .profiles.views import profiles_bp
+    from .answers.views import answers_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(questions_bp)

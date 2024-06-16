@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, session, redirect, url_for
 # from app import mongo
-from app.models.user import User
+from app.auth.models import User
 
 profiles_bp = Blueprint('profiles', __name__, template_folder='../templates')
 
