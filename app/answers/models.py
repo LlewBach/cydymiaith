@@ -1,3 +1,6 @@
+from datetime import datetime
+import humanize
+import pytz
 from bson.objectid import ObjectId
 from app import mongo
 
@@ -12,8 +15,15 @@ class Answer:
     def find_answers_by_question_id(question_id):
         """Retrieve an answer from the database by question_id."""
         answers = list(mongo.db.answers.find({"question_id": ObjectId(question_id)}))
-        print(answers)
+        for answer in answers:
+            Answer.set_time_ago(answer)
         return answers
+    
+
+    @staticmethod
+    def set_time_ago(answer):
+        creation_time = answer['_id'].generation_time.replace(tzinfo=pytz.utc)
+        answer['time_ago'] = humanize.naturaltime(datetime.now(pytz.utc) - creation_time)
 
     
     @staticmethod
