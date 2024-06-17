@@ -1,6 +1,6 @@
-from flask import Blueprint, render_template, session, redirect, url_for, flash
+from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
-from app.auth.models import User
+# from app.auth.models import User
 
 profiles_bp = Blueprint('profiles', __name__, template_folder='../templates')
 

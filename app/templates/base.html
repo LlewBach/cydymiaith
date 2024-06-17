@@ -17,10 +17,10 @@
     <!-- Top navbar -->
     <nav>
       <div class="nav-wrapper">
-        <a href="{{ url_for('home') }}" class="brand-logo">Cydymiaith</a>
+        <a href="{{ url_for('core.home') }}" class="brand-logo">Cydymiaith</a>
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fa-solid fa-bars"></i></a>
         <ul class="right hide-on-med-and-down">
-          <li><a href="{{ url_for('home') }}">Home</a></li>
+          <li><a href="{{ url_for('core.home') }}">Home</a></li>
           <li><a href="{{ url_for('questions.get_questions') }}">Q&As</a></li>
           {% if current_user.is_authenticated %}
           <li><a href="{{ url_for('profiles.profile', username=session['user']) }}">Profile</a></li>
@@ -34,7 +34,7 @@
     </nav>
     <!-- Mobile sidenav -->
     <ul class="sidenav" id="mobile-demo">
-      <li><a href="{{ url_for('home') }}">Home</a></li>
+      <li><a href="{{ url_for('core.home') }}">Home</a></li>
       <li><a href="{{ url_for('questions.get_questions') }}">Q&As</a></li>
       {% if current_user.is_authenticated %}
       <li><a href="{{ url_for('profiles.profile', username=session['user']) }}">Profile</a></li>
