@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask_login import login_required, current_user
 from bson.objectid import ObjectId
 from app.answers.models import Answer
 from app.questions.models import Question
@@ -18,22 +19,25 @@ def view_answers(question_id):
 
 
 @answers_bp.route("/answer/<question_id>", methods=["GET", "POST"])
+@login_required
 def answer(question_id):
     if request.method == "POST":
         text = request.form.get("text")
-        username = session["user"]
+        # username = session["user"]
+        username = current_user.username
         Answer.insert_answer(question_id, text, username)
         Question.increase_answer_count(question_id)
         return redirect(url_for("answers.view_answers", question_id=question_id))
     
 
 @answers_bp.route("/edit_answer/<answer_id>", methods=["GET", "POST"])
+@login_required
 def edit_answer(answer_id):
     question_id = Answer.find_question_id(answer_id)
 
     if request.method == "POST":
         text = request.form.get("text")
-        username = session["user"]
+        username = current_user.username
         Answer.edit_answer(answer_id, question_id, text, username)
         return redirect(url_for("answers.view_answers", question_id=question_id))
     
@@ -43,6 +47,7 @@ def edit_answer(answer_id):
 
 
 @answers_bp.route("/delete_answer/<answer_id>")
+@login_required
 def delete_answer(answer_id):
     question_id = Answer.find_question_id(answer_id)
     Question.decrease_answer_count(question_id)

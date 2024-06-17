@@ -1,7 +1,6 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session
-from bson.objectid import ObjectId
+from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask_login import current_user, login_required
 from app.questions.models import Question
-
 
 questions_bp = Blueprint('questions', __name__, template_folder='../templates')
 
@@ -14,9 +13,11 @@ def get_questions():
 
 
 @questions_bp.route("/ask_question", methods=["GET", "POST"])
+@login_required
 def ask_question():
     if request.method == "POST":
-        username = session["user"]
+        # username = session["user"]
+        username = current_user.username
         title = request.form.get("title")
         description = request.form.get("description")
         Question.insert_question(username, title, description)
@@ -27,9 +28,11 @@ def ask_question():
 
 
 @questions_bp.route("/edit_question/<question_id>", methods=["GET", "POST"])
+@login_required
 def edit_question(question_id):
     if request.method == "POST":
-        username = session["user"]
+        # username = session["user"]
+        username = current_user.username
         title = request.form.get("title")
         description = request.form.get("description")
         Question.update_question(question_id, username, title, description)
@@ -41,6 +44,7 @@ def edit_question(question_id):
 
 
 @questions_bp.route("/delete_question/<question_id>")
+@login_required
 def delete_question(question_id):
     Question.delete_question(question_id)
     flash("Question deleted")

@@ -1,10 +1,22 @@
+from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-from app import mongo
+# from bson.objectid import ObjectId
+from app import mongo, login_manager
 
-class User:
+
+@login_manager.user_loader
+def load_user(username):
+    user_doc = mongo.db.users.find_one({"username": username})
+    if user_doc:
+        return User(username=user_doc["username"], password=user_doc["password"])
+    return None
+
+
+class User(UserMixin):
     def __init__(self, username, password):
         self.username = username.lower()
-        self.password = password
+        self.password = password #need to rename password hash
+
 
     @classmethod
     def find_by_username(cls, username):
@@ -25,6 +37,11 @@ class User:
             "password": generate_password_hash(password)
         }
         mongo.db.users.insert_one(registrant)
+        return User(username=username.lower(), password=password)
+
+
+    def get_id(self):#
+        return self.username
 
 
     def authenticate(self, password):

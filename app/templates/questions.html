@@ -36,7 +36,7 @@
             <a href="{{ url_for('answers.view_answers', question_id=question._id) }}">{{ question.answer_count }}
               Comments</a>
           </div>
-          {% if session.user == question.username %}
+          {% if current_user.username == question.username %}
           <div class="col s4">
             <div class="row">
               <div class="col s12 m6">
