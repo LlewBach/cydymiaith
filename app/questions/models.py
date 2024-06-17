@@ -14,62 +14,88 @@ class Question:
     
     @staticmethod
     def find_by_id(question_id):
-        question = mongo.db.questions.find_one({"_id": ObjectId(question_id)})
-        return question
+        try:
+            question = mongo.db.questions.find_one({"_id": ObjectId(question_id)})
+            return question
+        except Exception as e:
+            print(f"Error in find_by_id method: {e}")
+            return None
 
     
     @staticmethod
     def get_list():
-        questions = list(mongo.db.questions.find().sort("_id", -1))
-        for question in questions:
-            Question.set_time_ago(question)
-        print(questions)
-        return questions
+        try:
+            questions = list(mongo.db.questions.find().sort("_id", -1))
+            for question in questions:
+                Question.set_time_ago(question)
+            return questions
+        except Exception as e:
+            print(f"Error in get_list method: {e}")
+            return []
     
 
     @staticmethod
     def set_time_ago(question):
-        creation_time = question['_id'].generation_time.replace(tzinfo=pytz.utc)
-        question['time_ago'] = humanize.naturaltime(datetime.now(pytz.utc) - creation_time)
+        try:
+            creation_time = question['_id'].generation_time.replace(tzinfo=pytz.utc)
+            question['time_ago'] = humanize.naturaltime(datetime.now(pytz.utc) - creation_time)
+        except Exception as e:
+            print(f"Error in set_time_ago method: {e}")
 
     
     @staticmethod
     def increase_answer_count(question_id):
-        mongo.db.questions.update_one({'_id': ObjectId(question_id)}, {'$inc': {'answer_count': 1}})
+        try:
+            mongo.db.questions.update_one({'_id': ObjectId(question_id)}, {'$inc': {'answer_count': 1}})
+        except Exception as e:
+            print(f"Error in increase_answer_count method: {e}")
 
 
     @staticmethod
     def decrease_answer_count(question_id):
-        mongo.db.questions.update_one({'_id': ObjectId(question_id)}, {'$inc': {'answer_count': -1}})
+        try:
+            mongo.db.questions.update_one({'_id': ObjectId(question_id)}, {'$inc': {'answer_count': -1}})
+        except Exception as e:
+            print(f"Error in decrease_answer_count method: {e}")
 
 
     @staticmethod
     def insert_question(username, title, description):
-        question = {
-            "username": username,
-            "title": title,
-            "description": description,
-            "answer_count": 0
-        }
-        mongo.db.questions.insert_one(question)
+        try:
+            question = {
+                "username": username,
+                "title": title,
+                "description": description,
+                "answer_count": 0
+            }
+            mongo.db.questions.insert_one(question)
+        except Exception as e:
+            print(f"Error in insert_question method: {e}")
 
     
     @staticmethod
     def get_answer_count(question_id):
-        count = Question.find_by_id(question_id)["answer_count"]
-        return count
+        try:
+            count = Question.find_by_id(question_id)["answer_count"]
+            return count
+        except Exception as e:
+            print(f"Error in get_answer_count method: {e}")
+            return 0
 
 
     @staticmethod
     def update_question(question_id, username, title, description):
-        current_answer_count = Question.get_answer_count(question_id)
-        submit = {
-            "username": username,
-            "title": title,
-            "description": description,
-            "answer_count": current_answer_count
-        }
-        mongo.db.questions.update_one({"_id": ObjectId(question_id)}, {"$set": submit})
+        try:
+            current_answer_count = Question.get_answer_count(question_id)
+            submit = {
+                "username": username,
+                "title": title,
+                "description": description,
+                "answer_count": current_answer_count
+            }
+            mongo.db.questions.update_one({"_id": ObjectId(question_id)}, {"$set": submit})
+        except Exception as e:
+            print(f"Error in delete_question method: {e}")
 
 
     @staticmethod
