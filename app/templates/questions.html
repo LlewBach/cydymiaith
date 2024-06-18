@@ -1,71 +1,64 @@
 {% extends "base.html" %}
 {% block content %}
-
-<div class="center-align">
-  <h1>Q&As</h1>
-  {% if session.user %}
-  <a href="{{ url_for('questions.ask_question') }}" class="btn-large outlined ask-button">Ask question</a>
-  {% else %}
-  <a href="{{ url_for('auth.login') }}">Login to ask question</a>
-  {% endif %}
-</div>
+<header>
+  <div class="text-center">
+    <h1>Q&As</h1>
+    {% if session.user %}
+    <a href="{{ url_for('questions.ask_question') }}" class="btn btn-outline-primary btn-lg ask-button">Ask
+      question</a>
+    {% else %}
+    <a href="{{ url_for('auth.login') }}">Login to ask question</a>
+    {% endif %}
+  </div>
+</header>
 
 <!-- remember tooltips -->
 
 {% for question in questions %}
-<div class="row question-row">
-  <div class="col s12">
-    <div class="card grey lighten-5">
-      <div class="card-content">
-        <span class="card-title">{{ question.title }}</span>
-        <p>{{ question.description }}</p>
-      </div>
-      <div class="card-action">
-        <div class="row">
-          <div class="col s4">
-            <div class="row">
-              <div class="col s12 m6">
-                <p>{{ question.username }}</p>
-              </div>
-              <div class="col s12 m6">
-                <p>{{ question.time_ago }}</p>
-              </div>
+
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">{{ question.title }}</h5>
+    <h6 class="card-subtitle mb-2 text-body-secondary">{{ question.username }}: {{ question.time_ago }}</h6>
+    <p class="card-text">{{ question.description }}</p>
+
+  </div>
+  <div class="card-footer d-flex justify-content-between">
+    <a href="{{ url_for('answers.view_answers', question_id=question._id) }}" class="card-link">{{ question.answer_count
+      }} Comments</a>
+    {% if current_user.username == question.username %}
+    <div>
+      <a href="{{ url_for('questions.edit_question', question_id=question._id) }}" class="card-link">Edit</a>
+      <!-- <a href="#" class="card-link">Delete</a> -->
+      <a href="#" class="card-link" data-bs-toggle="modal" data-bs-target="#deletionModal">Delete</a>
+
+      <!-- Modal -->
+      <div class="modal fade" id="deletionModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="modalLabel">Are you sure?</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Changes cannot be undone!</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <a href="{{ url_for('questions.delete_question', question_id=question._id) }}"
+                class="btn btn-primary">Confirm</a>
             </div>
           </div>
-          <div class="col s4">
-            <a href="{{ url_for('answers.view_answers', question_id=question._id) }}">{{ question.answer_count }}
-              Comments</a>
-          </div>
-          {% if current_user.username == question.username %}
-          <div class="col s4">
-            <div class="row">
-              <div class="col s12 m6">
-                <a href="{{ url_for('questions.edit_question', question_id=question._id) }}">Edit</a>
-              </div>
-              <div class="col s12 m6">
-                <a href="#modal{{ question._id }}" class="modal-trigger">Delete</a>
-                <!-- {{ url_for('questions.delete_question', question_id=question._id) }} -->
-                <!-- Modal Structure -->
-                <div id="modal{{ question._id }}" class="modal">
-                  <div class="modal-content">
-                    <h4>Are you sure?</h4>
-                    <p>Cancel or confirm deletion</p>
-                  </div>
-                  <div class="modal-footer">
-                    <a class="modal-close">Cancel</a>
-                    <a href="{{ url_for('questions.delete_question', question_id=question._id) }}"
-                      class="modal-close waves-effect waves-green btn-flat">Confirm</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          {% endif %}
         </div>
       </div>
     </div>
+    {% endif %}
   </div>
 </div>
+
+
 {% endfor %}
+
+
 
 {% endblock %}
