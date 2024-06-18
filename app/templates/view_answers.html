@@ -2,101 +2,56 @@
 
 {% block content %}
 
-<div class="row question-row">
-  <div class="col s12">
-    <div class="card grey lighten-5">
-      <div class="card-content">
-        <span class="card-title">{{ question.title }}</span>
-        <p>{{ question.description }}</p>
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">{{ question.title }}</h5>
+    <h6 class="card-subtitle mb-2 text-body-secondary">{{ question.username }}: {{ question.time_ago }}</h6>
+    <p class="card-text">{{ question.description }}</p>
+
+  </div>
+  <div class="card-footer d-flex justify-content-between">
+    <p>{{ question.answer_count }} Comments</p>
+  </div>
+</div>
+<div class="card">
+  <div class="card-body">
+    <form method="POST" action="{{ url_for('answers.answer', question_id=question._id) }}">
+      <div class="mb-3">
+        <label for="text" class="form-label">Add answer...</label>
+        <textarea class="form-control" id="text" name="text" rows="3"></textarea>
       </div>
-      <div class="card-action">
-        <div class="row">
-          <div class="col s4">
-            <div class="row">
-              <div class="col s12 m6">
-                <p>{{ question.username }}</p>
-              </div>
-              <div class="col s12 m6">
-                <p>{{ question.time_ago }}</p>
-              </div>
-            </div>
+      <button type="submit" class="btn btn-primary">Answer</button>
+    </form>
+  </div>
+</div>
+{% for answer in answers %}
+<div class="card">
+  <div class="card-body">
+    <p class="card-text">{{ answer.username }} - {{ answer.time_ago }}: {{ answer.text }}</p>
+    <a href="{{ url_for('answers.edit_answer', answer_id=answer._id) }}">Edit</a>
+    <a href="#" class="card-link" data-bs-toggle="modal" data-bs-target="#deletionModal">Delete</a>
+
+    <!-- Modal -->
+    <div class="modal fade" id="deletionModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="modalLabel">Are you sure?</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="col s4">
-            <a href="{{ url_for('answers.view_answers', question_id=question._id) }}">{{ question.answer_count }}
-              Comments</a>
+          <div class="modal-body">
+            <p>Changes cannot be undone!</p>
           </div>
-          {% if current_user.username == question.username %}
-          <div class="col s4">
-            <div class="row">
-              <div class="col s12 m6">
-                <a href="{{ url_for('questions.edit_question', question_id=question._id) }}">Edit</a>
-              </div>
-              <div class="col s12 m6">
-                <a href="#modal1" class="modal-trigger">Delete</a>
-                <div id="modal1" class="modal">
-                  <div class="modal-content">
-                    <h4>Are you sure?</h4>
-                    <p>Cancel or confirm deletion</p>
-                  </div>
-                  <div class="modal-footer">
-                    <a class="modal-close">Cancel</a>
-                    <a href="{{ url_for('questions.delete_question', question_id=question._id) }}"
-                      class="modal-close waves-effect waves-green btn-flat">Confirm</a>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <a href="{{ url_for('answers.delete_answer', answer_id=answer._id) }}" class="btn btn-primary">Confirm</a>
           </div>
-          {% endif %}
         </div>
       </div>
     </div>
   </div>
 </div>
+{% endfor %}
 
-<div class="row">
-  <form class="col s12" method="POST" action="{{ url_for('answers.answer', question_id=question._id) }}">
-    <div class="row">
-      <div class="input-field col s12">
-        <textarea id="text" name="text" class="materialize-textarea"></textarea>
-        <label for="text">Add Comment</label>
-      </div>
-    </div>
-    <div>
-      <button type="submit">Add Answer</button>
-    </div>
-  </form>
-</div>
-
-<ul>
-  {% for answer in answers %}
-  <li>
-    <div class="row">
-      <div class="col s9">
-        {{ answer.username }}
-        {{ answer.time_ago }}
-        {{ answer.text }}
-      </div>
-      <div class="col s3 right-align">
-        <a href="{{ url_for('answers.edit_answer', answer_id=answer._id) }}">Edit</a>
-        <a href="#modal{{ answer._id }}" class="modal-trigger">Delete</a>
-        <!-- Modal Structure -->
-        <div id="modal{{ answer._id }}" class="modal">
-          <div class="modal-content">
-            <h4>Are you sure?</h4>
-            <p>Please cancel or confirm deletion.</p>
-          </div>
-          <div class="modal-footer">
-            <a class="modal-close waves-effect waves-red btn-flat" href="#!">Cancel</a>
-            <a href="{{ url_for('answers.delete_answer', answer_id=answer._id) }}"
-              class="modal-close waves-effect waves-green btn-flat">Confirm</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </li>
-  <hr>
-  {% endfor %}
-</ul>
 
 {% endblock %}

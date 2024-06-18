@@ -47,5 +47,6 @@ def edit_question(question_id):
 @login_required
 def delete_question(question_id):
     Question.delete_question(question_id)
+    # Need to also delete all associated answers
     flash("Question deleted")
     return redirect(url_for("questions.get_questions"))
