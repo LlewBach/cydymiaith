@@ -8,7 +8,7 @@ profiles_bp = Blueprint('profiles', __name__, template_folder='../templates')
 @login_required
 def profile(username):
     if current_user.username != username:
-        flash("You are not authorized to view this profile.")
+        flash(f"You are not authorized to view this profile, {current_user.username}.")
         return redirect(url_for('profiles.profile', username=current_user.username))
 
     return render_template("profile.html", username=username)

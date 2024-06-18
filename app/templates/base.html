@@ -23,7 +23,7 @@
           <li><a href="{{ url_for('core.home') }}">Home</a></li>
           <li><a href="{{ url_for('questions.get_questions') }}">Q&As</a></li>
           {% if current_user.is_authenticated %}
-          <li><a href="{{ url_for('profiles.profile', username=session['user']) }}">Profile</a></li>
+          <li><a href="{{ url_for('profiles.profile', username=current_user.username) }}">Profile</a></li>
           <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
           {% else %}
           <li><a href="{{ url_for('auth.login') }}">Log In</a></li>
@@ -37,7 +37,7 @@
       <li><a href="{{ url_for('core.home') }}">Home</a></li>
       <li><a href="{{ url_for('questions.get_questions') }}">Q&As</a></li>
       {% if current_user.is_authenticated %}
-      <li><a href="{{ url_for('profiles.profile', username=session['user']) }}">Profile</a></li>
+      <li><a href="{{ url_for('profiles.profile', username=current_user.username) }}">Profile</a></li>
       <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
       {% else %}
       <li><a href="{{ url_for('auth.login') }}">Log In</a></li>
