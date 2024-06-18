@@ -6,9 +6,12 @@ from app import mongo, login_manager
 
 @login_manager.user_loader
 def load_user(username):
-    user_doc = mongo.db.users.find_one({"username": username})
-    if user_doc:
-        return User(username=user_doc["username"], password=user_doc["password"])
+    try:
+        user_doc = mongo.db.users.find_one({"username": username})
+        if user_doc:
+            return User(username=user_doc["username"], password=user_doc["password"])
+    except Exception as e:
+        print(f"Error in load_user method: {e}")
     return None
 
 
@@ -21,9 +24,12 @@ class User(UserMixin):
     @classmethod
     def find_by_username(cls, username):
         """Retrieve a user from the database by username."""
-        user = mongo.db.users.find_one({"username": username.lower()})
-        if user:
-            return cls(username=user['username'], password=user['password'])
+        try:
+            user = mongo.db.users.find_one({"username": username.lower()})
+            if user:
+                return cls(username=user['username'], password=user['password'])
+        except Exception as e:
+            print(f"Error in find_by_username method: {e}")
         return None
 
     
@@ -36,8 +42,12 @@ class User(UserMixin):
             # if second field to confirm password, would confirm before here
             "password": generate_password_hash(password)
         }
-        mongo.db.users.insert_one(registrant)
-        return User(username=username.lower(), password=password)
+        try:
+            mongo.db.users.insert_one(registrant)
+            return User(username=username.lower(), password=password)
+        except Exception as e:
+            print(f"Error in create_new method: {e}")
+            return None        
 
 
     def get_id(self):#
