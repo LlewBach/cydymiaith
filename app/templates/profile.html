@@ -5,8 +5,15 @@
   <div class="col s12 m8 offset-m2">
     <div class="card-panel">
       <h3 class="center-align">{{ username }}</h3>
+      <p>Location: {{ username }}</p>
+      <p>Level: {{ username }}</p>
+      <p>Provider: {{ username }}</p>
+      <a href="{{ url_for('profiles.edit_profile', username=username) }}">Edit</a>
+      <a href="#">Delete</a>
     </div>
   </div>
 </div>
+
+
 
 {% endblock %}

@@ -12,4 +12,15 @@ def profile(username):
         return redirect(url_for('profiles.profile', username=current_user.username))
 
     return render_template("profile.html", username=username)
+
+
+@profiles_bp.route("/edit_profile/<username>", methods=["GET", "POST"])
+@login_required
+def edit_profile(username):
+    if current_user.username != username:
+        flash(f"You are not authorized to view this profile, {current_user.username}.") # make into own function?
+        return redirect(url_for('profiles.profile', username=current_user.username))
+    
+    
+    return render_template("edit_profile.html", username=username)
     
