@@ -5,26 +5,13 @@
   <div class="card-body text-center">
     <h2 class="card-title">{{ user.username }}</h2>
     <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.
-    </p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
+    <p class="card-text">Level: {{ x }}</p>
+    <p class="card-text">Provider: {{ x }}</p>
+    <p class="card-text">Location: {{ x }}</p>
+    <p class="card-text">Bio: {{ x }}</p>
+    <a href="{{ url_for('auth.edit_profile', username=user.username) }}" class="card-link">Edit Profile</a>
+    <a href="#" class="card-link">Delete Profile</a>
   </div>
 </div>
-
-<div class="row">
-  <div class="col s12 m8 offset-m2">
-    <div class="card-panel">
-      <h3 class="center-align">{{ user.username }}</h3>
-      <p>Location: {{ username }}</p>
-      <p>Level: {{ username }}</p>
-      <p>Provider: {{ username }}</p>
-      <a href="{{ url_for('auth.edit_profile', username=username) }}">Edit</a>
-      <a href="#">Delete</a>
-    </div>
-  </div>
-</div>
-
-
 
 {% endblock %}

@@ -82,5 +82,10 @@ def edit_profile(username):
     if current_user.username != username:
         flash(f"You are not authorized to view this profile, {current_user.username}.") # make into own function?
         return redirect(url_for('auth.profile', username=current_user.username))
+
+    user = User.find_by_username(username)
+    levels = User.get_levels()
+    providers = User.get_providers()
+
     
-    return render_template("edit_profile.html", username=username)
+    return render_template("edit_profile.html", user=user, levels=levels, providers=providers)

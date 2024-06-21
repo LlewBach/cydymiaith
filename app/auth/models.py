@@ -57,3 +57,13 @@ class User(UserMixin):
     def authenticate(self, password):
         """Check if the provided password matches the stored hash"""
         return check_password_hash(self.password, password)
+    
+
+    @staticmethod
+    def get_levels():
+        return list(mongo.db.levels.find())
+    
+
+    @staticmethod
+    def get_providers():
+        return list(mongo.db.providers.find())
