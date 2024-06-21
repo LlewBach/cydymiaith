@@ -23,13 +23,13 @@ def create_app():
     from .core.views import core_bp
     from .auth.views import auth_bp
     from .questions.views import questions_bp
-    from .profiles.views import profiles_bp
+    # from .profiles.views import profiles_bp
     from .answers.views import answers_bp
 
     app.register_blueprint(core_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(questions_bp)
-    app.register_blueprint(profiles_bp)
+    # app.register_blueprint(profiles_bp)
     app.register_blueprint(answers_bp)
 
     # @login_manager.user_loader

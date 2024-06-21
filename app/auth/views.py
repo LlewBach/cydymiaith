@@ -63,3 +63,24 @@ def logout():
     flash("Logged out")
     # session.pop("user")
     return redirect(url_for("auth.login"))
+
+
+@auth_bp.route("/profile/<username>")
+@login_required
+def profile(username):
+    if current_user.username != username:
+        flash(f"You are not authorized to view this profile, {current_user.username}.")
+        return redirect(url_for('auth.profile', username=current_user.username))
+    
+    user = User.find_by_username(username)
+    return render_template("profile.html", user=user)
+
+
+@auth_bp.route("/edit_profile/<username>", methods=["GET", "POST"])
+@login_required
+def edit_profile(username):
+    if current_user.username != username:
+        flash(f"You are not authorized to view this profile, {current_user.username}.") # make into own function?
+        return redirect(url_for('auth.profile', username=current_user.username))
+    
+    return render_template("edit_profile.html", username=username)
