@@ -68,9 +68,9 @@ def logout():
 @auth_bp.route("/profile/<username>")
 @login_required
 def profile(username):
-    if current_user.username != username:
-        flash(f"You are not authorized to view this profile, {current_user.username}.")
-        return redirect(url_for('auth.profile', username=current_user.username))
+    # if current_user.username != username:
+    #     flash(f"You are not authorized to view this profile, {current_user.username}.")
+    #     return redirect(url_for('auth.profile', username=current_user.username))
     
     user = User.find_by_username(username)
     return render_template("profile.html", user=user)
