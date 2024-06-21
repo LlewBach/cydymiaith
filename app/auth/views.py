@@ -82,10 +82,20 @@ def edit_profile(username):
     if current_user.username != username:
         flash(f"You are not authorized to view this profile, {current_user.username}.") # make into own function?
         return redirect(url_for('auth.profile', username=current_user.username))
+    
+    if request.method == "POST":
+        level = request.form.get("level")
+        provider = request.form.get("provider")
+        location = request.form.get("location")
+        bio = request.form.get("bio")
+        User.update_profile(username, level, provider, location, bio)
+        flash("Profile updated")
+        return redirect(url_for('auth.profile', username=username))
+
 
     user = User.find_by_username(username)
     levels = User.get_levels()
     providers = User.get_providers()
 
     
-    return render_template("edit_profile.html", user=user, levels=levels, providers=providers)
+    return render_template("edit_profile.html", user=user, levels=levels, providers=providers) 

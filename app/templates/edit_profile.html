@@ -4,33 +4,41 @@
 
 <h3 class="center-align">Edit Profile</h3>
 
-<form method="POST" action="{{ url_for('auth.register') }}">
+<form method="POST" action="{{ url_for('auth.edit_profile', username=user.username) }}">
   <div class="mb-3">
-    <label for="level_name" class="form-label">Level</label>
-    <select id="level_name" name="level_name" class="form-select" aria-label="Default select example">
+    <label for="level" class="form-label">Level</label>
+    <select id="level" name="level" class="form-select" aria-label="Default select example">
       <option selected>Choose Level</option>
       {% for level in levels %}
+      {% if level.level_name == user.level %}
+      <option value="{{ level.level_name }}" selected>{{ level.level_name }}</option>
+      {% else %}
       <option value="{{ level.level_name }}">{{ level.level_name }}</option>
+      {% endif %}
       {% endfor %}
     </select>
   </div>
   <div class="mb-3">
-    <label for="level_name" class="form-label">Provider</label>
-    <select class="form-select" aria-label="Default select example">
+    <label for="provider" class="form-label">Provider</label>
+    <select id="provider" name="provider" class="form-select" aria-label="Default select example">
       <option selected>Provider</option>
       {% for provider in providers %}
+      {% if provider.provider_name == user.provider %}
+      <option value="{{ provider.provider_name }}" selected>{{ provider.provider_name }}</option>
+      {% else %}
       <option value="{{ provider.provider_name }}">{{ provider.provider_name }}</option>
+      {% endif %}
       {% endfor %}
     </select>
   </div>
   <div class="mb-3">
-    <label for="location" class="form-label">{{ user.location }}</label>
-    <input type="text" class="form-control" id="location" name="location" placeholder="Location" minlength="3"
-      maxlength="15" pattern="^[a-zA-Z0-9]{5,15}$" required>
+    <label for="location" class="form-label">Location</label>
+    <input type="text" class="form-control" id="location" name="location" value="{{ user.location }}"
+      placeholder="Location" minlength="3" maxlength="15" pattern="^[a-zA-Z0-9]{5,15}$" required>
   </div>
   <div class="mb-3">
-    <label for="floatingTextarea">Bio</label>
-    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea">{{ user.bio }}</textarea>
+    <label for="bio">Bio</label>
+    <textarea class="form-control" placeholder="Leave a comment here" id="bio" name="bio">{{ user.bio }}</textarea>
   </div>
   <button type="submit" class="btn btn-primary">Save</button>
 </form>

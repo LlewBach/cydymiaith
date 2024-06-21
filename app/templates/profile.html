@@ -5,10 +5,10 @@
   <div class="card-body text-center">
     <h2 class="card-title">{{ user.username }}</h2>
     <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-    <p class="card-text">Level: {{ x }}</p>
-    <p class="card-text">Provider: {{ x }}</p>
-    <p class="card-text">Location: {{ x }}</p>
-    <p class="card-text">Bio: {{ x }}</p>
+    <p class="card-text">Level: {{ user.level }}</p>
+    <p class="card-text">Provider: {{ user.provider }}</p>
+    <p class="card-text">Location: {{ user.location }}</p>
+    <p class="card-text">Bio: {{ user.bio }}</p>
     <a href="{{ url_for('auth.edit_profile', username=user.username) }}" class="card-link">Edit Profile</a>
     <a href="#" class="card-link">Delete Profile</a>
   </div>

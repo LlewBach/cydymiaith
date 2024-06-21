@@ -30,10 +30,10 @@
   <div class="card-body">
     <p class="card-text">{{ answer.username }} - {{ answer.time_ago }}: {{ answer.text }}</p>
     <a href="{{ url_for('answers.edit_answer', answer_id=answer._id) }}">Edit</a>
-    <a href="#" class="card-link" data-bs-toggle="modal" data-bs-target="#deletionModal">Delete</a>
+    <a href="#" class="card-link" data-bs-toggle="modal" data-bs-target="#{{ answer._id }}">Delete</a>
 
     <!-- Modal -->
-    <div class="modal fade" id="deletionModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal fade" id="{{ answer._id }}" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -53,6 +53,5 @@
   </div>
 </div>
 {% endfor %}
-
 
 {% endblock %}

@@ -27,7 +27,8 @@ class User(UserMixin):
         try:
             user = mongo.db.users.find_one({"username": username.lower()})
             if user:
-                return cls(username=user['username'], password=user['password'])
+                # return cls(username=user['username'], password=user['password'])
+                return user
         except Exception as e:
             print(f"Error in find_by_username method: {e}")
         return None
@@ -67,3 +68,18 @@ class User(UserMixin):
     @staticmethod
     def get_providers():
         return list(mongo.db.providers.find())
+    
+
+    @staticmethod
+    def update_profile(username, level, provider, location, bio):
+        user = User.find_by_username(username)
+        password = user["password"]
+        profile = {
+            "username": username,
+            "password": password,
+            "level": level,
+            "provider": provider,
+            "location": location,
+            "bio": bio
+        }
+        mongo.db.users.update_one({"_id": user["_id"]}, {"$set": profile})
