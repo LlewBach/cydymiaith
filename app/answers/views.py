@@ -39,6 +39,7 @@ def edit_answer(answer_id):
         text = request.form.get("text")
         username = current_user.username
         Answer.edit_answer(answer_id, question_id, text, username)
+        # need flash
         return redirect(url_for("answers.view_answers", question_id=question_id))
     
     question = Question.find_by_id(question_id)

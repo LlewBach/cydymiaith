@@ -23,7 +23,7 @@ def register():
         login_user(user)
         flash("Registration Successful!")
         # return redirect(url_for("profiles.profile", username=session["user"]))
-        return redirect(url_for("profiles.profile", username=user.username))
+        return redirect(url_for("auth.profile", username=user.username))
 
     return render_template("register.html")
 
@@ -44,13 +44,13 @@ def login():
                 # flash("Croeso, {}".format(session["user"]))
                 flash("Croeso, {}".format(existing_user.username))
                 return redirect(url_for(
-                    "profiles.profile", username=existing_user.username))
+                    "auth.profile", username=existing_user.username))
             else:
-                flash("Incorrect username and/or password")
+                flash("Incorrect username and/or password1")
                 return redirect(url_for('auth.login'))
             
         else:
-            flash("Incorrect username and/or password")
+            flash("Incorrect username and/or password2")
             return redirect(url_for('auth.login'))
 
     return render_template("login.html")
@@ -92,10 +92,8 @@ def edit_profile(username):
         flash("Profile updated")
         return redirect(url_for('auth.profile', username=username))
 
-
     user = User.find_by_username(username)
     levels = User.get_levels()
     providers = User.get_providers()
 
-    
     return render_template("edit_profile.html", user=user, levels=levels, providers=providers) 

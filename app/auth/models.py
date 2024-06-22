@@ -16,9 +16,14 @@ def load_user(username):
 
 
 class User(UserMixin):
+    # def __init__(self, username, password, level, provider, location, bio):
     def __init__(self, username, password):
         self.username = username.lower()
         self.password = password #need to rename password hash
+        # self.level = level
+        # self.provider = provider
+        # self.location = location
+        # self.bio = bio
 
 
     @classmethod
@@ -27,8 +32,9 @@ class User(UserMixin):
         try:
             user = mongo.db.users.find_one({"username": username.lower()})
             if user:
-                # return cls(username=user['username'], password=user['password'])
-                return user
+                # return cls(username=user['username'], password=user['password'], level=user['level'], provider=user['provider'], location=user['location'], bio=['bio'])
+                return cls(username=user['username'], password=user['password'])
+                # return user
         except Exception as e:
             print(f"Error in find_by_username method: {e}")
         return None
@@ -73,7 +79,7 @@ class User(UserMixin):
     @staticmethod
     def update_profile(username, level, provider, location, bio):
         user = User.find_by_username(username)
-        password = user["password"]
+        password = user.password
         profile = {
             "username": username,
             "password": password,
@@ -82,4 +88,4 @@ class User(UserMixin):
             "location": location,
             "bio": bio
         }
-        mongo.db.users.update_one({"_id": user["_id"]}, {"$set": profile})
+        mongo.db.users.update_one({"username": user.username}, {"$set": profile})
