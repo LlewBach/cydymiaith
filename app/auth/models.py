@@ -16,25 +16,21 @@ def load_user(username):
 
 
 class User(UserMixin):
-    # def __init__(self, username, password, level, provider, location, bio):
     def __init__(self, username, password):
         self.username = username.lower()
         self.password = password #need to rename password hash
-        # self.level = level
-        # self.provider = provider
-        # self.location = location
-        # self.bio = bio
 
 
     @classmethod
-    def find_by_username(cls, username):
+    def find_by_username(cls, username, as_dict=False):
         """Retrieve a user from the database by username."""
         try:
             user = mongo.db.users.find_one({"username": username.lower()})
             if user:
-                # return cls(username=user['username'], password=user['password'], level=user['level'], provider=user['provider'], location=user['location'], bio=['bio'])
-                return cls(username=user['username'], password=user['password'])
-                # return user
+                if as_dict:
+                    return user
+                else:
+                    return cls(username=user['username'], password=user['password'])
         except Exception as e:
             print(f"Error in find_by_username method: {e}")
         return None
@@ -47,7 +43,11 @@ class User(UserMixin):
             "username": username.lower(),
             # can customize hash and salt methods, this standard
             # if second field to confirm password, would confirm before here
-            "password": generate_password_hash(password)
+            "password": generate_password_hash(password),
+            "level": None,
+            "provider": None,
+            "location": None,
+            "bio": None
         }
         try:
             mongo.db.users.insert_one(registrant)
@@ -74,7 +74,7 @@ class User(UserMixin):
     @staticmethod
     def get_providers():
         return list(mongo.db.providers.find())
-    
+
 
     @staticmethod
     def update_profile(username, level, provider, location, bio):

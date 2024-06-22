@@ -19,10 +19,8 @@ def register():
         username = request.form.get("username").lower()
         password = request.form.get("password")
         user = User.create_new(username, password)
-        # session["user"] = username
         login_user(user)
         flash("Registration Successful!")
-        # return redirect(url_for("profiles.profile", username=session["user"]))
         return redirect(url_for("auth.profile", username=user.username))
 
     return render_template("register.html")
@@ -39,9 +37,7 @@ def login():
         if existing_user:
             given_password = request.form.get("password")
             if existing_user.authenticate(given_password):
-                # session["user"] = existing_user.username
                 login_user(existing_user)
-                # flash("Croeso, {}".format(session["user"]))
                 flash("Croeso, {}".format(existing_user.username))
                 return redirect(url_for(
                     "auth.profile", username=existing_user.username))
@@ -61,7 +57,6 @@ def login():
 def logout():
     logout_user()
     flash("Logged out")
-    # session.pop("user")
     return redirect(url_for("auth.login"))
 
 
@@ -72,7 +67,7 @@ def profile(username):
     #     flash(f"You are not authorized to view this profile, {current_user.username}.")
     #     return redirect(url_for('auth.profile', username=current_user.username))
     
-    user = User.find_by_username(username)
+    user = User.find_by_username(username, True)
     return render_template("profile.html", user=user)
 
 
@@ -92,7 +87,7 @@ def edit_profile(username):
         flash("Profile updated")
         return redirect(url_for('auth.profile', username=username))
 
-    user = User.find_by_username(username)
+    user = User.find_by_username(username, True)
     levels = User.get_levels()
     providers = User.get_providers()
 
