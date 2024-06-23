@@ -100,4 +100,5 @@ class Question:
 
     @staticmethod
     def delete_question(question_id):
+        mongo.db.answers.delete_many({"question_id": ObjectId(question_id)})
         mongo.db.questions.delete_one({"_id": ObjectId(question_id)})

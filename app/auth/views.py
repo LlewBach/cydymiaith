@@ -92,3 +92,17 @@ def edit_profile(username):
     providers = User.get_providers()
 
     return render_template("edit_profile.html", user=user, levels=levels, providers=providers) 
+
+
+@auth_bp.route("/delete_profile/<username>")
+@login_required
+def delete_profile(username):
+    if current_user.username != username:
+        flash(f"You are not authorized to do this, {current_user.username}.") # make into own function?
+        return redirect(url_for('auth.profile', username=current_user.username))
+    
+    User.delete_profile(username)
+    logout_user()
+    flash("Account Deleted")
+    return redirect(url_for("auth.login"))
+
