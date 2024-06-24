@@ -13,6 +13,14 @@ class Question:
 
     
     @staticmethod
+    def get_categories():
+        try:
+            categories = list(mongo.db.categories.find())
+            return categories
+        except Exception as e:
+            print(f"Error in get_categories method: {e}")
+
+
     def find_by_id(question_id):
         try:
             question = mongo.db.questions.find_one({"_id": ObjectId(question_id)})
@@ -71,10 +79,11 @@ class Question:
 
 
     @staticmethod
-    def insert_question(username, title, description):
+    def insert_question(username, category, title, description):
         try:
             question = {
                 "username": username,
+                "category": category,
                 "title": title,
                 "description": description,
                 "answer_count": 0

@@ -18,13 +18,15 @@ def ask_question():
     if request.method == "POST":
         # username = session["user"]
         username = current_user.username
+        category = request.form.get("category")
         title = request.form.get("title")
         description = request.form.get("description")
-        Question.insert_question(username, title, description)
+        Question.insert_question(username, category, title, description)
         flash("Question posted to community:)")
         return redirect(url_for('questions.get_questions'))
 
-    return render_template("ask_question.html")
+    categories = Question.get_categories()
+    return render_template("ask_question.html", categories=categories)
 
 
 @questions_bp.route("/edit_question/<question_id>", methods=["GET", "POST"])
