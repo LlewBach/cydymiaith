@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user, current_user, login_required
 from app.auth.models import User
+from app.questions.models import Question
 
 auth_bp = Blueprint('auth', __name__, template_folder='../templates')
 
@@ -66,9 +67,9 @@ def profile(username):
     # if current_user.username != username:
     #     flash(f"You are not authorized to view this profile, {current_user.username}.")
     #     return redirect(url_for('auth.profile', username=current_user.username))
-    
+    questions = Question.get_list_by_username(username)
     user = User.find_by_username(username, True)
-    return render_template("profile.html", user=user)
+    return render_template("profile.html", user=user, questions=questions)
 
 
 @auth_bp.route("/edit_profile/<username>", methods=["GET", "POST"])

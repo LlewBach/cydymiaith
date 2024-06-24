@@ -32,6 +32,17 @@ class Question:
         except Exception as e:
             print(f"Error in get_list method: {e}")
             return []
+        
+
+    @staticmethod
+    def get_list_by_username(username):
+        try:
+            questions = list(mongo.db.questions.find({"username": username}).sort("_id, -1"))
+            for question in questions:
+                Question.set_time_ago(question)
+            return questions
+        except Exception as e:
+            print(f"Error in get_list_by_username method: {e}")
     
 
     @staticmethod

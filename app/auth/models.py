@@ -97,7 +97,6 @@ class User(UserMixin):
     def delete_profile(username):
         answers_to_delete = list(mongo.db.answers.find({"username": username}))
         for answer in answers_to_delete:
-            # print(answer)
             answer_id = answer["_id"]
             question_id = Answer.find_question_id(answer_id)
             Question.decrease_answer_count(question_id)
@@ -107,6 +106,6 @@ class User(UserMixin):
         for question in questions_to_delete:
             question_id = question["_id"]
             mongo.db.answers.delete_many({"question_id": question_id})
-            mongo.db.questions.delete_one({"_id": question_id})
+            mongo.db.questions.delete_one({"_id": question_id})            
 
         mongo.db.users.delete_one({"username": username})
