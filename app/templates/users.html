@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="text-center">Users</h1>
+
+{% for user in users %}
+<div class="card">
+  <div class="card-body text-center">
+    <h2 class="card-title">{{ user.username }}</h2>
+    <!-- <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6> -->
+    <p class="card-text">Level: {{ user.level }}</p>
+    <p class="card-text">Provider: {{ user.provider }}</p>
+    <p class="card-text">Location: {{ user.location }}</p>
+    <p class="card-text">Bio: {{ user.bio }}</p>
+    {% if current_user.username == "admin" %}
+    <a href="{{ url_for('auth.profile', username=user.username) }}" class="card-link">View Profile</a>
+    <a href="{{ url_for('auth.edit_profile', username=user.username) }}" class="card-link">Edit Profile</a>
+    <a href="#" class="card-link" data-bs-toggle="modal" data-bs-target="#{{ user._id }}">Delete Profile</a>
+
+    <!-- Modal -->
+    <div class="modal fade" id="{{ user._id }}" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="modalLabel">Are you sure?</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>Changes cannot be undone!</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <a href="{{ url_for('auth.delete_profile', username=user.username) }}" class="btn btn-primary">Confirm</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endfor %}
+
+{% endblock %}

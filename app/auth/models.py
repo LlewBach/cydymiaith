@@ -109,3 +109,9 @@ class User(UserMixin):
             mongo.db.questions.delete_one({"_id": question_id})            
 
         mongo.db.users.delete_one({"username": username})
+
+    
+    @staticmethod
+    def get_users():
+        users = list(mongo.db.users.find())
+        return users

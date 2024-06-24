@@ -98,12 +98,26 @@ def edit_profile(username):
 @auth_bp.route("/delete_profile/<username>")
 @login_required
 def delete_profile(username):
-    if current_user.username != username:
+    if current_user.username != username and current_user.username != "admin":
         flash(f"You are not authorized to do this, {current_user.username}.") # make into own function?
         return redirect(url_for('auth.profile', username=current_user.username))
     
     User.delete_profile(username)
-    logout_user()
-    flash("Account Deleted")
-    return redirect(url_for("auth.login"))
+    if current_user.username == "admin":
+        return redirect(url_for("auth.view_users"))
+    else:
+        logout_user()
+        flash("Account Deleted")
+        return redirect(url_for("auth.login"))
+
+
+@auth_bp.route("/view_users")
+@login_required
+def view_users():
+    if current_user.username != "admin":
+        flash(f"You are not authorized for this, {current_user.username}.") # make into own function?
+        return redirect(url_for('auth.profile', username=current_user.username))
+    
+    users = User.get_users()
+    return render_template("users.html", users=users)
 
