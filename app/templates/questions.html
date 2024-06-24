@@ -12,6 +12,27 @@
   </div>
 </header>
 
+<form method="POST" action="{{ url_for('questions.get_questions') }}">
+  <div class="container">
+    <div class="row">
+      <div class="col-4 text-center">
+        <label for="category" class="form-label">Apply Filter</label>
+      </div>
+      <div class="col-4 text-center">
+        <select id="category" name="category" class="form-select" aria-label="Default select example">
+          <option value="" selected>All Categories</option>
+          {% for category in categories %}
+          <option value="{{ category.category_name }}">{{ category.category_name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-4 text-center">
+        <button type="submit" class="btn btn-primary">Filter</button>
+      </div>
+    </div>
+  </div>
+</form>
+
 <!-- remember tooltips -->
 
 {% for question in questions %}

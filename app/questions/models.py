@@ -21,6 +21,7 @@ class Question:
             print(f"Error in get_categories method: {e}")
 
 
+    @staticmethod
     def find_by_id(question_id):
         try:
             question = mongo.db.questions.find_one({"_id": ObjectId(question_id)})
@@ -31,9 +32,12 @@ class Question:
 
     
     @staticmethod
-    def get_list():
+    def get_list(category):
         try:
-            questions = list(mongo.db.questions.find().sort("_id", -1))
+            if category:
+                questions = list(mongo.db.questions.find({"category": category}).sort("_id", -1))
+            else:
+                questions = list(mongo.db.questions.find().sort("_id", -1))
             for question in questions:
                 Question.set_time_ago(question)
             return questions
@@ -51,6 +55,15 @@ class Question:
             return questions
         except Exception as e:
             print(f"Error in get_list_by_username method: {e}")
+
+
+    # @staticmethod
+    # def get_list_by_category(category):
+    #     try:
+    #         questions = list(mongo.db.questions.find({"category": category}))
+    #         return 
+    #     except Exception as e:
+    #         print(f"Error in get_list_by_category method: {e}")
     
 
     @staticmethod

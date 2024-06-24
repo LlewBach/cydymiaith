@@ -5,11 +5,15 @@ from app.questions.models import Question
 questions_bp = Blueprint('questions', __name__, template_folder='../templates')
 
 
-@questions_bp.route("/get_questions")
+@questions_bp.route("/get_questions", methods=["GET", "POST"])
 def get_questions():
-    questions = Question.get_list()
+    categories = Question.get_categories()
+    questions = Question.get_list(None)
+    if request.method == "POST":
+        category = request.form.get("category")
+        questions = Question.get_list(category)
 
-    return render_template("questions.html", questions=questions)
+    return render_template("questions.html", questions=questions, categories=categories)
 
 
 @questions_bp.route("/ask_question", methods=["GET", "POST"])
