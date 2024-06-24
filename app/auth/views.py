@@ -75,7 +75,7 @@ def profile(username):
 @auth_bp.route("/edit_profile/<username>", methods=["GET", "POST"])
 @login_required
 def edit_profile(username):
-    if current_user.username != username:
+    if current_user.username != username and current_user.username != "admin":
         flash(f"You are not authorized to view this profile, {current_user.username}.") # make into own function?
         return redirect(url_for('auth.profile', username=current_user.username))
     
@@ -86,7 +86,10 @@ def edit_profile(username):
         bio = request.form.get("bio")
         User.update_profile(username, level, provider, location, bio)
         flash("Profile updated")
-        return redirect(url_for('auth.profile', username=username))
+        if current_user.username == "admin":
+            return redirect(url_for('auth.view_users'))
+        else:
+            return redirect(url_for('auth.profile', username=username))
 
     user = User.find_by_username(username, True)
     levels = User.get_levels()
