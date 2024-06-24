@@ -11,8 +11,8 @@
     <form method="POST" action="{{ url_for('questions.ask_question') }}">
       <div class="mb-3">
         <label for="category" class="form-label">Category</label>
-        <select id="category" name="category" class="form-select" aria-label="Default select example">
-          <option selected>Choose Category</option>
+        <select id="category" name="category" class="form-select" aria-label="Default select example" required>
+          <option value="" disabled selected>Choose Category</option>
           {% for category in categories %}
           <option value="{{ category.category_name }}">{{ category.category_name }}</option>
           {% endfor %}
