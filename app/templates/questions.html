@@ -2,7 +2,7 @@
 {% block content %}
 <header>
   <div class="text-center">
-    <h1>Q&As</h1>
+    <h1>{{ current_user.username }} has joined the chat</h1>
     {% if session.user %}
     <a href="{{ url_for('questions.ask_question') }}" class="btn btn-outline-primary btn-lg ask-button">Ask
       question</a>
@@ -18,10 +18,14 @@
 
 <div class="card">
   <div class="card-body">
-    <p class="card-subtitle mb-2 text-body-secondary"><a
-        href="{{ url_for('auth.profile', username=question.username) }}">{{ question.username }}</a>: {{
-      question.time_ago }}
-    </p>
+    <div class="d-flex justify-content-between">
+      <p class="card-subtitle mb-2 text-body-secondary"><a
+          href="{{ url_for('auth.profile', username=question.username) }}">{{ question.username }}</a>: {{
+        question.time_ago }}
+      </p>
+      <p>{{ question.category }}</p>
+    </div>
+
     <h5 class="card-title">{{ question.title }}</h5>
     <p class="card-text">{{ question.description }}</p>
 
