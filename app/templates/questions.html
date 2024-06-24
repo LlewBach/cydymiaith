@@ -58,10 +58,10 @@
     <div>
       <a href="{{ url_for('questions.edit_question', question_id=question._id) }}" class="card-link">Edit</a>
       <!-- <a href="#" class="card-link">Delete</a> -->
-      <a href="#" class="card-link" data-bs-toggle="modal" data-bs-target="#deletionModal">Delete</a>
+      <a href="#" class="card-link" data-bs-toggle="modal" data-bs-target="#{{ question._id }}">Delete</a>
 
       <!-- Modal -->
-      <div class="modal fade" id="deletionModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+      <div class="modal fade" id="{{ question._id }}" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
