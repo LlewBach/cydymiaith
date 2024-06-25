@@ -12,14 +12,15 @@ def register():
 
     if request.method == "POST":
         existing_user = User.find_by_username(request.form.get("username"))
-        
+        # also check for existing email
         if existing_user:
             flash("Username already exists")    
             return redirect(url_for("auth.login"))
         
+        email = request.form.get("email")
         username = request.form.get("username").lower()
         password = request.form.get("password")
-        user = User.create_new(username, password)
+        user = User.create_new(username, password, email)
         login_user(user)
         flash("Registration Successful!")
         return redirect(url_for("auth.profile", username=user.username))
@@ -119,9 +120,9 @@ def delete_profile(username):
 @auth_bp.route("/view_users")
 @login_required
 def view_users():
-    if current_user.role not in ["Admin", "Tutor"]:
-        flash(f"You are not authorized for this, {current_user.username}.") # make into own function?
-        return redirect(url_for('auth.profile', username=current_user.username))
+    # if current_user.role not in ["Admin", "Tutor"]:
+    #     flash(f"You are not authorized for this, {current_user.username}.") # make into own function?
+    #     return redirect(url_for('auth.profile', username=current_user.username))
     
     users = User.get_users()
     return render_template("users.html", users=users)

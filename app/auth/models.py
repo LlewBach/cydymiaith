@@ -43,9 +43,10 @@ class User(UserMixin):
 
     
     @staticmethod
-    def create_new(username, password):
+    def create_new(username, password, email):
         """Create a new user with a hashed password and store it in the database."""
         registrant = {
+            "email": email,
             "username": username.lower(),
             # can customize hash and salt methods, this standard
             # if second field to confirm password, would confirm before here
@@ -58,7 +59,7 @@ class User(UserMixin):
         }
         try:
             mongo.db.users.insert_one(registrant)
-            return User(username=username.lower(), password=password)
+            return User(username=username.lower(), password=password, role=None)
         except Exception as e:
             print(f"Error in create_new method: {e}")
             return None        

@@ -8,13 +8,14 @@
   <div class="card-body text-center">
     <h2 class="card-title">{{ user.username }}</h2>
     <!-- <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6> -->
+    <p class="card-text">Email: {{ user.email }}</p>
     <p class="card-text">Role: {{ user.role }}</p>
     <p class="card-text">Level: {{ user.level }}</p>
     <p class="card-text">Provider: {{ user.provider }}</p>
     <p class="card-text">Location: {{ user.location }}</p>
     <p class="card-text">Bio: {{ user.bio }}</p>
   </div>
-  {% if current_user.username == "admin" %}
+  {% if current_user.role == "Admin" %}
   <div class="card-footer text-center">
     <a href="{{ url_for('auth.profile', username=user.username) }}" class="card-link">View Profile</a>
     <a href="{{ url_for('auth.edit_profile', username=user.username) }}" class="card-link">Edit Profile</a>
