@@ -6,6 +6,19 @@
 
 <form method="POST" action="{{ url_for('auth.edit_profile', username=user.username) }}">
   <div class="mb-3">
+    <label for="role" class="form-label">Role</label>
+    <select id="role" name="role" class="form-select" aria-label="Default select example">
+      <option selected>Choose Role</option>
+      {% for role in roles %}
+      {% if role.role_name == user.role %}
+      <option value="{{ role.role_name }}" selected>{{ role.role_name }}</option>
+      {% else %}
+      <option value="{{ role.role_name }}">{{ role.role_name }}</option>
+      {% endif %}
+      {% endfor %}
+    </select>
+  </div>
+  <div class="mb-3">
     <label for="level" class="form-label">Level</label>
     <select id="level" name="level" class="form-select" aria-label="Default select example">
       <option selected>Choose Level</option>

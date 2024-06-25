@@ -80,11 +80,12 @@ def edit_profile(username):
         return redirect(url_for('auth.profile', username=current_user.username))
     
     if request.method == "POST":
+        role = request.form.get("role")
         level = request.form.get("level")
         provider = request.form.get("provider")
         location = request.form.get("location")
         bio = request.form.get("bio")
-        User.update_profile(username, level, provider, location, bio)
+        User.update_profile(username, role, level, provider, location, bio)
         flash("Profile updated")
         if current_user.username == "admin":
             return redirect(url_for('auth.view_users'))
@@ -92,10 +93,11 @@ def edit_profile(username):
             return redirect(url_for('auth.profile', username=username))
 
     user = User.find_by_username(username, True)
+    roles = User.get_roles()
     levels = User.get_levels()
     providers = User.get_providers()
 
-    return render_template("edit_profile.html", user=user, levels=levels, providers=providers) 
+    return render_template("edit_profile.html", user=user,roles=roles, levels=levels, providers=providers) 
 
 
 @auth_bp.route("/delete_profile/<username>")

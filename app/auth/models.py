@@ -69,6 +69,11 @@ class User(UserMixin):
     
 
     @staticmethod
+    def get_roles():
+        return list(mongo.db.roles.find())
+
+
+    @staticmethod
     def get_levels():
         return list(mongo.db.levels.find())
     
@@ -79,12 +84,13 @@ class User(UserMixin):
 
 
     @staticmethod
-    def update_profile(username, level, provider, location, bio):
+    def update_profile(username, role, level, provider, location, bio):
         user = User.find_by_username(username)
         password = user.password
         profile = {
             "username": username,
             "password": password,
+            "role": role,
             "level": level,
             "provider": provider,
             "location": location,
