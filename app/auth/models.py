@@ -11,16 +11,20 @@ def load_user(username):
     try:
         user_doc = mongo.db.users.find_one({"username": username})
         if user_doc:
-            return User(username=user_doc["username"], password=user_doc["password"])
+            return User(
+                username=user_doc["username"], 
+                password=user_doc["password"], 
+                role=user_doc["role"])
     except Exception as e:
         print(f"Error in load_user method: {e}")
     return None
 
 
 class User(UserMixin):
-    def __init__(self, username, password):
+    def __init__(self, username, password, role):
         self.username = username.lower()
         self.password = password #need to rename password hash
+        self.role = role
 
 
     @classmethod
@@ -32,7 +36,7 @@ class User(UserMixin):
                 if as_dict:
                     return user
                 else:
-                    return cls(username=user['username'], password=user['password'])
+                    return cls(username=user['username'], password=user['password'], role=user['role'])
         except Exception as e:
             print(f"Error in find_by_username method: {e}")
         return None
@@ -46,6 +50,7 @@ class User(UserMixin):
             # can customize hash and salt methods, this standard
             # if second field to confirm password, would confirm before here
             "password": generate_password_hash(password),
+            "role": None,
             "level": None,
             "provider": None,
             "location": None,
@@ -87,10 +92,14 @@ class User(UserMixin):
     def update_profile(username, role, level, provider, location, bio):
         user = User.find_by_username(username)
         password = user.password
+        if role:
+            designated_role = role
+        else:
+            designated_role = user.role
         profile = {
             "username": username,
             "password": password,
-            "role": role,
+            "role": designated_role,
             "level": level,
             "provider": provider,
             "location": location,

@@ -75,7 +75,7 @@ def profile(username):
 @auth_bp.route("/edit_profile/<username>", methods=["GET", "POST"])
 @login_required
 def edit_profile(username):
-    if current_user.username != username and current_user.username != "admin":
+    if current_user.username != username and current_user.role != "Admin":
         flash(f"You are not authorized to view this profile, {current_user.username}.") # make into own function?
         return redirect(url_for('auth.profile', username=current_user.username))
     
@@ -87,7 +87,7 @@ def edit_profile(username):
         bio = request.form.get("bio")
         User.update_profile(username, role, level, provider, location, bio)
         flash("Profile updated")
-        if current_user.username == "admin":
+        if current_user.role == "Admin":
             return redirect(url_for('auth.view_users'))
         else:
             return redirect(url_for('auth.profile', username=username))
@@ -103,12 +103,12 @@ def edit_profile(username):
 @auth_bp.route("/delete_profile/<username>")
 @login_required
 def delete_profile(username):
-    if current_user.username != username and current_user.username != "admin":
+    if current_user.username != username and current_user.role != "Admin":
         flash(f"You are not authorized to do this, {current_user.username}.") # make into own function?
         return redirect(url_for('auth.profile', username=current_user.username))
     
     User.delete_profile(username)
-    if current_user.username == "admin":
+    if current_user.role == "Admin":
         return redirect(url_for("auth.view_users"))
     else:
         logout_user()
@@ -119,7 +119,7 @@ def delete_profile(username):
 @auth_bp.route("/view_users")
 @login_required
 def view_users():
-    if current_user.username != "admin":
+    if current_user.role not in ["Admin", "Tutor"]:
         flash(f"You are not authorized for this, {current_user.username}.") # make into own function?
         return redirect(url_for('auth.profile', username=current_user.username))
     
