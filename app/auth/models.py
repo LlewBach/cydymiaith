@@ -90,7 +90,7 @@ class User(UserMixin):
 
 
     @staticmethod
-    def update_profile(username, role, level, provider, location, bio):
+    def update_profile(email, username, role, level, provider, location, bio):
         user = User.find_by_username(username)
         password = user.password
         if role:
@@ -98,6 +98,7 @@ class User(UserMixin):
         else:
             designated_role = user.role
         profile = {
+            "email": email,
             "username": username,
             "password": password,
             "role": designated_role,

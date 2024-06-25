@@ -5,6 +5,11 @@
 <h3 class="center-align">Edit Profile</h3>
 
 <form method="POST" action="{{ url_for('auth.edit_profile', username=user.username) }}">
+  <div class="mb-3">
+    <label for="email" class="form-label">Email</label>
+    <input type="email" class="form-control" id="email" name="email" placeholder="Email" maxlength="50"
+      value="{{ user.email }}" required>
+  </div>
   {% if current_user.role == "Admin" %}
   <div class="mb-3">
     <label for="role" class="form-label">Role</label>

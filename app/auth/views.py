@@ -81,12 +81,13 @@ def edit_profile(username):
         return redirect(url_for('auth.profile', username=current_user.username))
     
     if request.method == "POST":
+        email = request.form.get("email")
         role = request.form.get("role")
         level = request.form.get("level")
         provider = request.form.get("provider")
         location = request.form.get("location")
         bio = request.form.get("bio")
-        User.update_profile(username, role, level, provider, location, bio)
+        User.update_profile(email, username, role, level, provider, location, bio)
         flash("Profile updated")
         if current_user.role == "Admin":
             return redirect(url_for('auth.view_users'))
