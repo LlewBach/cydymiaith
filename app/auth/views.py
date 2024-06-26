@@ -1,9 +1,54 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash, current_app
 from flask_login import login_user, logout_user, current_user, login_required
+from flask_mail import Message
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
+from app import mail
 from app.auth.models import User
 from app.questions.models import Question
 
 auth_bp = Blueprint('auth', __name__, template_folder='../templates')
+
+
+@auth_bp.route('/send_confirmation/<email>')
+def send_confirmation(email):
+    s = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
+    token = s.dumps(email, salt='reset-password-salt')
+    reset_url = url_for('auth.reset_password', token=token, _external=True)
+    msg = Message("Password Reset Request", recipients=[email])
+    msg.body = f"To reset your password, please visit the following link: {reset_url}"
+    mail.send(msg)
+    flash('A confirmation email has been sent.', 'success')
+    return redirect(url_for('auth.profile', username=current_user.username))
+
+
+@auth_bp.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+    try:
+        email = URLSafeTimedSerializer(current_app.config['SECRET_KEY']).loads(
+            token, salt='reset-password-salt', max_age=3600)
+    except SignatureExpired:
+        flash('The reset link has expired.', 'error')
+        return redirect(url_for('auth.login'))
+    except BadSignature:
+        flash('The reset link is invalid.', 'error')
+        return redirect(url_for('auth.login'))
+
+    user = User.find_by_email(email)
+    if not user:
+        flash('No user found with this email address.', 'error')
+        return redirect(url_for('auth.login'))
+    
+    if request.method == 'POST':
+        new_password = request.form.get('new_password')
+        if new_password:
+            user.set_password(new_password)
+            flash('Your password has been reset.', 'success')
+            return redirect(url_for('auth.profile', username=current_user.username))
+        else:
+            flash('Password cannot be empty.', 'error')
+
+    return render_template('reset_password.html', token=token)
+
 
 @auth_bp.route("/register", methods=["GET", "POST"])
 def register():

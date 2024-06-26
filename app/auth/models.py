@@ -26,6 +26,26 @@ class User(UserMixin):
         self.password = password #need to rename password hash
         self.role = role
 
+    
+    def set_password(self, new_password):
+        """
+        Hash the new password and update it in the database.
+        """
+        new_password_hash = generate_password_hash(new_password)
+        self.password = new_password_hash
+        mongo.db.users.update_one(
+            {"username": self.username},
+            {"$set": {"password": new_password_hash}}
+        )
+
+
+    @staticmethod
+    def find_by_email(email):
+        user_doc = mongo.db.users.find_one({"email": email})
+        if user_doc:
+            return User(username=user_doc['username'], password=user_doc['password'], role=user_doc['role'])
+        return None
+
 
     @classmethod
     def find_by_username(cls, username, as_dict=False):
