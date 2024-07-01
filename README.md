@@ -80,6 +80,10 @@ By Gareth Llewelyn
 
 [Back to top](#milestone-3-project---cydymiaith)
 
+How to Generate App Passwords in Google | Fix App Passwords option not found
+https://www.youtube.com/watch?v=MkLX85XU5rU
+
+
 ## Acknowledgements
 
 [Back to top](#milestone-3-project---cydymiaith)

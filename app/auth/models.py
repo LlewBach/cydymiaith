@@ -39,7 +39,7 @@ class User(UserMixin):
         )
 
 
-    @staticmethod
+    @staticmethod #Should be class method?
     def find_by_email(email):
         user_doc = mongo.db.users.find_one({"email": email})
         if user_doc:

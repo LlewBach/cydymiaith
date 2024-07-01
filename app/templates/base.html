@@ -38,6 +38,11 @@
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('auth.view_users') }}">Users</a>
           </li>
+          {% if current_user.role in ["Tutor", "Admin"] %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('groups.get_groups') }}">Groups</a>
+          </li>
+          {% endif %}
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('auth.logout') }}">Log Out</a>
           </li>

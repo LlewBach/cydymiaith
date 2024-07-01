@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Groups</h1>
+
+<a href="{{ url_for('groups.add_group') }}" class="btn btn-outline-primary btn-lg ask-button">Add Group</a>
+
+{% for group in groups %}
+
+<div class="card">
+  <div class="card-body">
+    <p>Tutor: {{ group.tutor }}</p>
+    <p>Provider: {{ group.provider}}</p>
+    <p>Level: {{ group.level}}</p>
+    <p>Year: {{ group.year }}</p>
+    <p>Weekday: {{ group.weekday }}</p>
+    <p>Students: {{ group.students }}</p>
+  </div>
+</div>
+
+{% endfor %}
+
+{% endblock %}

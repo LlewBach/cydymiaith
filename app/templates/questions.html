@@ -2,8 +2,8 @@
 {% block content %}
 <header>
   <div class="text-center">
-    <h1>{{ current_user.username }} has joined the chat</h1>
-    {% if session.user %}
+    <h1>Posts</h1>
+    {% if current_user %}
     <a href="{{ url_for('questions.ask_question') }}" class="btn btn-outline-primary btn-lg ask-button">Ask
       question</a>
     {% else %}

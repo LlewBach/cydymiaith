@@ -38,12 +38,14 @@ def create_app():
     from .questions.views import questions_bp
     # from .profiles.views import profiles_bp
     from .answers.views import answers_bp
+    from .groups.views import groups_bp
 
     app.register_blueprint(core_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(questions_bp)
     # app.register_blueprint(profiles_bp)
     app.register_blueprint(answers_bp)
+    app.register_blueprint(groups_bp)
 
     # @login_manager.user_loader
     # def load_user(user_id):
