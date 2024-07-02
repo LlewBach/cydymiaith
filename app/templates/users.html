@@ -1,7 +1,45 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="text-center">Users</h1>
+<header>
+  <h1 class="text-center">Users</h1>
+</header>
+
+<form method="POST" action="{{ url_for('auth.view_users') }}">
+  <div class="container">
+    <div class="row">
+      <div class="col-2">
+        <label for="level" class="form-label">Level</label>
+        <select id="level" name="level" class="form-select">
+          <option value="" selected>All</option>
+          {% for level in levels %}
+          {% if query.level == level.level_name %}
+          <option value="{{ level.level_name }}" selected>{{ level.level_name }}</option>
+          {% else %}
+          <option value="{{ level.level_name }}">{{ level.level_name }}</option>
+          {% endif %}
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-2">
+        <label for="provider" class="form-label">Provider</label>
+        <select id="provider" name="provider" class="form-select">
+          <option value="" selected>All</option>
+          {% for provider in providers %}
+          {% if query.provider == provider.provider_name %}
+          <option value="{{ provider.provider_name }}" selected>{{ provider.provider_name }}</option>
+          {% else %}
+          <option value="{{ provider.provider_name }}">{{ provider.provider_name }}</option>
+          {% endif %}
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-2">
+        <button type="submit" class="btn btn-primary">Filter</button>
+      </div>
+    </div>
+  </div>
+</form>
 
 {% for user in users %}
 <div class="card">
@@ -41,8 +79,9 @@
       </div>
     </div>
 
-    <a href="#" class="card-link" data-bs-toggle="modal" data-bs-target="#addToClassModal{{ user._id }}">Add to
-      Class</a>
+    <a href="#" class="card-link" data-bs-toggle="modal" data-bs-target="#addToClassModal{{ user._id }}">
+      Add to Class
+    </a>
 
     <!-- Modal -->
     <div class="modal fade" id="addToClassModal{{ user._id }}" tabindex="-1" aria-labelledby="modalLabel"
@@ -73,7 +112,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn btn-primary">Confirm</a>
+              <button type="submit" class="btn btn-primary">Confirm</button>
             </div>
           </form>
         </div>

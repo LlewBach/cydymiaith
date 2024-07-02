@@ -164,11 +164,19 @@ def delete_profile(username):
         return redirect(url_for("auth.login"))
 
 
-@auth_bp.route("/view_users")
+@auth_bp.route("/view_users", methods=["GET", "POST"])
 @login_required
-def view_users():    
-    users = User.get_users()
-    groups = Group.get_own_groups(current_user.username)
+def view_users():
+    users, query = User.get_users(None, None)
 
-    return render_template("users.html", users=users, groups=groups)
+    if request.method == 'POST':
+        level = request.form.get('level')
+        provider = request.form.get('provider')
+        users, query = User.get_users(level, provider)
+    
+    groups = Group.get_own_groups(current_user.username)
+    levels = User.get_levels()
+    providers = User.get_providers()
+
+    return render_template("users.html", users=users, query=query, groups=groups, levels=levels, providers=providers)
 

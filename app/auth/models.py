@@ -149,6 +149,14 @@ class User(UserMixin):
 
     
     @staticmethod
-    def get_users():
-        users = list(mongo.db.users.find())
-        return users
+    def get_users(level, provider):
+        query = {}
+        if level:
+            query['level'] = level
+        if provider:
+            query['provider'] = provider
+        if query:
+            users = list(mongo.db.users.find(query))
+        else:
+            users = list(mongo.db.users.find())
+        return users, query
