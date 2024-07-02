@@ -25,6 +25,26 @@ class Group:
 
 
     @staticmethod
+    def get_group_by_id(group_id):
+        group = mongo.db.groups.find_one({"_id": group_id})
+        return group
+    
+
+    # @staticmethod
+    # def get_student_by_username(username):
+    #     student = mongo.db.users.find_one({"username": username, "role": "Student"})
+    #     return student
+
+
+    @staticmethod
+    def add_student_to_group(group_id, username):
+        mongo.db.groups.update_one(
+            {'_id': ObjectId(group_id)},
+            {'$push': {'students': username}}
+        )
+
+
+    @staticmethod
     def insert_group(tutor, provider, level, year, weekday):
         try:
             group = {
@@ -32,7 +52,8 @@ class Group:
                 "provider": provider,
                 "level": level,
                 "year": year,
-                "weekday": weekday
+                "weekday": weekday,
+                "students": []
             }
             mongo.db.groups.insert_one(group)
         except Exception as e:

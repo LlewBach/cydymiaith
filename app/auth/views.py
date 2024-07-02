@@ -5,6 +5,7 @@ from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
 from app import mail
 from app.auth.models import User
 from app.questions.models import Question
+from app.groups.models import Group
 
 auth_bp = Blueprint('auth', __name__, template_folder='../templates')
 
@@ -165,11 +166,9 @@ def delete_profile(username):
 
 @auth_bp.route("/view_users")
 @login_required
-def view_users():
-    # if current_user.role not in ["Admin", "Tutor"]:
-    #     flash(f"You are not authorized for this, {current_user.username}.") # make into own function?
-    #     return redirect(url_for('auth.profile', username=current_user.username))
-    
+def view_users():    
     users = User.get_users()
-    return render_template("users.html", users=users)
+    groups = Group.get_own_groups(current_user.username)
+
+    return render_template("users.html", users=users, groups=groups)
 

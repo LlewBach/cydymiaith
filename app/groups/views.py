@@ -24,8 +24,17 @@ def add_group():
         weekday = request.form.get("weekday")
         Group.insert_group(tutor, provider, level, year, weekday)
 
-
     providers = Group.get_providers()
     levels = Group.get_levels()
 
     return render_template("add_group.html", providers=providers, levels=levels)
+
+
+@groups_bp.route("/add_student/<username>", methods=["GET", "POST"]) # just post?
+def add_student(username):
+    if request.method == "POST":
+        group_id = request.form.get("group_id")
+        # student = Group.get_student_by_username(username)
+        Group.add_student_to_group(group_id, username)
+
+    return redirect(url_for("groups.get_groups"))
