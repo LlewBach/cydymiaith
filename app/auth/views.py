@@ -167,12 +167,15 @@ def delete_profile(username):
 @auth_bp.route("/view_users", methods=["GET", "POST"])
 @login_required
 def view_users():
-    users, query = User.get_users(None, None)
+    users, query = User.get_users(None, None, None, None, None)
 
     if request.method == 'POST':
         level = request.form.get('level')
         provider = request.form.get('provider')
-        users, query = User.get_users(level, provider)
+        username = request.form.get('username')
+        email = request.form.get('email')
+        location = request.form.get('location')
+        users, query = User.get_users(level, provider, username, email, location)
     
     groups = Group.get_own_groups(current_user.username)
     levels = User.get_levels()
