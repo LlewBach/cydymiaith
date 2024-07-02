@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import current_user, login_required
 from app.questions.models import Question
+from app.groups.models import Group
 
 questions_bp = Blueprint('questions', __name__, template_folder='../templates')
 
@@ -8,12 +9,15 @@ questions_bp = Blueprint('questions', __name__, template_folder='../templates')
 @questions_bp.route("/get_questions", methods=["GET", "POST"])
 def get_questions():
     categories = Question.get_categories()
-    questions = Question.get_list(None)
+    questions = Question.get_list(None, None)
+    groups = Group.get_own_groups(current_user.username)
+
     if request.method == "POST":
         category = request.form.get("category")
-        questions = Question.get_list(category)
+        group_id = request.form.get("group")
+        questions = Question.get_list(category, group_id)
 
-    return render_template("questions.html", questions=questions, categories=categories)
+    return render_template("questions.html", questions=questions, categories=categories, groups=groups)
 
 
 @questions_bp.route("/ask_question", methods=["GET", "POST"])
@@ -23,14 +27,16 @@ def ask_question():
         # username = session["user"]
         username = current_user.username
         category = request.form.get("category")
+        group_id = request.form.get("group")
         title = request.form.get("title")
         description = request.form.get("description")
-        Question.insert_question(username, category, title, description)
+        Question.insert_question(username, category, group_id, title, description)
         flash("Question posted to community:)")
         return redirect(url_for('questions.get_questions'))
 
+    groups = Group.get_own_groups(current_user.username)
     categories = Question.get_categories()
-    return render_template("ask_question.html", categories=categories)
+    return render_template("ask_question.html", categories=categories, groups=groups)
 
 
 @questions_bp.route("/edit_question/<question_id>", methods=["GET", "POST"])

@@ -32,10 +32,15 @@ class Question:
 
     
     @staticmethod
-    def get_list(category):
+    def get_list(category, group_id):
         try:
+            query = {}
             if category:
-                questions = list(mongo.db.questions.find({"category": category}).sort("_id", -1))
+                query['category'] = category
+            if group_id:
+                query['group_id'] = group_id
+            if query:
+                questions = list(mongo.db.questions.find(query).sort("_id", -1))
             else:
                 questions = list(mongo.db.questions.find().sort("_id", -1))
             for question in questions:
@@ -92,11 +97,12 @@ class Question:
 
 
     @staticmethod
-    def insert_question(username, category, title, description):
+    def insert_question(username, category, group_id, title, description):
         try:
             question = {
                 "username": username,
                 "category": category,
+                "group_id": group_id,
                 "title": title,
                 "description": description,
                 "answer_count": 0

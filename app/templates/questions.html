@@ -15,10 +15,10 @@
 <form method="POST" action="{{ url_for('questions.get_questions') }}">
   <div class="container">
     <div class="row">
-      <div class="col-4 text-center">
+      <div class="col-3 text-center">
         <label for="category" class="form-label">Apply Filter</label>
       </div>
-      <div class="col-4 text-center">
+      <div class="col-3 text-center">
         <select id="category" name="category" class="form-select" aria-label="Default select example">
           <option value="" selected>All Categories</option>
           {% for category in categories %}
@@ -26,7 +26,15 @@
           {% endfor %}
         </select>
       </div>
-      <div class="col-4 text-center">
+      <div class="col-3 text-center">
+        <select id="group" name="group" class="form-select" aria-label="Default select example">
+          <option value="" selected>All Groups</option>
+          {% for group in groups %}
+          <option value="{{ group._id }}">{{ group.weekday }}, {{ group.provider }}, {{ group.level }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-3 text-center">
         <button type="submit" class="btn btn-primary">Filter</button>
       </div>
     </div>
