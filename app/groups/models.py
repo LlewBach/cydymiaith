@@ -45,6 +45,14 @@ class Group:
 
 
     @staticmethod
+    def remove_student(group_id, username):
+        mongo.db.groups.update_one(
+            {'_id': ObjectId(group_id)},
+            {'$pull': {'students': username}}
+        )
+
+
+    @staticmethod
     def insert_group(tutor, provider, level, year, weekday):
         try:
             group = {

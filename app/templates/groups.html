@@ -44,7 +44,8 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                      <a href="" class="btn btn-primary">Confirm</a>
+                      <a href="{{ url_for('groups.remove_student', group_id=group._id, username=student) }}"
+                        class="btn btn-primary">Confirm</a>
                     </div>
                   </div>
                 </div>

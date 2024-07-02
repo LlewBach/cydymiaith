@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, current_app
 from flask_login import login_user, logout_user, current_user, login_required
 from app.groups.models import Group
-
+from app.auth.models import User
 
 
 groups_bp = Blueprint('groups', __name__, template_folder='../templates')
@@ -38,3 +38,10 @@ def add_student(username):
         Group.add_student_to_group(group_id, username)
 
     return redirect(url_for("groups.get_groups"))
+
+
+@groups_bp.route("/remove_student/<group_id>/<username>")
+def remove_student(group_id, username):
+    Group.remove_student(group_id, username)
+
+    return redirect(url_for('groups.get_groups'))
