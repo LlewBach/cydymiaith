@@ -177,7 +177,8 @@ def view_users():
         location = request.form.get('location')
         users, query = User.get_users(level, provider, username, email, location)
     
-    groups = Group.get_own_groups(current_user.username)
+    # groups = Group.get_own_groups(current_user.username)
+    groups = Group.get_groups_by_role(current_user.role, current_user.username)
     levels = User.get_levels()
     providers = User.get_providers()
 

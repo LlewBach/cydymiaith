@@ -7,43 +7,26 @@ class Group:
 
 
     @staticmethod
-    def get_all_groups():
+    def get_groups_by_role(role, username):
         try:
-            all_groups = list(mongo.db.groups.find())
-            return all_groups
+            if role == 'Admin':
+                groups = list(mongo.db.groups.find())
+            elif role == 'Tutor':
+                groups = list(mongo.db.groups.find({"tutor": username}))
+            elif role == 'Student':
+                groups = list(mongo.db.groups.find({"students": username}))
+
+            if groups:
+                return groups
+        
         except Exception as e:
-            print(f"Error in get_all_groups method: {e}")
-
-
-    @staticmethod
-    def get_own_groups(username):
-        try:
-            groups = list(mongo.db.groups.find({"tutor": username}))
-            return groups
-        except Exception as e:
-            print(f"Error in get_own_groups method: {e}")
-
-
-    @staticmethod
-    def get_student_group(username):
-        try:
-            group = list(mongo.db.groups.find({"students": username}))
-            print("get_student_group: ", group)
-            return group
-        except Exception as e:
-            print(f'Error in get_own_groups method: {e}')
+            print(f'Error in get_groups_by_role method: {e}')
 
 
     @staticmethod
     def get_group_by_id(group_id):
         group = mongo.db.groups.find_one({"_id": group_id})
         return group
-    
-
-    # @staticmethod
-    # def get_student_by_username(username):
-    #     student = mongo.db.users.find_one({"username": username, "role": "Student"})
-    #     return student
 
 
     @staticmethod

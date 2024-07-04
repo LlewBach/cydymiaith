@@ -9,7 +9,7 @@ groups_bp = Blueprint('groups', __name__, template_folder='../templates')
 
 @groups_bp.route("/get_groups")
 def get_groups():
-    groups = Group.get_all_groups()
+    groups = Group.get_groups_by_role(current_user.role, current_user.username)
 
     return render_template("groups.html", groups=groups)
 
@@ -34,7 +34,6 @@ def add_group():
 def add_student(username):
     if request.method == "POST":
         group_id = request.form.get("group_id")
-        # student = Group.get_student_by_username(username)
         Group.add_student_to_group(group_id, username)
 
     return redirect(url_for("groups.get_groups"))
