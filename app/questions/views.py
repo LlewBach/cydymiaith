@@ -10,7 +10,12 @@ questions_bp = Blueprint('questions', __name__, template_folder='../templates')
 def get_questions():
     categories = Question.get_categories()
     questions = Question.get_list(None, None)
-    groups = Group.get_own_groups(current_user.username)
+    if current_user.role == 'Tutor':
+        groups = Group.get_own_groups(current_user.username)
+    elif current_user.role == 'Student':
+        groups = Group.get_student_group(current_user.username)
+    elif current_user.role == 'Admin':
+        groups = Group.get_all_groups()
 
     if request.method == "POST":
         category = request.form.get("category")

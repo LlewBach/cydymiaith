@@ -25,6 +25,16 @@ class Group:
 
 
     @staticmethod
+    def get_student_group(username):
+        try:
+            group = list(mongo.db.groups.find({"students": username}))
+            print("get_student_group: ", group)
+            return group
+        except Exception as e:
+            print(f'Error in get_own_groups method: {e}')
+
+
+    @staticmethod
     def get_group_by_id(group_id):
         group = mongo.db.groups.find_one({"_id": group_id})
         return group
