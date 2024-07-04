@@ -34,7 +34,7 @@ def ask_question():
         flash("Question posted to community:)")
         return redirect(url_for('questions.get_questions'))
 
-    groups = Group.get_own_groups(current_user.username)
+    groups = Group.get_groups_by_role(current_user.role, current_user.username)
     categories = Question.get_categories()
     return render_template("ask_question.html", categories=categories, groups=groups)
 
