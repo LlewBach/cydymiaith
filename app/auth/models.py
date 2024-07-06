@@ -71,7 +71,7 @@ class User(UserMixin):
             # can customize hash and salt methods, this standard
             # if second field to confirm password, would confirm before here
             "password": generate_password_hash(password),
-            "role": None,
+            "role": "Student",
             "level": None,
             "provider": None,
             "location": None,

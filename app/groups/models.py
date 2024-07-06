@@ -15,9 +15,10 @@ class Group:
                 groups = list(mongo.db.groups.find({"tutor": username}))
             elif role == 'Student':
                 groups = list(mongo.db.groups.find({"students": username}))
+            else:
+                groups = []
 
-            if groups:
-                return groups
+            return groups
         
         except Exception as e:
             print(f'Error in get_groups_by_role method: {e}')
