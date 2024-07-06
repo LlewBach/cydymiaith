@@ -47,7 +47,7 @@ Creator's goals...
 - to provide a means for learners to practice, find inspiration and learn from others
 - to allow tutors to disseminate information more quickly and to allow students better visibility of news etc.
 
-User's goals...
+Student's goals...
 
 - to be able to communicate with class and tutor
 - to have a place to practice reading and writing Welsh and have the opportunity to get feedback/corrections
@@ -87,6 +87,8 @@ AC4 - "Students can write/read posts of a variety of types, such as blog posts, 
 
 US5 - "As a user, I want to be able to register and log in and out securely."
 
+AC5 - "Users can create an account and log in and be sure that others can't see information or use functionality that is solely for them."
+
 ### Scope
 
 [Back to top](#milestone-3-project---cydymiaith)
@@ -94,31 +96,54 @@ US5 - "As a user, I want to be able to register and log in and out securely."
 #### Functional Requirements
 
 - Simple and intuitive interface
-- Allow users to create/read/update/delete account
-- Allow users to create/read/update/delete posts and comments
+- Allow users to register, view, edit and delete a profile and log in/out
+- Allow unregistered users to read posts and comments
+- Allow registered users to create/update/delete posts and comments
 - Allow functionality based on role (Student, Tutor or Admin) and login status
+- Allow Tutor to create groups and add/remove students
+- Allow Admin to read, update and delete everything
+- Allow Admin to set the roles of other users
 - Allow visibility of content based on login status, class, filters
-- Allow tutors to create groups and add/remove students
 
 #### Content requirements
 
 - The main content of the site will be made by registered site members and will have full CRUD functionality.
 
+##### Profiles
+
+This model contains the following data: username, password hash, bio, level, provider, location, role and email.
+
+Username and password hash are set at profile creation. The user can set their level, provider, location and bio on their profile.
+
 ##### Posts
 
-Information collected - Title, Description, Category, Group
+This model contains the following data: username, category, group_id, title, description, answer_count
+
+Users set the title and description. The other data are automatically collected. The group_id allows filtering by group and answer count allows the number of comments to be displayed.
 
 ##### Comments
 
-Information collected - Text
+This model contains the following data: username, question_id, text.
+
+The user writes the text.
 
 ##### Groups
 
-Information collecte
+This model contains the following data: tutor, level, provider, year, weekday, and students, which is an array of usernames.
+
+Tutors and Admins can create groups, and set provider, level, year and weekday. Students can be added by going to the Users page and adding users to one of their own groups.
 
 ### Structure
 
 [Back to top](#milestone-3-project---cydymiaith)
+
+For unregistered/logged out users, the site navbar will contain the following links: Home, Posts, Log In, Register.
+
+For logged in Students, the site navbar will contain the following links: Home, Posts, Profile, Users, Log Out.
+
+For logged in Tutors and Admins, the site navbar will contain the following links: Home, Posts, Profile, Users, Groups, Log Out.
+
+The information of Profiles, Posts, Comments, Users and Groups will be displayed together as cards.
 
 ### Skeleton
 
@@ -135,6 +160,43 @@ Information collecte
 ### Existing Features
 
 [Back to top](#milestone-3-project---cydymiaith)
+
+#### Account Creation and Use
+
+##### Registration
+
+- The registration form asks for an email, username and password.
+- The password must be correctly entered twice CHECK.
+- The email and username must be unique and not already exist in the database CHECK.
+- The password is required to be in a certain form and contain certain characters CHECK. 
+- If the user has forgotten their password, they are able to reset it via email confirmation CHECK.
+- Form validation will inform the user of any errors in user input CHECK.
+- Flash messages will inform the user if the email or username are already taken CHECK.
+- Entering a unique email, username and valid password will successfully register the user, who will be redirected to their profile.
+- A flash message will display informing the user that registration was successful.
+
+##### Log In
+
+- The Log In form requests the user's username and password. 
+- The form validation requires that the email be in a certain format CHECK.
+- The form validation requires that the password has a certain format CHECK.
+- If the entered username or password do not correspond to a user in the database, a flash message will display to the user CHECK.
+- Entering a username and password that successfully correspond to a user's details in the database will log the user in to that profile.
+- A flash message will inform the user that login was successful.
+
+##### Log Out
+
+- A logged in user can click on the Log Out navbar option and the user will be redirected to the Log In page.
+- A flash message will inform the user that logout was successful.
+
+#### Role Management
+
+##### Student Powers
+
+- To create, view, edit and delete their own posts.
+- To add, view, edit and delete their own comments on posts.
+
+
 
 ### Future Feature Considerations
 
