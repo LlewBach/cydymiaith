@@ -20,7 +20,7 @@
       </div>
       <div class="mb-3">
         <label for="group" class="form-label">For All or Group?</label>
-        <select id="group" name="group" class="form-select" aria-label="Default select example" required>
+        <select id="group" name="group" class="form-select" aria-label="Default select example">
           <option value="">All</option>
           {% for group in groups %}
           <option value="{{ group._id }}">{{ group.weekday }}, {{ group.provider }}, {{ group.level }}</option>

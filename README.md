@@ -193,10 +193,47 @@ The information of Profiles, Posts, Comments, Users and Groups will be displayed
 
 ##### Student Powers
 
-- To create, view, edit and delete their own posts.
-- To add, view, edit and delete their own comments on posts.
+- Create, view, edit and delete their own posts.
+- Add, view, edit and delete their own comments on posts.
+- Assign and filter posts by category or assigned group.
+- Edit and delete their own profile with confirmational flash messages CHECK.
+- Reset password with email confirmation.
+- A flash message will inform the user if password reset was successful.
+- SHALL I ALLOW STUDENTS TO VIEW USERS LIST?
 
+##### Tutor Powers
 
+- Include Student powers plus the following...
+- Create, view, edit and delete own Groups.
+- View a list of Users. Add Students from the user list to own Groups.
+- Remove Students from own Group.
+- Filter Posts by own Groups.
+- Filter Users by level, provider, username, email and location. Filter text inputs can be upper or lower case CHECK!
+
+##### Admin Powers
+
+- Include Tutor powers plus the following...
+- View, edit, and delete all Groups.
+- Edit and delete any Profile.
+- Filter posts by any existing Group.
+- Set users' role (Student/Tutor/Admin)
+
+#### Posts
+
+- Display username, amount of time since posted, the category of the post and the number of comments on the post. 
+- Flash message will display when post successfully created, updated and deleted.
+- If the post was made by the user, Edit and Delete links will be visible. 
+- Clicking the delete link will bring up a modal asking for confirmation.
+
+#### Comments
+
+- Comments can be viewed and added on the same page.
+- Flash messages inform the user if comments created, edited and deleted successfully CHECK.
+- Adding and deleting comments will change the question's comment count.
+
+#### Profiles
+
+- Display user info and posts.
 
 ### Future Feature Considerations
 
@@ -206,6 +243,23 @@ The information of Profiles, Posts, Comments, Users and Groups will be displayed
 
 [Back to top](#milestone-3-project---cydymiaith)
 
+- Visual Studio Code as development environment
+- Windows PowerShell terminal
+- Git for version control
+- GitHub as a code repository
+- HTML5
+- CSS3
+- Bootstrap frontend framework
+- Python
+- Flask Web Application Microframework
+- Jinja2 templating language for HTML generation
+- Flask-Login for user session management
+- Flask-Pymongo
+- Flask-Mail for sending password reset confirmation emails
+- Pymongo for interacting with MongoDB via Python
+- MongoDB database
+- Heroku for hosting
+
 ## Testing
 
 [Back to top](#milestone-3-project---cydymiaith)
@@ -213,6 +267,17 @@ The information of Profiles, Posts, Comments, Users and Groups will be displayed
 ## Deployment
 
 [Back to top](#milestone-3-project---cydymiaith)
+
+This project was deployed to Heroku as follows:
+
+1. Set up database and collection with MongoDB.
+2. Navigate to Heroku.
+3. Log in or register for an account.
+4. Create new app. Enter App Name that's unique, and the Region. Click Create App.
+5. From the new app Settings, click Reveal Config Vars and set environment variables.
+Image.
+6. 
+
 
 ## Credits
 
