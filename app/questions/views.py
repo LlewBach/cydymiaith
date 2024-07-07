@@ -9,6 +9,12 @@ questions_bp = Blueprint('questions', __name__, template_folder='../templates')
 
 @questions_bp.route("/get_questions", methods=["GET", "POST"])
 def get_questions():
+    """
+    Renders the questions template showing a list of all questions (posts)
+
+    If POST:
+    Returns a list of questions filtered by category and/or group.
+    """
     categories = Question.get_categories()
     questions = Question.get_list(None, None)
     groups = Group.get_groups_by_role(current_user.role, current_user.username)
@@ -24,6 +30,16 @@ def get_questions():
 @questions_bp.route("/ask_question", methods=["GET", "POST"])
 @login_required
 def ask_question():
+    """
+    Renders ask_question template.
+
+    If POST:
+    Inserts a question into the database.
+
+    Flashes message to the user.
+
+    Redirects the get_questions view.
+    """
     if request.method == "POST":
         username = current_user.username
         category = request.form.get("category")
@@ -42,6 +58,16 @@ def ask_question():
 @questions_bp.route("/edit_question/<question_id>", methods=["GET", "POST"])
 @login_required
 def edit_question(question_id):
+    """
+    Renders edit_question template.
+
+    If POST:
+    Updates question in the database.
+
+    Flashes message to user.
+
+    Redirects to get_questions view.
+    """
     if request.method == "POST":
         username = current_user.username
         title = request.form.get("title")
@@ -57,6 +83,13 @@ def edit_question(question_id):
 @questions_bp.route("/delete_question/<question_id>")
 @login_required
 def delete_question(question_id):
+    """
+    Deletes question from database.
+
+    Flashes message to user.
+
+    Redirects to get_questions view.
+    """
     Question.delete_question(question_id)
     flash("Post deleted")
     return redirect(url_for("questions.get_questions"))

@@ -7,6 +7,9 @@ from app import mongo
 class Question:
     @staticmethod
     def get_categories():
+        """
+        Returns the list of categories.
+        """
         try:
             categories = list(mongo.db.categories.find())
             return categories
@@ -17,6 +20,9 @@ class Question:
 
     @staticmethod
     def find_by_id(question_id):
+        """
+        Returns the question associated with the question_id.
+        """
         try:
             question = mongo.db.questions.find_one({"_id": ObjectId(question_id)})
             return question
@@ -27,6 +33,11 @@ class Question:
     
     @staticmethod
     def get_list(category, group_id):
+        """
+        Returns a list of questions filtered by category and/or group.
+
+        For each question, calculate and add the time_ago property.
+        """
         try:
             query = {}
             if category:
@@ -47,6 +58,11 @@ class Question:
 
     @staticmethod
     def get_list_by_username(username):
+        """
+        Returns a list of questions associated with a username.
+
+        For each question, calculate and add the time_ago property.
+        """
         try:
             questions = list(mongo.db.questions.find({"username": username}).sort("_id, -1"))
             for question in questions:
@@ -59,6 +75,11 @@ class Question:
 
     @staticmethod
     def set_time_ago(question):
+        """
+        Calculates the question's creation time based on the generated id.
+
+        Calculates and sets 'time_ago' property for the question.
+        """
         try:
             creation_time = question['_id'].generation_time.replace(tzinfo=pytz.utc)
             question['time_ago'] = humanize.naturaltime(datetime.now(pytz.utc) - creation_time)
@@ -68,6 +89,9 @@ class Question:
     
     @staticmethod
     def increase_answer_count(question_id):
+        """
+        Increases the question's answer_count property by one.
+        """
         try:
             mongo.db.questions.update_one({'_id': ObjectId(question_id)}, {'$inc': {'answer_count': 1}})
         except Exception as e:
@@ -76,6 +100,9 @@ class Question:
 
     @staticmethod
     def decrease_answer_count(question_id):
+        """
+        Decreases the question's answer_count property by one.
+        """
         try:
             mongo.db.questions.update_one({'_id': ObjectId(question_id)}, {'$inc': {'answer_count': -1}})
         except Exception as e:
@@ -84,6 +111,9 @@ class Question:
 
     @staticmethod
     def insert_question(username, category, group_id, title, description):
+        """
+        Inserts a question into the database.
+        """
         try:
             question = {
                 "username": username,
@@ -100,6 +130,9 @@ class Question:
     
     @staticmethod
     def get_answer_count(question_id):
+        """
+        Returns the answer_count associated with a question.
+        """
         try:
             count = Question.find_by_id(question_id)["answer_count"]
             return count
@@ -110,6 +143,9 @@ class Question:
 
     @staticmethod
     def update_question(question_id, username, title, description):
+        """
+        Updates a question.
+        """
         try:
             current_answer_count = Question.get_answer_count(question_id)
             submit = {
@@ -125,6 +161,11 @@ class Question:
 
     @staticmethod
     def delete_question(question_id):
+        """
+        Deletes answers associated with the question.
+        
+        Deletes the question
+        """
         try:
             mongo.db.answers.delete_many({"question_id": ObjectId(question_id)})
             mongo.db.questions.delete_one({"_id": ObjectId(question_id)})
