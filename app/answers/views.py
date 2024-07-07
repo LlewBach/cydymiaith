@@ -10,6 +10,9 @@ answers_bp = Blueprint('answers', __name__, template_folder='../templates')
 
 @answers_bp.route("/view_answers/<question_id>")
 def view_answers(question_id):
+    """
+    Renders the view_answers template for a certain question
+    """
     question = Question.find_by_id(question_id)
     Question.set_time_ago(question)
     answers = Answer.find_answers_by_question_id(question_id)
@@ -21,6 +24,15 @@ def view_answers(question_id):
 @answers_bp.route("/answer/<question_id>", methods=["GET", "POST"])
 @login_required
 def answer(question_id):
+    """
+    Adds an answer to a specific question to the database.
+
+    Increases the answer_count for the question.
+
+    Flashes message to user.
+
+    Redirects to the view_answers template.
+    """
     if request.method == "POST":
         text = request.form.get("text")
         username = current_user.username
@@ -34,6 +46,17 @@ def answer(question_id):
 @answers_bp.route("/edit_answer/<answer_id>", methods=["GET", "POST"])
 @login_required
 def edit_answer(answer_id):
+    """
+    Renders the edit_answer template.
+
+    If POST:
+
+    Updates answer in database.
+
+    Flashes message to user.
+
+    Redirects to view_answers template.
+    """
     question_id = Answer.find_question_id(answer_id)
 
     if request.method == "POST":
@@ -53,6 +76,15 @@ def edit_answer(answer_id):
 @answers_bp.route("/delete_answer/<answer_id>")
 @login_required
 def delete_answer(answer_id):
+    """
+    Deletes a specific answer from the database.
+
+    Decreases the associated question's answer_count.
+
+    Flashes message to user.
+
+    Redirects to the view_answers template.
+    """
     question_id = Answer.find_question_id(answer_id)
     Question.decrease_answer_count(question_id)
     Answer.delete_answer(answer_id)

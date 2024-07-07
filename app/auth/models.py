@@ -1,6 +1,5 @@
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-# from bson.objectid import ObjectId
 from app import mongo, login_manager
 from app.questions.models import Question
 from app.answers.models import Answer
@@ -15,15 +14,16 @@ def load_user(username):
                 username=user_doc["username"], 
                 password=user_doc["password"], 
                 role=user_doc["role"])
+        
     except Exception as e:
         print(f"Error in load_user method: {e}")
-    return None
+        return None
 
 
 class User(UserMixin):
     def __init__(self, username, password, role):
         self.username = username.lower()
-        self.password = password #need to rename password hash
+        self.password = password
         self.role = role
 
     
@@ -33,18 +33,25 @@ class User(UserMixin):
         """
         new_password_hash = generate_password_hash(new_password)
         self.password = new_password_hash
-        mongo.db.users.update_one(
-            {"username": self.username},
-            {"$set": {"password": new_password_hash}}
-        )
+        try:
+            mongo.db.users.update_one(
+                {"username": self.username},
+                {"$set": {"password": new_password_hash}}
+            )
+
+        except Exception as e:
+            print(f'Error in set_password method: {e}')
 
 
-    @staticmethod #Should be class method?
-    def find_by_email(email):
-        user_doc = mongo.db.users.find_one({"email": email})
-        if user_doc:
-            return User(username=user_doc['username'], password=user_doc['password'], role=user_doc['role'])
-        return None
+    @classmethod #Should be class method?
+    def find_by_email(cls, email):
+        try:
+            user_doc = mongo.db.users.find_one({"email": email})
+            if user_doc:
+                return cls(username=user_doc['username'], password=user_doc['password'], role=user_doc['role'])
+        except Exception as e:
+            print(f"Error in find_by_email method: {e}")
+            return None
 
 
     @classmethod
@@ -111,41 +118,47 @@ class User(UserMixin):
 
     @staticmethod
     def update_profile(email, username, role, level, provider, location, bio):
-        user = User.find_by_username(username)
-        password = user.password
-        if role:
-            designated_role = role
-        else:
-            designated_role = user.role
-        profile = {
-            "email": email,
-            "username": username,
-            "password": password,
-            "role": designated_role,
-            "level": level,
-            "provider": provider,
-            "location": location,
-            "bio": bio
-        }
-        mongo.db.users.update_one({"username": user.username}, {"$set": profile})
+        try:
+            user = User.find_by_username(username)
+            password = user.password
+            if role:
+                designated_role = role
+            else:
+                designated_role = user.role
+            profile = {
+                "email": email,
+                "username": username,
+                "password": password,
+                "role": designated_role,
+                "level": level,
+                "provider": provider,
+                "location": location,
+                "bio": bio
+            }
+            mongo.db.users.update_one({"username": user.username}, {"$set": profile})
+        except Exception as e:
+            print(f"Error in update_profile method: {e}")
 
 
     @staticmethod
     def delete_profile(username):
-        answers_to_delete = list(mongo.db.answers.find({"username": username}))
-        for answer in answers_to_delete:
-            answer_id = answer["_id"]
-            question_id = Answer.find_question_id(answer_id)
-            Question.decrease_answer_count(question_id)
-            Answer.delete_answer(answer_id)
+        try:
+            answers_to_delete = list(mongo.db.answers.find({"username": username}))
+            for answer in answers_to_delete:
+                answer_id = answer["_id"]
+                question_id = Answer.find_question_id(answer_id)
+                Question.decrease_answer_count(question_id)
+                Answer.delete_answer(answer_id)
 
-        questions_to_delete = list(mongo.db.questions.find({"username": username}))
-        for question in questions_to_delete:
-            question_id = question["_id"]
-            mongo.db.answers.delete_many({"question_id": question_id})
-            mongo.db.questions.delete_one({"_id": question_id})            
+            questions_to_delete = list(mongo.db.questions.find({"username": username}))
+            for question in questions_to_delete:
+                question_id = question["_id"]
+                mongo.db.answers.delete_many({"question_id": question_id})
+                mongo.db.questions.delete_one({"_id": question_id})            
 
-        mongo.db.users.delete_one({"username": username})
+            mongo.db.users.delete_one({"username": username})
+        except Exception as e:
+            print(f"Error in delete_profile method: {e}")
 
     
     @staticmethod
@@ -161,8 +174,12 @@ class User(UserMixin):
             query['email'] = email
         if location: 
             query['location'] = location
-        if query:
-            users = list(mongo.db.users.find(query))
-        else:
-            users = list(mongo.db.users.find())
-        return users, query
+        try:
+            if query:
+                users = list(mongo.db.users.find(query))
+            else:
+                users = list(mongo.db.users.find())
+            return users, query
+        except Exception as e:
+            print(f"Error in get_users method: {e}")
+            return None

@@ -60,7 +60,7 @@ def register():
         existing_user = User.find_by_username(request.form.get("username"))
         # also check for existing email
         if existing_user:
-            flash("Username already exists")    
+            flash("Username already exists", "error")    
             return redirect(url_for("auth.login"))
         
         email = request.form.get("email")
@@ -68,7 +68,7 @@ def register():
         password = request.form.get("password")
         user = User.create_new(username, password, email)
         login_user(user)
-        flash("Registration Successful!")
+        flash("Registration Successful!", "success")
         return redirect(url_for("auth.profile", username=user.username))
 
     return render_template("register.html")
@@ -90,11 +90,11 @@ def login():
                 return redirect(url_for(
                     "auth.profile", username=existing_user.username))
             else:
-                flash("Incorrect username and/or password1")
+                flash("Incorrect username and/or password", "error")
                 return redirect(url_for('auth.login'))
             
         else:
-            flash("Incorrect username and/or password2")
+            flash("Incorrect username and/or password", "error")
             return redirect(url_for('auth.login'))
 
     return render_template("login.html")
@@ -111,11 +111,9 @@ def logout():
 @auth_bp.route("/profile/<username>")
 @login_required
 def profile(username):
-    # if current_user.username != username:
-    #     flash(f"You are not authorized to view this profile, {current_user.username}.")
-    #     return redirect(url_for('auth.profile', username=current_user.username))
     questions = Question.get_list_by_username(username)
     user = User.find_by_username(username, True)
+
     return render_template("profile.html", user=user, questions=questions)
 
 
@@ -123,7 +121,7 @@ def profile(username):
 @login_required
 def edit_profile(username):
     if current_user.username != username and current_user.role != "Admin":
-        flash(f"You are not authorized to view this profile, {current_user.username}.") # make into own function?
+        flash(f"You are not authorized to view this profile, {current_user.username}.", "error") # make into own function?
         return redirect(url_for('auth.profile', username=current_user.username))
     
     if request.method == "POST":
@@ -134,7 +132,7 @@ def edit_profile(username):
         location = request.form.get("location")
         bio = request.form.get("bio")
         User.update_profile(email, username, role, level, provider, location, bio)
-        flash("Profile updated")
+        flash("Profile updated", "success")
         if current_user.role == "Admin":
             return redirect(url_for('auth.view_users'))
         else:
@@ -152,15 +150,15 @@ def edit_profile(username):
 @login_required
 def delete_profile(username):
     if current_user.username != username and current_user.role != "Admin":
-        flash(f"You are not authorized to do this, {current_user.username}.") # make into own function?
+        flash(f"You are not authorized to do this, {current_user.username}.", "error") # make into own function?
         return redirect(url_for('auth.profile', username=current_user.username))
     
     User.delete_profile(username)
+    flash("Account Deleted")
     if current_user.role == "Admin":
         return redirect(url_for("auth.view_users"))
     else:
         logout_user()
-        flash("Account Deleted")
         return redirect(url_for("auth.login"))
 
 
@@ -177,7 +175,6 @@ def view_users():
         location = request.form.get('location')
         users, query = User.get_users(level, provider, username, email, location)
     
-    # groups = Group.get_own_groups(current_user.username)
     groups = Group.get_groups_by_role(current_user.role, current_user.username)
     levels = User.get_levels()
     providers = User.get_providers()
