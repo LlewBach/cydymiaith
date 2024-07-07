@@ -5,6 +5,9 @@ from app import mongo
 class Group:
     @staticmethod
     def get_groups_by_role(role, username):
+        """
+        Returns a list of groups filtered by role and username.
+        """
         try:
             if role == 'Admin':
                 groups = list(mongo.db.groups.find())
@@ -23,6 +26,9 @@ class Group:
 
     @staticmethod
     def get_group_by_id(group_id):
+        """
+        Returns a group with a certain id.
+        """
         try:
             group = mongo.db.groups.find_one({"_id": group_id})
 
@@ -34,6 +40,9 @@ class Group:
 
     @staticmethod
     def add_student_to_group(group_id, username):
+        """
+        Adds a student to a group's students list property.
+        """
         try:
             mongo.db.groups.update_one(
                 {'_id': ObjectId(group_id)},
@@ -46,6 +55,9 @@ class Group:
 
     @staticmethod
     def remove_student(group_id, username):
+        """
+        Removes a student from a group's students list property.
+        """
         try:
             mongo.db.groups.update_one(
                 {'_id': ObjectId(group_id)},
@@ -58,6 +70,9 @@ class Group:
 
     @staticmethod
     def insert_group(tutor, provider, level, year, weekday):
+        """
+        Inserts a group into the database.
+        """
         try:
             group = {
                 "tutor": tutor,
@@ -75,9 +90,15 @@ class Group:
     
     @staticmethod
     def get_levels():
+        """
+        Returns a list of the levels.
+        """
         return list(mongo.db.levels.find())
     
 
     @staticmethod
     def get_providers():
+        """
+        Returns a list of the providers.
+        """
         return list(mongo.db.providers.find())
