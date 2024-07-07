@@ -3,6 +3,7 @@ from flask_login import current_user, login_required
 from app.questions.models import Question
 from app.groups.models import Group
 
+
 questions_bp = Blueprint('questions', __name__, template_folder='../templates')
 
 
@@ -24,14 +25,13 @@ def get_questions():
 @login_required
 def ask_question():
     if request.method == "POST":
-        # username = session["user"]
         username = current_user.username
         category = request.form.get("category")
         group_id = request.form.get("group")
         title = request.form.get("title")
         description = request.form.get("description")
         Question.insert_question(username, category, group_id, title, description)
-        flash("Question posted to community:)")
+        flash("Post published")
         return redirect(url_for('questions.get_questions'))
 
     groups = Group.get_groups_by_role(current_user.role, current_user.username)
@@ -43,12 +43,11 @@ def ask_question():
 @login_required
 def edit_question(question_id):
     if request.method == "POST":
-        # username = session["user"]
         username = current_user.username
         title = request.form.get("title")
         description = request.form.get("description")
         Question.update_question(question_id, username, title, description)
-        flash("Question updated")
+        flash("Post updated")
         return redirect(url_for('questions.get_questions'))
     
     question = Question.find_by_id(question_id)
@@ -59,6 +58,5 @@ def edit_question(question_id):
 @login_required
 def delete_question(question_id):
     Question.delete_question(question_id)
-    # Need to also delete all associated answers
-    flash("Question deleted")
+    flash("Post deleted")
     return redirect(url_for("questions.get_questions"))

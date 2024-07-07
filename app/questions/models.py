@@ -5,13 +5,6 @@ from bson.objectid import ObjectId
 from app import mongo
 
 class Question:
-    def __init__(self, username, title, description, answer_count):
-        self.username = username
-        self.title = title
-        self.description = description
-        self.answer_count = answer_count
-
-    
     @staticmethod
     def get_categories():
         try:
@@ -19,6 +12,7 @@ class Question:
             return categories
         except Exception as e:
             print(f"Error in get_categories method: {e}")
+            return []
 
 
     @staticmethod
@@ -60,15 +54,7 @@ class Question:
             return questions
         except Exception as e:
             print(f"Error in get_list_by_username method: {e}")
-
-
-    # @staticmethod
-    # def get_list_by_category(category):
-    #     try:
-    #         questions = list(mongo.db.questions.find({"category": category}))
-    #         return 
-    #     except Exception as e:
-    #         print(f"Error in get_list_by_category method: {e}")
+            return []
     
 
     @staticmethod
@@ -134,10 +120,13 @@ class Question:
             }
             mongo.db.questions.update_one({"_id": ObjectId(question_id)}, {"$set": submit})
         except Exception as e:
-            print(f"Error in delete_question method: {e}")
+            print(f"Error in update_question method: {e}")
 
 
     @staticmethod
     def delete_question(question_id):
-        mongo.db.answers.delete_many({"question_id": ObjectId(question_id)})
-        mongo.db.questions.delete_one({"_id": ObjectId(question_id)})
+        try:
+            mongo.db.answers.delete_many({"question_id": ObjectId(question_id)})
+            mongo.db.questions.delete_one({"_id": ObjectId(question_id)})
+        except Exception as e:
+            print(f"Error in delete_question method: {e}")

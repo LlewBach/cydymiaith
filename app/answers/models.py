@@ -5,12 +5,6 @@ from bson.objectid import ObjectId
 from app import mongo
 
 class Answer:
-    def __init__(self, question_id, text, username):
-        self.question_id = question_id
-        self.text = text
-        self.username = username
-
-
     @staticmethod
     def find_answers_by_question_id(question_id):
         """Retrieve an answer from the database by question_id."""
@@ -21,6 +15,7 @@ class Answer:
             return answers
         except Exception as e:
             print(f"Error in find_answers_by_question_id method: {e}")
+            return []
     
 
     @staticmethod

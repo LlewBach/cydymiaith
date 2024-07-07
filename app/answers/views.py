@@ -7,12 +7,12 @@ from app.questions.models import Question
 
 answers_bp = Blueprint('answers', __name__, template_folder='../templates')
 
+
 @answers_bp.route("/view_answers/<question_id>")
 def view_answers(question_id):
     question = Question.find_by_id(question_id)
     Question.set_time_ago(question)
     answers = Answer.find_answers_by_question_id(question_id)
-    # answer_count = len(answers)
     answer_count = Answer.count_answers(answers)
 
     return render_template("view_answers.html", question=question, answers=answers, answer_count=answer_count)
@@ -23,10 +23,10 @@ def view_answers(question_id):
 def answer(question_id):
     if request.method == "POST":
         text = request.form.get("text")
-        # username = session["user"]
         username = current_user.username
         Answer.insert_answer(question_id, text, username)
         Question.increase_answer_count(question_id)
+        flash("Comment added")
         return redirect(url_for("answers.view_answers", question_id=question_id))
     
 
@@ -39,7 +39,7 @@ def edit_answer(answer_id):
         text = request.form.get("text")
         username = current_user.username
         Answer.edit_answer(answer_id, question_id, text, username)
-        # need flash
+        flash("Comment edited")
         return redirect(url_for("answers.view_answers", question_id=question_id))
     
     question = Question.find_by_id(question_id)
@@ -53,5 +53,5 @@ def delete_answer(answer_id):
     question_id = Answer.find_question_id(answer_id)
     Question.decrease_answer_count(question_id)
     Answer.delete_answer(answer_id)
-    flash("Answer deleted")
+    flash("Comment deleted")
     return redirect(url_for("answers.view_answers", question_id=question_id))
