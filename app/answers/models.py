@@ -4,6 +4,7 @@ import pytz
 from bson.objectid import ObjectId
 from app import mongo
 
+
 class Answer:
     @staticmethod
     def find_answers_by_question_id(question_id):

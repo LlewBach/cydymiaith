@@ -27,6 +27,7 @@ def answer(question_id):
         Answer.insert_answer(question_id, text, username)
         Question.increase_answer_count(question_id)
         flash("Comment added")
+
         return redirect(url_for("answers.view_answers", question_id=question_id))
     
 
@@ -40,10 +41,12 @@ def edit_answer(answer_id):
         username = current_user.username
         Answer.edit_answer(answer_id, question_id, text, username)
         flash("Comment edited")
+
         return redirect(url_for("answers.view_answers", question_id=question_id))
     
     question = Question.find_by_id(question_id)
     answers = Answer.find_answers_by_question_id(question_id)
+
     return render_template("edit_answer.html", question=question, answers=answers, answer_id=ObjectId(answer_id))
 
 
@@ -54,4 +57,5 @@ def delete_answer(answer_id):
     Question.decrease_answer_count(question_id)
     Answer.delete_answer(answer_id)
     flash("Comment deleted")
+    
     return redirect(url_for("answers.view_answers", question_id=question_id))
