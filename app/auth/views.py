@@ -20,7 +20,7 @@ def send_confirmation(email):
     an email with this URL to the specified email address. A success message is flashed
     to the user and the user is redirected to their profile page.
 
-    Parameters:
+    Args:
     email (str): The email address to which the confirmation email will be sent.
 
     Returns:
@@ -46,7 +46,7 @@ def reset_password(token):
     expired or invalid, it flashes an appropriate error message and redirects to the 
     login page.
 
-    Parameters:
+    Args:
         token (str): The token used to verify the password reset request.
 
     Returns:
@@ -181,7 +181,7 @@ def profile(username):
     This function retrieves the user's profile information and their associated questions
     based on the provided username. It then renders the profile page template with this data.
 
-    Parameters:
+    Args:
         username (str): The username of the user whose profile is to be displayed.
 
     Returns:
@@ -203,7 +203,7 @@ def edit_profile(username):
 
     Only the profile owner or an Admin can edit the profile.
 
-    Parameters:
+    Args:
         username (str): The username of the user whose profile is to be edited.
 
     Returns:
@@ -247,7 +247,7 @@ def delete_profile(username):
     Verifies if the current user is authorized to delete the profile (either the profile owner or an Admin). If authorized, 
     it deletes the user's profile, flashes a success message, and redirects accordingly.
 
-    Parameters:
+    Args:
         username (str): The username of the user whose profile is to be deleted.
 
     Returns:
