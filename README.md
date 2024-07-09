@@ -259,6 +259,7 @@ The information of Profiles, Posts, Comments, Users and Groups will be displayed
 - Pymongo for interacting with MongoDB via Python
 - MongoDB database
 - Heroku for hosting
+- GPT-4 for debugging, information gathering, writing docstrings
 
 ## Testing
 
@@ -283,8 +284,32 @@ Image.
 
 [Back to top](#milestone-3-project---cydymiaith)
 
+### Code
+
 How to Generate App Passwords in Google | Fix App Passwords option not found
 https://www.youtube.com/watch?v=MkLX85XU5rU
+
+### Media
+
+Neil Mark Thomas - Unsplash - https://unsplash.com/photos/mountain-under-cloudy-sky-10mHvFA6Ykg X
+
+Jonathan Kemper - Unsplash - https://unsplash.com/photos/black-dragon-head-wall-decor-zQMN9fLJehM
+
+RetroSupply - Unsplash - https://unsplash.com/photos/vintage-teal-typewriter-beside-book-jLwVAUtLOAQ
+
+Marcos Paulo Prado - Unsplash - https://unsplash.com/photos/unknown-person-writing-tcyW6Im5Uug
+
+Camylla Battani - Unsplash - https://unsplash.com/photos/short-coated-brown-dog-AoqgGAqrLpU
+
+Pim de Boer - Unsplash - https://unsplash.com/photos/a-book-shelf-next-to-a-street-sign-and-a-bicycle-nkGjJRQigYM
+
+Solen Feyissa - Unsplash - https://unsplash.com/photos/man-in-white-crew-neck-t-shirt-wearing-black-framed-eyeglasses-WG7v_wYZW4Q
+
+Anne Nygard - Unsplash - https://unsplash.com/photos/brown-wooden-bench-on-dock-near-lake-during-daytime-bLooSpzyuHc
+
+Ali Bakhtiari - Unsplash - https://unsplash.com/photos/assorted-postage-stamps-on-blue-and-white-textile-81eOv8Vox8k
+
+Priscilla Du Preez - Unsplash - https://unsplash.com/photos/woman-in-black-long-sleeve-shirt-holding-black-ceramic-mug-K8XYGbw4Ahg
 
 
 ## Acknowledgements

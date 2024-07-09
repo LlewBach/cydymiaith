@@ -1,47 +1,84 @@
-/*
-.ask-button {
-  margin-bottom: 20px;
+.home-header {
+  position: relative;
+  background-image: url(../images/dragon.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: whitesmoke;
+  padding: 50px;
+  border-radius: 20px;
+  text-align: left;
+  height: 100vh;
 }
 
-.question-row {
-  margin: 0px;
+.hero-text {
+  position: relative;
+  padding: 20px;
 }
 
-.question-row:last-of-type {
-  margin-bottom: 20px;
+.home-header:before {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 20px;
 }
 
-.card-content {
-  word-wrap: break-word;
+.hero-text h1,
+.hero-text p,
+.hero-text a {
+  position: relative;
+  z-index: 1;
 }
 
-.card .card-action {
-  padding: 5px 24px;
+/* .about-section {
+  background-color: pink;
+} */
+
+.activity {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 200px;
 }
 
-.card .card-action .row {
-  margin-bottom: 0;
+.activity p {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.7);
+  font-size: 30px;
 }
 
-.card .card-action p {
-  margin: 0;
+.act-blog {
+  background-image: url(../images/blog.jpg);
 }
 
-.card .card-action a {
-  color: red !important;
-  font-size: 14px;
-  margin: 0px !important;
+.act-diary {
+  background-image: url(../images/diary.jpg);
 }
 
-.card-action .col {
-  border: 1px solid red;
-  text-align: center;
+.act-question {
+  background-image: url(../images/question.jpg);
 }
 
-.modal,
-.modal a {
-  color: red;
-  text-align: center;
-  font-size: 14px;
+.act-exchange {
+  background-image: url(../images/exchange.jpg);
 }
-*/
+
+.act-ad {
+  background-image: url(../images/ad.jpg);
+}
+
+.act-creative {
+  background-image: url(../images/creative.jpg);
+}
+
+.act-penpal {
+  background-image: url(../images/penpal.jpg);
+}
+
+.act-meetup {
+  background-image: url(../images/meetup.jpg);
+}
