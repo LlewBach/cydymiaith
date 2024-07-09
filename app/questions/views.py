@@ -7,13 +7,20 @@ from app.groups.models import Group
 questions_bp = Blueprint('questions', __name__, template_folder='../templates')
 
 
+# Docstrings written by GPT4o and edited by myself.
 @questions_bp.route("/get_questions", methods=["GET", "POST"])
 def get_questions():
     """
-    Renders the questions template showing a list of all questions (posts)
+    Renders the questions template showing a list of all questions or filtered questions.
 
-    If POST:
-    Returns a list of questions filtered by category and/or group.
+    On a GET request, this function retrieves all questions and renders the questions template.
+    It also retrieves the categories and groups relevant to the current user's role and username.
+
+    On a POST request, it retrieves the category and group ID from the form data, filters the questions
+    based on these parameters, and then renders the questions template with the filtered list of questions.
+
+    Returns:
+        Response: Renders the questions.html template with the list of questions, categories, and groups.
     """
     categories = Question.get_categories()
     questions = Question.get_list(None, None)
@@ -31,14 +38,18 @@ def get_questions():
 @login_required
 def ask_question():
     """
-    Renders ask_question template.
+    Handles the creation of a new question and renders the ask_question template.
 
-    If POST:
-    Inserts a question into the database.
+    On a GET request, this function renders the ask_question template with the necessary
+    data for creating a question, including the list of categories and groups relevant to
+    the current user's role and username.
 
-    Flashes message to the user.
+    On a POST request, it retrieves the form data, inserts the new question into the database,
+    flashes a success message to the user, and redirects to the get_questions view.
 
-    Redirects the get_questions view.
+    Returns:
+        Response: Renders the ask_question.html template with the list of categories and groups on a GET request.
+        Response: Redirects to the get_questions view on a POST request.
     """
     if request.method == "POST":
         username = current_user.username
@@ -59,14 +70,18 @@ def ask_question():
 @login_required
 def edit_question(question_id):
     """
-    Renders edit_question template.
+    Handles the editing of an existing question and renders the edit_question template.
 
-    If POST:
-    Updates question in the database.
+    On a GET request, this function retrieves the question by its ID and renders the edit_question template with the question's current data.
 
-    Flashes message to user.
+    On a POST request, it retrieves the updated title and description from the form data, updates the question in the database, flashes a success message to the user, and redirects to the get_questions view.
 
-    Redirects to get_questions view.
+    Args:
+        question_id (str): The ID of the question to be edited.
+
+    Returns:
+        Response: Renders the edit_question.html template with the question's current data on a GET request.
+        Response: Redirects to the get_questions view on a POST request.
     """
     if request.method == "POST":
         username = current_user.username
@@ -84,11 +99,16 @@ def edit_question(question_id):
 @login_required
 def delete_question(question_id):
     """
-    Deletes question from database.
+    Deletes a question from the database and redirects to the get_questions view.
 
-    Flashes message to user.
+    This function deletes the specified question from the database. It then flashes a success message
+    to the user and redirects to the get_questions view.
 
-    Redirects to get_questions view.
+    Args:
+        question_id (str): The ID of the question to be deleted.
+
+    Returns:
+        Response: Redirects to the get_questions view after deleting the question.
     """
     Question.delete_question(question_id)
     flash("Post deleted")
