@@ -6,11 +6,17 @@ from app.groups.models import Group
 groups_bp = Blueprint('groups', __name__, template_folder='../templates')
 
 
+# Docstrings written by GPT4o and edited by myself.
 @groups_bp.route("/get_groups")
 @login_required
 def get_groups():
     """
-    Renders the groups template, featuring a list of groups, filtered by role and username.
+    Renders the groups template with a list of groups filtered by the current user's role and username.
+
+    This function retrieves the list of groups from the database based on the current user's role and username. It then renders the groups template, passing the filtered list of groups to the template.
+
+    Returns:
+        Response: Renders the groups.html template with the list of groups filtered by the user's role and username.
     """
     groups = Group.get_groups_by_role(current_user.role, current_user.username)
 
@@ -21,12 +27,14 @@ def get_groups():
 @login_required
 def add_group():
     """
-    Renders the add_group template.
+    Handles the creation of a new group and renders the add_group template.
 
-    If POST:
-    Inserts a group into the database.
+    On a GET request, this function renders the add_group template with the necessary 
+    data for creating a group. On a POST request, it inserts a new group into the database
+    using the provided form data, flashes a success message to the user, and re-renders the add_group template.
 
-    Flashes message to user.
+    Returns:
+        Response: Renders the add_group.html template with the list of providers and levels.
     """
     if request.method == "POST":
         tutor = current_user.username
@@ -47,11 +55,15 @@ def add_group():
 @login_required
 def add_student(username):
     """
-    Adds a student to a group's students list property.
+    Adds a student to a group's students list and redirects to the groups view.
 
-    Flashes message to user.
+    On a POST request, this function retrieves the group ID from the form data and adds the specified student (by username) to the group's students list in the database. It then flashes a success message to the user and redirects to the get_groups view.
 
-    Redirects to get_groups view.
+    Args:
+        username (str): The username of the student to be added to the group.
+
+    Returns:
+        Response: Redirects to the get_groups view.
     """
     if request.method == "POST":
         group_id = request.form.get("group_id")
@@ -65,11 +77,17 @@ def add_student(username):
 @login_required
 def remove_student(group_id, username):
     """
-    Removes a student from a group's students list property.
+    Removes a student from a group's students list and redirects to the groups view.
 
-    Flashes message to user.
+    This function removes the specified student (by username) from the group's students list
+    in the database. It then flashes a success message to the user and redirects to the get_groups view.
 
-    Redirects to get_groups view.
+    Args:
+        group_id (str): The ID of the group from which the student is to be removed.
+        username (str): The username of the student to be removed from the group.
+
+    Returns:
+        Response: Redirects to the get_groups view.
     """
     Group.remove_student(group_id, username)
     flash("Student removed")
