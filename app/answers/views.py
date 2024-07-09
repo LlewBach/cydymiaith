@@ -8,6 +8,7 @@ from app.questions.models import Question
 answers_bp = Blueprint('answers', __name__, template_folder='../templates')
 
 
+# Docstrings written by GPT4o and edited by myself.
 @answers_bp.route("/view_answers/<question_id>")
 def view_answers(question_id):
     """
