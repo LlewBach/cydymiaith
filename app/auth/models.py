@@ -5,6 +5,7 @@ from app.questions.models import Question
 from app.answers.models import Answer
 
 
+# Docstrings written by GPT4o and edited by myself.
 @login_manager.user_loader
 def load_user(username):
     """

@@ -11,7 +11,17 @@ answers_bp = Blueprint('answers', __name__, template_folder='../templates')
 @answers_bp.route("/view_answers/<question_id>")
 def view_answers(question_id):
     """
-    Renders the view_answers template for a certain question
+    Renders the view_answers template for a specific question.
+
+    This function retrieves the question and its associated answers from the database,
+    sets the time ago for the question, counts the number of answers, and then renders
+    the view_answers template with this data.
+
+    Args:
+        question_id (str): The ID of the question for which answers are to be viewed.
+
+    Returns:
+        Response: Renders the view_answers.html template with the question, answers, and the count of answers.
     """
     question = Question.find_by_id(question_id)
     Question.set_time_ago(question)
@@ -25,13 +35,15 @@ def view_answers(question_id):
 @login_required
 def answer(question_id):
     """
-    Adds an answer to a specific question to the database.
+    Adds an answer to a specific question and updates the database.
 
-    Increases the answer_count for the question.
+    On a POST request, it retrieves the answer text from the form, inserts the answer into the database, increases the answer count for the question, flashes a success message to the user, and redirects to the view_answers template to display the updated list of answers.
 
-    Flashes message to user.
+    Args:
+        question_id (str): The ID of the question to which the answer is to be added.
 
-    Redirects to the view_answers template.
+    Returns:
+        Response: Redirects to the view_answers template to display the updated list of answers.
     """
     if request.method == "POST":
         text = request.form.get("text")
@@ -47,15 +59,17 @@ def answer(question_id):
 @login_required
 def edit_answer(answer_id):
     """
-    Renders the edit_answer template.
+    Handles the editing of an existing answer and updates the database.
 
-    If POST:
+    On a GET request, it renders the edit_answer template with the current answer details. On a POST request, it updates the answer in the database with the provided text, flashes a success message to the user, and redirects
+    to the view_answers template to display the updated list of answers.
 
-    Updates answer in database.
+    Args:
+        answer_id (str): The ID of the answer to be edited.
 
-    Flashes message to user.
-
-    Redirects to view_answers template.
+    Returns:
+        Response: Renders the edit_answer.html template with the current answer details on a GET request.
+        Response: Redirects to the view_answers template to display the updated list of answers on a POST request.
     """
     question_id = Answer.find_question_id(answer_id)
 
@@ -77,13 +91,16 @@ def edit_answer(answer_id):
 @login_required
 def delete_answer(answer_id):
     """
-    Deletes a specific answer from the database.
+    Deletes a specific answer from the database and updates the associated question's answer count.
 
-    Decreases the associated question's answer_count.
+    This function deletes an answer from the database, decreases the answer count of the associated question, flashes a success message to the user, and redirects to the view_answers template to display the updated list
+    of answers.
 
-    Flashes message to user.
+    Args:
+        answer_id (str): The ID of the answer to be deleted.
 
-    Redirects to the view_answers template.
+    Returns:
+        Response: Redirects to the view_answers template to display the updated list of answers.
     """
     question_id = Answer.find_question_id(answer_id)
     Question.decrease_answer_count(question_id)

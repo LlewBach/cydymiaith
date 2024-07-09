@@ -10,6 +10,7 @@ from app.groups.models import Group
 auth_bp = Blueprint('auth', __name__, template_folder='../templates')
 
 
+# Docstrings written by GPT4o and edited by myself.
 @auth_bp.route('/send_confirmation/<email>')
 def send_confirmation(email):
     """
