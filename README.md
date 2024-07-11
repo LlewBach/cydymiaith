@@ -289,6 +289,8 @@ Image.
 How to Generate App Passwords in Google | Fix App Passwords option not found
 https://www.youtube.com/watch?v=MkLX85XU5rU
 
+YouTube - [Python Flask Tutorial: Full-Featured Web App Part 12 - Custom Error Pages](https://www.youtube.com/watch?v=uVNfQDohYNI) - Corey Schafer
+
 ### Media
 
 Neil Mark Thomas - Unsplash - https://unsplash.com/photos/mountain-under-cloudy-sky-10mHvFA6Ykg X

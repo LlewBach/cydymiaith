@@ -34,15 +34,11 @@
   z-index: 1;
 }
 
-/* .about-section {
-  background-color: pink;
-} */
-
 .activity {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 200px;
+  height: 250px;
 }
 
 .activity p {
