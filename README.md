@@ -259,7 +259,8 @@ The information of Profiles, Posts, Comments, Users and Groups will be displayed
 - Pymongo for interacting with MongoDB via Python
 - MongoDB database
 - Heroku for hosting
-- GPT-4 for debugging, information gathering, writing docstrings
+- GPT-4 for debugging, information gathering, writing docstrings, logo generation
+- [favicon.io](https://favicon.io/) - Logo to favicon converter
 
 ## Testing
 
@@ -292,6 +293,8 @@ https://www.youtube.com/watch?v=MkLX85XU5rU
 YouTube - [Python Flask Tutorial: Full-Featured Web App Part 12 - Custom Error Pages](https://www.youtube.com/watch?v=uVNfQDohYNI) - Corey Schafer
 
 ### Media
+
+GPTo - drew the logo
 
 Neil Mark Thomas - Unsplash - https://unsplash.com/photos/mountain-under-cloudy-sky-10mHvFA6Ykg X
 
