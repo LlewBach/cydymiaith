@@ -261,6 +261,8 @@ The information of Profiles, Posts, Comments, Users and Groups will be displayed
 - Heroku for hosting
 - GPT-4 for debugging, information gathering, writing docstrings, logo generation
 - [favicon.io](https://favicon.io/) - Logo to favicon converter
+- [ImageResizer.com](https://imageresizer.com/image-compressor) - Image compression
+
 
 ## Testing
 
@@ -270,15 +272,67 @@ The information of Profiles, Posts, Comments, Users and Groups will be displayed
 
 [Back to top](#milestone-3-project---cydymiaith)
 
-This project was deployed to Heroku as follows:
+### Deployment to Heroku
 
 1. Set up database and collection with MongoDB.
-2. Navigate to Heroku.
-3. Log in or register for an account.
-4. Create new app. Enter App Name that's unique, and the Region. Click Create App.
-5. From the new app Settings, click Reveal Config Vars and set environment variables.
-Image.
-6. 
+2. Add a Procfile and requirements.txt file to the project.
+3. Navigate to Heroku and log in or register for an account.
+4. Click 'New' => 'Create new app'. Enter App Name that's unique, and the Region. Click 'Create app'.
+5. In the app's 'Deploy' tab, click on 'GitHub' in preparation for setting up automatic deployment from the GitHub repository. Enter GitHub username and repo name and 'Search'. Click 'Connect' once found.
+6. In the app's 'Settings' tab. Click 'Reveal Config Vars' and set environment variables as outlined in the 'Config Vars' section below.
+7. Back in the app's 'Deploy' tab, click 'Enable Automatic Deploys'.
+8. Choose the appropriate branch to deploy (in my case 'main') and click 'Deploy Branch'.
+
+### Config Vars
+
+Heroku requires the following environment variables in order for the deployed site to function properly. Under Config Vars, select 'Reveal Config Vars' and add the following:
+
+| KEY | VALUE |
+| --- | --- |
+| IP | 0.0.0.0 |
+| PORT | 5000 |
+| MONGO_URI | your own value, see below |
+| MONGO_DBNAME | your own value |
+| SECRET_KEY | your own value |
+| MAIL_SERVER | your own value |
+| MAIL_PORT | 587 |
+| MAIL_USE_TLS | true |
+| MAIL_USERNAME | your own value |
+| MAIL_PASSWORD | your own value |
+| MAIL_DEFAULT_SENDER | your own value |
+
+The MONGO_URI value can be obtained from MongoDB via the following steps:
+  - Log in to MongoDB.
+  - Under the 'Data Services' tab, choose the desired cluster and click 'Connect'.
+  - Click 'Connect Your Application'.
+  - Copy the connection string and replace password with your own password, removing the angle brackets.
+
+### Local Deployment
+
+This project can be forked or cloned to your own local system.
+
+You will need to install any packages necessary for the app, listed in the requirements.txt file.
+
+`pip3 install -r requirements.txt`
+
+You will also need to create an 'env.py' file at root level that will note the 'config vars' above as environment variables. Here is a template:
+
+```
+import os
+
+os.environ.setdefault("IP", "0.0.0.0")
+os.environ.setdefault("PORT", "5000")
+os.environ.setdefault("SECRET_KEY", "your own value")
+os.environ.setdefault("MONGO_URI", "your own value")
+os.environ.setdefault("MONGO_DBNAME", "your own value")
+os.environ.setdefault("MAIL_SERVER", "your own value")
+os.environ.setdefault("MAIL_PORT", "587")
+os.environ.setdefault("MAIL_USE_TLS", "true")
+os.environ.setdefault("MAIL_USERNAME", "your own value")
+os.environ.setdefault("MAIL_PASSWORD", "your own value")
+os.environ.setdefault("MAIL_DEFAULT_SENDER", "your own value")
+
+```
 
 
 ## Credits
