@@ -98,6 +98,27 @@ def remove_student(group_id, username):
     return redirect(url_for('groups.get_groups'))
 
 
+@groups_bp.route("/edit_group/<group_id>", methods=["GET", "POST"])
+@login_required
+def edit_group(group_id):
+    group = Group.get_group_by_id(group_id)
+    if request.method == "POST":
+        tutor = current_user.username
+        provider = request.form.get("provider")
+        level = request.form.get("level")
+        year = request.form.get("year")
+        weekday = request.form.get("weekday")
+        students = group["students"]
+        Group.edit_group(group_id, tutor, provider, level, year, weekday, students)
+        flash("Group edited")
+        return redirect(url_for('groups.get_groups'))
+
+    providers = Group.get_providers()
+    levels = Group.get_levels()
+
+    return render_template("edit_group.html", group=group, providers=providers, levels=levels)
+
+
 @groups_bp.route("/delete_group/<group_id>")
 @login_required
 def delete_group(group_id):

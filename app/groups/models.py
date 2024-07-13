@@ -59,7 +59,7 @@ class Group:
             Exception: If there is an issue with the database query, the exception is caught and an error message is printed.
         """
         try:
-            group = mongo.db.groups.find_one({"_id": group_id})
+            group = mongo.db.groups.find_one({"_id": ObjectId(group_id)})
 
             return group
         
@@ -170,6 +170,22 @@ class Group:
             list: A list of provider documents from the providers collection.
         """
         return list(mongo.db.providers.find())
+    
+
+    @staticmethod
+    def edit_group(group_id, tutor, provider, level, year, weekday, students):
+        try:
+            group = {
+                "tutor": tutor,
+                "provider": provider,
+                "level": level,
+                "year": year,
+                "weekday": weekday,
+                "students": students
+            }
+            mongo.db.groups.update_one({"_id": ObjectId(group_id)}, {"$set": group})
+        except Exception as e:
+            print(f"Error in edit_group method: {e}")
     
 
     @staticmethod

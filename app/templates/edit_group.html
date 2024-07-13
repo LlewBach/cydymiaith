@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3 class="text-center">Edit Group: {{ group.provider }}</h3>
+
+<div class="card">
+  <div class="card-body">
+    <form method="POST" action="{{ url_for('groups.edit_group', group_id=group._id) }}">
+      <div class="mb-3">
+        <label for="provider" class="form-label">Provider</label>
+        <select id="provider" name="provider" class="form-select" aria-label="#" required>
+          <option value="" disabled {% if not group.provider %}selected{% endif %}>Choose Provider</option>
+          {% for provider in providers %}
+          {% if provider.provider_name == group.provider %}
+          <option value="{{ provider.provider_name }}" selected>{{ provider.provider_name }}</option>
+          {% else %}
+          <option value="{{ provider.provider_name }}">{{ provider.provider_name }}</option>
+          {% endif %}
+          {% endfor %}
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="provider" class="form-label">Level</label>
+        <select id="level" name="level" class="form-select" aria-label="#" required>
+          <option value="" disabled {% if not group.level %}selected{% endif %}>Choose Level</option>
+          {% for level in levels %}
+          {% if level.level_name == group.level %}
+          <option value="{{ level.level_name }}" selected>{{ level.level_name }}</option>
+          {% else %}
+          <option value="{{ level.level_name }}">{{ level.level_name }}</option>
+          {% endif %}
+          {% endfor %}
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="year" class="form-label">Year</label>
+        <input type="text" id="year" name="year" class="form-control" value="{{ group.year }}">
+      </div>
+      <div class="mb-3">
+        <label for="weekday" class="form-label">Weekday</label>
+        <input type="text" id="weekday" name="weekday" class="form-control" value="{{ group.weekday }}">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
