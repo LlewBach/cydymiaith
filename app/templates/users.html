@@ -113,6 +113,7 @@
                 </label>
               </div>
               {% for group in groups %}
+              {% if user.username not in group.students %}
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="group_id" id="{{ group._id }}"
                   value="{{ group._id }}">
@@ -120,6 +121,7 @@
                   {{ group.level }}, {{ group.weekday }}, {{ group.year }}
                 </label>
               </div>
+              {% endif %}
               {% endfor %}
             </div>
             <div class="modal-footer">
