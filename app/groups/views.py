@@ -31,10 +31,12 @@ def add_group():
 
     On a GET request, this function renders the add_group template with the necessary 
     data for creating a group. On a POST request, it inserts a new group into the database
-    using the provided form data, flashes a success message to the user, and re-renders the add_group template.
+    using the provided form data, flashes a success message to the user, and redirects to the get_groups view.
 
     Returns:
-        Response: Renders the add_group.html template with the list of providers and levels.
+        Response: 
+            - On GET: Renders the add_group.html template with the list of providers and levels.
+            - On POST: Redirects to the get_groups view after successfully creating a group.
     """
     if request.method == "POST":
         tutor = current_user.username
@@ -44,6 +46,7 @@ def add_group():
         weekday = request.form.get("weekday")
         Group.insert_group(tutor, provider, level, year, weekday)
         flash("Group created")
+        return redirect(url_for('groups.get_groups'))
 
     providers = Group.get_providers()
     levels = Group.get_levels()
@@ -91,5 +94,27 @@ def remove_student(group_id, username):
     """
     Group.remove_student(group_id, username)
     flash("Student removed")
+
+    return redirect(url_for('groups.get_groups'))
+
+
+@groups_bp.route("/delete_group/<group_id>")
+@login_required
+def delete_group(group_id):
+    """
+    Deletes a group and redirects to the groups list view.
+
+    This route handles the deletion of a group specified by the group_id.
+    It calls the Group.delete_group method to perform the deletion, flashes
+    a success message to the user, and redirects to the 'get_groups' view.
+
+    Args:
+        group_id (str): The unique identifier of the group to be deleted.
+
+    Returns:
+        Response: A redirect response to the 'get_groups' view.
+    """
+    Group.delete_group(group_id)
+    flash("Group deleted")
 
     return redirect(url_for('groups.get_groups'))

@@ -1,5 +1,6 @@
 from bson.objectid import ObjectId
 from app import mongo
+from app.questions.models import Question
 
 
 class Group:
@@ -7,24 +8,24 @@ class Group:
     @staticmethod
     def get_groups_by_role(role, username):
         """
-    Retrieves a list of groups from the database filtered by the user's role and username.
+        Retrieves a list of groups from the database filtered by the user's role and username.
 
-    This method queries the database to retrieve groups based on the provided user role and username.
-    - If the role is 'Admin', it retrieves all groups.
-    - If the role is 'Tutor', it retrieves groups where the tutor is the specified username.
-    - If the role is 'Student', it retrieves groups where the student list includes the specified username.
-    - For any other roles, it returns an empty list.
+        This method queries the database to retrieve groups based on the provided user role and username.
+        - If the role is 'Admin', it retrieves all groups.
+        - If the role is 'Tutor', it retrieves groups where the tutor is the specified username.
+        - If the role is 'Student', it retrieves groups where the student list includes the specified username.
+        - For any other roles, it returns an empty list.
 
-    Args:
-        role (str): The role of the user (e.g., 'Admin', 'Tutor', 'Student').
-        username (str): The username of the user to filter the groups by.
+        Args:
+            role (str): The role of the user (e.g., 'Admin', 'Tutor', 'Student').
+            username (str): The username of the user to filter the groups by.
 
-    Returns:
-        list: A list of groups filtered by the user's role and username. If an exception occurs, it returns an empty list.
+        Returns:
+            list: A list of groups filtered by the user's role and username. If an exception occurs, it returns an empty list.
 
-    Raises:
-        Exception: If there is an issue with the database query, the exception is caught and an error message is printed.
-    """
+        Raises:
+            Exception: If there is an issue with the database query, the exception is caught and an error message is printed.
+        """
         try:
             if role == 'Admin':
                 groups = list(mongo.db.groups.find())
@@ -169,3 +170,27 @@ class Group:
             list: A list of provider documents from the providers collection.
         """
         return list(mongo.db.providers.find())
+    
+
+    @staticmethod
+    def delete_group(group_id):
+        """
+        Deletes a group from the database.
+
+        This method finds a group by its group_id, deletes any associated questions, 
+        and then deletes the group itself from the database.
+
+        Args:
+            group_id (str): The unique identifier of the group to be deleted.
+
+        Raises:
+            Exception: If there is an issue with deleting the group in the database, the exception is caught and an error message is printed.
+        """
+        try:
+            question = mongo.db.questions.find_one({"group_id": ObjectId(group_id)})
+            if question:
+                Question.delete_question(question._id)
+            mongo.db.groups.delete_one({"_id": ObjectId(group_id)})
+        except Exception as e:
+            print(f"Error in delete_group method: {e}")
+
