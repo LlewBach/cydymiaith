@@ -10,6 +10,32 @@
   <div class="card-body">
     <form method="POST" action="{{ url_for('questions.edit_question', question_id=question._id) }}">
       <div class="mb-3">
+        <label for="category" class="form-label">Category</label>
+        <select id="category" name="category" class="form-select" aria-label="Default select example" required>
+          <option value="" disabled {% if not question.category %}selected{% endif %}>Choose Category</option>
+          {% for category in categories %}
+          {% if category.category_name == question.category %}
+          <option value="{{ category.category_name }}" selected>{{ category.category_name }}</option>
+          {% else %}
+          <option value="{{ category.category_name }}">{{ category.category_name }}</option>
+          {% endif %}
+          {% endfor %}
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="group" class="form-label">For All or Group?</label>
+        <select id="group" name="group" class="form-select" aria-label="Default select example">
+          <option value="" {% if not question.group_id %}selected{% endif %}>All</option>
+          {% for group in groups %}
+          {% if group._id|string == question.group_id|string %}
+          <option value="{{ group._id }}" selected>{{ group.weekday }}, {{ group.provider }}, {{ group.level }}</option>
+          {% else %}
+          <option value="{{ group._id }}">{{ group.weekday }}, {{ group.provider }}, {{ group.level }}</option>
+          {% endif %}
+          {% endfor %}
+        </select>
+      </div>
+      <div class="mb-3">
         <label for="title" class="form-label">Title</label>
         <input type="text" class="form-control" id="title" name="title" aria-describedby="title-help" minlength="1"
           maxlength="50" required value="{{ question.title }}">

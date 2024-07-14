@@ -72,3 +72,9 @@ Feature abilities and limitations are dependent on the user's role. I will start
 
 ## Bugs
 
+- Getting edit question form to remember associated group - I was having trouble handling id vs ObjectId - I consulted GPT4o who advised me how to use jinja filters properly, such as 
+
+` {% if group._id|string == question.group_id|string %}`
+
+and this equates the types making them comparable.
+

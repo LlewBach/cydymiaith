@@ -237,7 +237,7 @@ class Question:
 
 
     @staticmethod
-    def update_question(question_id, username, title, description):
+    def update_question(question_id, username, category, group_id, title, description):
         """
         Updates the details of a specific question in the database.
 
@@ -257,6 +257,8 @@ class Question:
             current_answer_count = Question.get_answer_count(question_id)
             submit = {
                 "username": username,
+                "category": category,
+                "group_id": group_id,
                 "title": title,
                 "description": description,
                 "answer_count": current_answer_count

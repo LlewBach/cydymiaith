@@ -85,14 +85,18 @@ def edit_question(question_id):
     """
     if request.method == "POST":
         username = current_user.username
+        category = request.form.get("category")
+        group_id = request.form.get("group")
         title = request.form.get("title")
         description = request.form.get("description")
-        Question.update_question(question_id, username, title, description)
+        Question.update_question(question_id, username, category, group_id, title, description)
         flash("Post updated")
         return redirect(url_for('questions.get_questions'))
     
+    groups = Group.get_groups_by_role(current_user.role, current_user.username)
+    categories = Question.get_categories()
     question = Question.find_by_id(question_id)
-    return render_template("edit_question.html", question=question)
+    return render_template("edit_question.html", question=question, groups=groups, categories=categories)
 
 
 @questions_bp.route("/delete_question/<question_id>")
