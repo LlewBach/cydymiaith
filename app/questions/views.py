@@ -24,7 +24,7 @@ def get_questions():
     """
     categories = Question.get_categories()
     questions = Question.get_list(None, None)
-    groups = Group.get_groups_by_role(current_user.role, current_user.username)
+    groups = Group.get_groups_by_role(current_user.role, current_user.username) if current_user.is_authenticated else []
 
     if request.method == "POST":
         category = request.form.get("category")
