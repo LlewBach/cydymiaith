@@ -29,6 +29,7 @@
 <div class="card">
   <div class="card-body">
     <p class="card-text">{{ answer.username }} - {{ answer.time_ago }}: {{ answer.text }}</p>
+    {% if current_user.username == question.username or current_user.role == 'Admin' %}
     <a href="{{ url_for('answers.edit_answer', answer_id=answer._id) }}">Edit</a>
     <a href="#" class="card-link" data-bs-toggle="modal" data-bs-target="#{{ answer._id }}">Delete</a>
 
@@ -50,6 +51,7 @@
         </div>
       </div>
     </div>
+    {% endif %}
   </div>
 </div>
 {% endfor %}
