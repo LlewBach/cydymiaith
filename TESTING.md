@@ -27,9 +27,18 @@ Go to [README.md](README.md)
 
 [Back to top](#cydymiaith-testing-documentation)
 
-Feature abilities and limitations are dependent on the user's role. I will start with the Student role.
+### Unregistered Users
+
+#### Visibility
+
+1) Navigate to cydymiaith in the Chrome browser.
+2) From the Home page, click on the Posts navbar item.
+
+
 
 ### Student Role
+
+Feature abilities and limitations are dependent on the user's role. I will start with the Student role.
 
 #### Registration 
 
