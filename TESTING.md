@@ -44,9 +44,8 @@ Go to [README.md](README.md)
 2) Navigate back to the Posts page. Check that only one filter selector (category) is visible. 
 3) On the posts that are displayed, there should be no links to 'edit' or 'delete' posts.
 4) Look for a post with at least one comment. Click the comments link. The user should be directed to a page that shows the comments on the post.
-5) Check that on the comment, there are no links for 'Edit' or 'Delete'.
-
-
+5) Check that on the comment(s), there are no links for 'Edit' or 'Delete'.
+6) Try to add a comment. The user should be redirected to the Log In page, and a flash message should appear saying 'Please log in to access this page.'
 
 ### Student Role
 
