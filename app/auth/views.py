@@ -169,7 +169,7 @@ def logout():
         Response: A redirect response to the login page after logging out the user.
     """
     logout_user()
-    flash("Logged out")
+    flash("Logged Out")
     return redirect(url_for("auth.login"))
 
 
