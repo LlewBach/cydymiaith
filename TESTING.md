@@ -29,10 +29,22 @@ Go to [README.md](README.md)
 
 ### Unregistered Users
 
-#### Visibility
+#### Navigation
 
 1) Navigate to cydymiaith in the Chrome browser.
 2) From the Home page, click on the Posts navbar item.
+3) On the Posts page, click 'Log In To Ask Question' button. The user should be redirected to the Log In page.
+4) On the Log In page, click 'Register here'. The user should be sent to the Register page.
+5) Click 'Log In' from the navbar. The user should navigate to the Log In page.
+6) Click 'Register' from the navbar. The user should navigate to the Register page.
+
+#### Visibility
+
+1) The navbar should contain the following links - Home, Posts, Log In, Register.
+2) Navigate back to the Posts page. Check that only one filter selector (category) is visible. 
+3) On the posts that are displayed, there should be no links to 'edit' or 'delete' posts.
+4) Look for a post with at least one comment. Click the comments link. The user should be directed to a page that shows the comments on the post.
+5) Check that on the comment, there are no links for 'Edit' or 'Delete'.
 
 
 

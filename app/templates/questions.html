@@ -3,11 +3,11 @@
 <header>
   <div class="text-center">
     <h1>Posts</h1>
-    {% if current_user %}
-    <a href="{{ url_for('questions.ask_question') }}" class="btn btn-outline-primary btn-lg ask-button">Ask
+    {% if current_user.is_authenticated %}
+    <a href="{{ url_for('questions.ask_question') }}" class="btn btn-outline-primary btn-lg">Ask
       question</a>
     {% else %}
-    <a href="{{ url_for('auth.login') }}">Login to ask question</a>
+    <a href="{{ url_for('auth.login') }}" class="btn btn-outline-primary btn-lg">Log In To Ask Question</a>
     {% endif %}
   </div>
 </header>
