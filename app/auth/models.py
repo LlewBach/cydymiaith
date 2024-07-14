@@ -333,7 +333,9 @@ class User(UserMixin):
             for question in questions_to_delete:
                 question_id = question["_id"]
                 mongo.db.answers.delete_many({"question_id": question_id})
-                mongo.db.questions.delete_one({"_id": question_id})            
+                mongo.db.questions.delete_one({"_id": question_id})
+   
+            mongo.db.groups.delete_many({"tutor": username})  
 
             mongo.db.users.delete_one({"username": username})
         except Exception as e:
