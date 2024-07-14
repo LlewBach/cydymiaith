@@ -18,7 +18,7 @@
       <div class="col-3 text-center">
         <label for="category" class="form-label">Apply Filter</label>
       </div>
-      <div class="col-3 text-center">
+      <div class="{% if current_user.is_authenticated %}col-3{% else %}col-6{% endif %} text-center">
         <select id="category" name="category" class="form-select" aria-label="Default select example">
           <option value="" selected>All Categories</option>
           {% for category in categories %}
@@ -26,6 +26,7 @@
           {% endfor %}
         </select>
       </div>
+      {% if current_user.is_authenticated %}
       <div class="col-3 text-center">
         <select id="group" name="group" class="form-select" aria-label="Default select example">
           <option value="" selected>All Groups</option>
@@ -34,6 +35,7 @@
           {% endfor %}
         </select>
       </div>
+      {% endif %}
       <div class="col-3 text-center">
         <button type="submit" class="btn btn-primary">Filter</button>
       </div>
