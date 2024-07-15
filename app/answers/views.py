@@ -78,7 +78,7 @@ def edit_answer(answer_id):
         text = request.form.get("text")
         username = current_user.username
         Answer.edit_answer(answer_id, question_id, text, username)
-        flash("Comment edited")
+        flash("Comment Edited")
 
         return redirect(url_for("answers.view_answers", question_id=question_id))
     
@@ -106,6 +106,6 @@ def delete_answer(answer_id):
     question_id = Answer.find_question_id(answer_id)
     Question.decrease_answer_count(question_id)
     Answer.delete_answer(answer_id)
-    flash("Comment deleted")
+    flash("Comment Deleted")
     
     return redirect(url_for("answers.view_answers", question_id=question_id))

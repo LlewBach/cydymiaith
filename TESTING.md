@@ -27,13 +27,15 @@ Go to [README.md](README.md)
 
 [Back to top](#cydymiaith-testing-documentation)
 
+Please note that these tests flow sequentially.
+
 ### Unregistered Users
 
 #### Navigation
 
 1) Navigate to cydymiaith in the Chrome browser.
 2) From the Home page, click on the Posts navbar item.
-3) On the Posts page, click 'Log In To Ask Question' button. The user should be redirected to the Log In page.
+3) On the Posts page, click 'Log In To Make Post' button. The user should be redirected to the Log In page.
 4) On the Log In page, click 'Register here'. The user should be sent to the Register page.
 5) Click 'Log In' from the navbar. The user should navigate to the Log In page.
 6) Click 'Register' from the navbar. The user should navigate to the Register page.
@@ -74,8 +76,8 @@ Feature abilities and limitations are dependent on the user's role. I will start
 
 #### Post Creation
 
-1) Having logged in, navigate to Posts. Beneath the Posts title, the button should say 'Ask Question'.
-2) Click 'Ask Question'. The user should be redirected to the Make Post page.
+1) Having logged in, navigate to Posts. Beneath the Posts title, the button should say 'Make Post'.
+2) Click 'Make Post'. The user should be redirected to the Make Post page.
 3) Fill in form details such as:
 - Category: Question
 - All/Group: All
@@ -118,6 +120,39 @@ We will test group filtering later.
 2) From the Category drop down menu, select the first menu item, and press 'Filter'. The page should reload and only display posts of that category or no posts. The Category filter should also display the selected category.
 3) Repeat for all category menu items.
 4) Having tested each category, filter for 'All Categories'. All posts should now be visible to the user.
+
+#### Comment Creation
+
+1) Create a post with the following details:
+- Category: Other
+- For All or Group?: All
+- Title: "Comment CRUD testing"
+- Description: "testing"
+2) On the post, click the 'Comments' link. The user should be directed to a page displaying the post with a comment box beneath.
+3) In the comment box, type in "Comment creation test" and press 'Submit'. Check the following:
+- The page should reload
+- a flash message "Comment Added" should display
+-  the new comment should be visible beneath the comment box
+- the post's Comments number should have updated from 'O Comments' to '1 Comments'
+
+#### Comment Editing
+
+1) On the comments page for the 'Comment CRUD testing' post, click on the 'Edit' link for the new comment. The user should be taken to a page with an 'Edit Comment' text box that's populated with the previous comment.
+2) Edit the comment to 'Comment edit test'. Press 'Save'.
+3) Check that:
+- The user is taken back to the comments page for the post
+- A flash message reads 'Comment Edited'
+- The comment text shows as 'Comment edit test'
+
+#### Comment Deletion
+
+1) On the comment, click the 'Delete' link. A modal should appear asking to 'Cancel' or 'Confirm'. 
+2) Click 'Cancel'. The modal should disappear and nothing should have changed.
+3) Click 'Delete' again, and then 'Confirm' on the modal.
+4) Check the following:
+- A flash message displays 'Comment Deleted'
+- The number of comments should have changed to '0 Comments'
+- The comment has been deleted
 
 
 ## Defensive Programming Testing
