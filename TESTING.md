@@ -154,6 +154,57 @@ We will test group filtering later.
 - The number of comments should have changed to '0 Comments'
 - The comment has been deleted
 
+#### Profile Editing
+
+1) Click the 'Profile' navbar option
+2) On the profile, click 'Edit Profile'
+3) Change the values to the following and press 'Save'
+- Email: testuser1@abcd.com
+- Level: Blasu
+- Provider: Caerdydd / Cardiff
+- Location: Abertawe
+- Bio: "Hello world!"
+4) Check that:
+- the user is taken back to the profile page
+- a flash message displays 'Profile Updated'
+- the profile information has been updated
+5) Click 'Edit Profile' again. On the Edit Profile page check that the input fields are populated with the current values.
+6) Change the email address to one that you have access to in order to test password reset functionality in the next section. Click 'Save'.
+
+#### Password Reset
+
+1) On the Profile page, check that your email is set to the profile.
+2) Click 'Reset Password'. A flash message should display "A confirmation email has been sent".
+3) Find the email from cydymiaith@gmail.com in your inbox with the subject 'Password Reset Request'.
+4) Open the email and click the link. The user should be taken to Cydymiaith's Reset Password page.
+5) Enter the Email and New Password, and click 'Reset Password'. The user should be sent back to the profile page and a flash message should display "Your password has been reset".
+6) Log out and log back in with the new password. Log in should succeed.
+
+#### Profile Deletion
+
+This test is more involved as it requires a bit of set up to fully test the full deletion cascade of all the comments the user has made, the posts the user has made, and all comments associated with those posts.
+
+Set up
+
+1) As testuser1, add a comment ('testuser1 deletion cascade test') to testuser1's post titled 'Comment CRUD testing'.
+2) Log Out and Register a new profile of username 'testuser2', password 'testuser2'.
+3) Create a post titled 'profile deletion cascade test'
+4) Log Out and Log In as testuser1.
+5) Find the post 'profile deletion cascade test' and add a comment.
+
+Test
+
+6) On testuser1's profile page, click 'Delete Profile'. A modal asking the user to 'Cancel' or 'Confirm' should appear.
+7) Click 'Cancel'. The modal should disappear.
+8) Click 'Delete Profile' again, and then 'Confirm'.
+9) The user should be redirected to the Log In page and a flash message should display 'Account Deleted'.
+10) Navigate to the Posts page. Check that:
+- there are no posts by testuser1
+- testuser1's comment on testuser2's post titled 'profile deletion cascade test' and check that there are no comments by testuser1.
+11) Navigate to the Log In page and attempt to log in with testuser1's details. The page should refresh and flash a message 'Incorrect username and/or password'.
+
+
+
 
 ## Defensive Programming Testing
 

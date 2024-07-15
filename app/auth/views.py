@@ -225,7 +225,7 @@ def edit_profile(username):
         location = request.form.get("location")
         bio = request.form.get("bio")
         User.update_profile(email, username, role, level, provider, location, bio)
-        flash("Profile updated", "success")
+        flash("Profile Updated", "success")
         if current_user.role == "Admin":
             return redirect(url_for('auth.view_users'))
         else:
