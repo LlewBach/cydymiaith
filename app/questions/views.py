@@ -58,7 +58,7 @@ def ask_question():
         title = request.form.get("title")
         description = request.form.get("description")
         Question.insert_question(username, category, group_id, title, description)
-        flash("Post published")
+        flash("Post Published")
         return redirect(url_for('questions.get_questions'))
 
     groups = Group.get_groups_by_role(current_user.role, current_user.username)
@@ -90,7 +90,7 @@ def edit_question(question_id):
         title = request.form.get("title")
         description = request.form.get("description")
         Question.update_question(question_id, username, category, group_id, title, description)
-        flash("Post updated")
+        flash("Post Updated")
         return redirect(url_for('questions.get_questions'))
     
     groups = Group.get_groups_by_role(current_user.role, current_user.username)
@@ -115,5 +115,5 @@ def delete_question(question_id):
         Response: Redirects to the get_questions view after deleting the question.
     """
     Question.delete_question(question_id)
-    flash("Post deleted")
+    flash("Post Deleted")
     return redirect(url_for("questions.get_questions"))
