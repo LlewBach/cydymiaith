@@ -23,15 +23,15 @@ def get_questions():
         Response: Renders the questions.html template with the list of questions, categories, and groups.
     """
     categories = Question.get_categories()
-    questions = Question.get_list(None, None)
+    questions, query = Question.get_list(None, None)
     groups = Group.get_groups_by_role(current_user.role, current_user.username) if current_user.is_authenticated else []
 
     if request.method == "POST":
         category = request.form.get("category")
         group_id = request.form.get("group")
-        questions = Question.get_list(category, group_id)
+        questions, query = Question.get_list(category, group_id)
 
-    return render_template("questions.html", questions=questions, categories=categories, groups=groups)
+    return render_template("questions.html", questions=questions, categories=categories, groups=groups, query=query)
 
 
 @questions_bp.route("/ask_question", methods=["GET", "POST"])

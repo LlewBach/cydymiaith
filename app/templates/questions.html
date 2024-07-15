@@ -22,7 +22,11 @@
         <select id="category" name="category" class="form-select" aria-label="Default select example">
           <option value="" selected>All Categories</option>
           {% for category in categories %}
+          {% if query.category == category.category_name %}
+          <option value="{{ category.category_name }}" selected>{{ category.category_name }}</option>
+          {% else %}
           <option value="{{ category.category_name }}">{{ category.category_name }}</option>
+          {% endif %}
           {% endfor %}
         </select>
       </div>
@@ -31,7 +35,11 @@
         <select id="group" name="group" class="form-select" aria-label="Default select example">
           <option value="" selected>All Groups</option>
           {% for group in groups %}
+          {% if query.group_id == group._id %}
+          <option value="{{ group._id }}" selected>{{ group.weekday }}, {{ group.provider }}, {{ group.level }}</option>
+          {% else %}
           <option value="{{ group._id }}">{{ group.weekday }}, {{ group.provider }}, {{ group.level }}</option>
+          {% endif %}
           {% endfor %}
         </select>
       </div>

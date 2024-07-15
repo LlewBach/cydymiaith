@@ -71,19 +71,19 @@ class Question:
         Raises:
             Exception: If there is an issue with the database query, the exception is caught and an error message is printed.
         """
+        query = {}
+        if category:
+            query['category'] = category
+        if group_id:
+            query['group_id'] = group_id
         try:
-            query = {}
-            if category:
-                query['category'] = category
-            if group_id:
-                query['group_id'] = group_id
             if query:
                 questions = list(mongo.db.questions.find(query).sort("_id", -1))
             else:
                 questions = list(mongo.db.questions.find().sort("_id", -1))
             for question in questions:
                 Question.set_time_ago(question)
-            return questions
+            return questions, query
         except Exception as e:
             print(f"Error in get_list method: {e}")
             return []
