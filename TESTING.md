@@ -40,6 +40,8 @@ Please note that these tests flow sequentially.
 5) Click 'Log In' from the navbar. The user should navigate to the Log In page.
 6) Click 'Register' from the navbar. The user should navigate to the Register page.
 
+Test result: Pass
+
 #### Visibility
 
 1) The navbar should contain the following links - Home, Posts, Log In, Register.
@@ -48,6 +50,8 @@ Please note that these tests flow sequentially.
 4) Look for a post with at least one comment. Click the comments link. The user should be directed to a page that shows the comments on the post.
 5) Check that on the comment(s), there are no links for 'Edit' or 'Delete'.
 6) Try to add a comment. The user should be redirected to the Log In page, and a flash message should appear saying 'Please log in to access this page.'
+
+Test result: Pass
 
 ### Student Role
 
@@ -63,16 +67,22 @@ Feature abilities and limitations are dependent on the user's role. I will start
 3) If the values pass form validation (tested in the 'Defensive Programming Testing' section below), then upon clicking 'Register' the user should be redirected to the user's new profile page, that displays the username, 'Role: Student' and a flash message - "Registration Successful!".
 4) The navbar menu items should have changed from 'Home, Posts, Log In, Register' to 'Home, Posts, Profile, Users, Log Out'.
 
+Test result: Pass
+
 #### Log Out
 
 1) Having registered an account, click the 'Log Out' navbar option.
 2) The user should be redirected to the Log In page, with a flash message saying 'Logged Out'.
 3) The navbar menu items should be 'Home, Posts, Log In, Register'.
 
+Test result: Pass
+
 #### Log In
 
 1) Having logged out and on the Log In page, enter username (testuser1) and password (testuser1).
 2) The user should be redirected to the user's profile page, with a flash message saying "Croeso, testuser1".
+
+Test result: Pass
 
 #### Post Creation
 
@@ -90,6 +100,8 @@ Feature abilities and limitations are dependent on the user's role. I will start
 - The post should have 0 Comments. 
 - Unlike other posts, there should be 'Edit' and 'Delete' links visible for the created post.
 
+Test result: Pass
+
 #### Post Updating
 
 1) On the created post ('Student functionality test'), click 'Edit'. The user should be redirected to the Edit Post page.
@@ -106,11 +118,15 @@ Feature abilities and limitations are dependent on the user's role. I will start
 4) The user should be redirected to the Posts page and there should be a flash message saying "Post Updated"
 5) Check that the edited post displays the updated details.
 
+Test result: Pass
+
 #### Post Deletion
 
 1) On the above post titled "Student post edit test", click 'Delete'. A modal should appear asking to either 'Cancel' or 'Confirm'. 
 2) Click 'Cancel'. The modal should disappear having made no change.
 3) Click 'Delete' again, and then 'Confirm'. The post should be deleted, and a flash message should say 'Post Deleted'.
+
+Test result: Pass
 
 #### Post Filtering by Category
 
@@ -120,6 +136,8 @@ We will test group filtering later.
 2) From the Category drop down menu, select the first menu item, and press 'Filter'. The page should reload and only display posts of that category or no posts. The Category filter should also display the selected category.
 3) Repeat for all category menu items.
 4) Having tested each category, filter for 'All Categories'. All posts should now be visible to the user.
+
+Test result: Pass
 
 #### Comment Creation
 
@@ -135,6 +153,8 @@ We will test group filtering later.
 -  the new comment should be visible beneath the comment box
 - the post's Comments number should have updated from 'O Comments' to '1 Comments'
 
+Test result: Pass
+
 #### Comment Editing
 
 1) On the comments page for the 'Comment CRUD testing' post, click on the 'Edit' link for the new comment. The user should be taken to a page with an 'Edit Comment' text box that's populated with the previous comment.
@@ -143,6 +163,8 @@ We will test group filtering later.
 - The user is taken back to the comments page for the post
 - A flash message reads 'Comment Edited'
 - The comment text shows as 'Comment edit test'
+
+Test result: Pass
 
 #### Comment Deletion
 
@@ -153,6 +175,8 @@ We will test group filtering later.
 - A flash message displays 'Comment Deleted'
 - The number of comments should have changed to '0 Comments'
 - The comment has been deleted
+
+Test result: Pass
 
 #### Profile Editing
 
@@ -171,6 +195,8 @@ We will test group filtering later.
 5) Click 'Edit Profile' again. On the Edit Profile page check that the input fields are populated with the current values.
 6) Change the email address to one that you have access to in order to test password reset functionality in the next section. Click 'Save'.
 
+Test result: Pass
+
 #### Password Reset
 
 1) On the Profile page, check that your email is set to the profile.
@@ -179,6 +205,8 @@ We will test group filtering later.
 4) Open the email and click the link. The user should be taken to Cydymiaith's Reset Password page.
 5) Enter the Email and New Password, and click 'Reset Password'. The user should be sent back to the profile page and a flash message should display "Your password has been reset".
 6) Log out and log back in with the new password. Log in should succeed.
+
+Test result: Pass
 
 #### Profile Deletion
 
@@ -202,6 +230,12 @@ Test
 - there are no posts by testuser1
 - testuser1's comment on testuser2's post titled 'profile deletion cascade test' and check that there are no comments by testuser1.
 11) Navigate to the Log In page and attempt to log in with testuser1's details. The page should refresh and flash a message 'Incorrect username and/or password'.
+
+Test result: Pass
+
+### Admin Role
+
+The Admin role has all the abilities of the Student role plus more, which we will test below.
 
 
 
