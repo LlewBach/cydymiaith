@@ -106,6 +106,8 @@ class User(UserMixin):
             user_doc = mongo.db.users.find_one({"email": email})
             if user_doc:
                 return cls(username=user_doc['username'], password=user_doc['password'], role=user_doc['role'])
+            else:
+                return None
         except Exception as e:
             print(f"Error in find_by_email method: {e}")
             return None

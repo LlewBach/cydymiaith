@@ -202,6 +202,8 @@ def edit_profile(username):
 
     On a POST request, it updates the user's profile with the provided data.
 
+    The function prevents the submission of an email address that is already in use.
+
     Only the profile owner or an Admin can edit the profile.
 
     Args:
@@ -209,6 +211,7 @@ def edit_profile(username):
 
     Returns:
         Response: Renders the edit_profile template on GET requests.
+        Response: Redirects to the edit_profile page if the email address is already in use.
         Response: Redirects to the user's profile page after successful profile update.
         Response: Redirects to the users view page if the current user is an Admin.
         Response: Redirects to the current user's profile page if they are not authorized to edit the profile.
@@ -219,6 +222,9 @@ def edit_profile(username):
     
     if request.method == "POST":
         email = request.form.get("email")
+        if User.find_by_email(email):
+            flash("That email is already in use")
+            return redirect(url_for('auth.edit_profile', username=current_user.username))
         role = request.form.get("role")
         level = request.form.get("level")
         provider = request.form.get("provider")
