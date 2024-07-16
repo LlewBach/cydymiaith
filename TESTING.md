@@ -371,7 +371,51 @@ Test result: Pass
 
 [Back to top](#cydymiaith-testing-documentation)
 
+### Form Validation
 
+Testing for valid inputs has already been accounted for above.
+
+This section considers two aspects.
+
+1) Ensuring that all forms in the application validate user inputs before processing, where necessary. This includes checking for required fields and correct data formats.
+2) Validating submitted data on the backend. This includes checking whether someone is trying to register a username that is currently in use etc.
+
+#### Make/Edit Post Forms
+
+1. **Test Case**: Empty Fields
+    - **Input**: All fields left empty.
+    - **Expected Result**: The form should display error messages indicating that the Category, Title and Description fields are required.
+    - **Actual Result**: All required fields raise a request for the user to fill out the field. - PASS.
+2. **Test Case**: >50 Characters in Title
+    - **Input**: A 50 character string - 12345678901234567890123456789012345678901234567890.
+    - **Expected Result**: The form should not allow any more characters to be added to the above string.
+    - **Actual Result**: It is not possible to type any more than the limit of 50 characters. - PASS.
+3. **Test Case**: >500 Characters in Description
+    - **Input**: A 500 character string
+    - **Expected Result**: The form should not allow any more characters to be added to the above string.
+    - **Actual Result**: It is not possible to type any more than the limit of 500 characters. - PASS
+
+#### Add/Edit Comment Forms
+
+1. **Test Case**: Empty Field
+    - **Input**: Empty field
+    - **Expected Result**: The form should display error messages indicating that the 'Add comment' field is required.
+    - **Actual Result**: The required field raises a request for the user to fill out the field. - PASS.
+2. **Test Case**: >500 Characters in Comment
+    - **Input**: A 500 character string
+    - **Expected Result**: The form should not allow any more characters to be added to the above string.
+    - **Actual Result**: It is not possible to type any more than the limit of 500 characters. - PASS
+
+#### Edit Profile Form
+
+1. **Test Case**: Invalid email format
+    - **Input**: abc.com
+    - **Expected Result**: Form should not submit and should display a validation message indicating the email format is incorrect.
+    - **Actual Result**: Form did not submit and did display a validation message indicating the email format is incorrect. - PASS
+2. **Test Case**: Email address already in use
+    - **Input**: testuser3@abc.com
+    - **Expected Result**: Form should not submit and should display a validation message indicating the email format is incorrect.
+    - **Actual Result**: Form did not submit and did display a validation message indicating the email format is incorrect. - PASS
 
 ## Responsiveness Testing
 
