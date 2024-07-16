@@ -294,7 +294,52 @@ Test result: Pass
 3) Click 'Add to Class'. A modal should appear asking the user to choose a group, and there should appear an entry for the group 'Sylfaen, Tuesday, 2025'.
 4) Press 'Cancel'. The modal should disappear.
 5) Press 'Add to Class' again. This time select the radio button for the group and press 'Confirm'. The user should be redirected to the Groups page and a flash message should display "Student Added".
-6) Click on the 'Student List' dropdown.
+6) Click on the 'Student List' dropdown. testuser3 should be listed.
+
+Test result: Pass
+
+#### Assigning a post to a group
+
+1) Create a new post with the following values:
+- Category: Announcement
+- For All or Group?: Tuesday, Gwent, Sylfaen
+- Title: Post filtering by group test
+- Description: abc
+2) On the Posts page, select the group 'Tuesday, Gwent, Sylfaen' from the group filter dropdown and click 'Filter'. The post titled 'Post filtering by group test' should be visible.
+3) Check that the selected group is still visible in the filter.
+
+Test result: Pass
+
+#### Student ability to filter posts by group
+
+1) Log in as testuser3.
+2) On the Posts page, in the group filter, select the group 'Tuesday, Gwent, Sylfaen' and click 'Filter'.
+3) The post titled 'Post filtering by group test' should be visible.
+
+Test result: Pass
+
+#### Removing Students from a Group
+
+1) Log back in as testuser2.
+2) Navigate to the Groups page.
+3) Open the Student List, and click the 'Remove' link for testuser3. A modal should appear.
+4) Click 'Cancel'. The modal should disappear.
+5) Click 'Remove' again, and then 'Confirm'. A flash message should display "Student Removed".
+6) Check that testuser3 has been removed from the Student List.
+
+Test result: Pass
+
+#### Group Deletion
+
+1) On the Groups page, click 'Delete Group' for the group. A modal should appear.
+2) Click 'Cancel'. The modal should disappear.
+3) Click 'Delete Group' again and then 'Confirm'.
+4) Check that: 
+- the user is redirected to the Groups page
+- a flash message displays "Group Deleted"
+- the group no longer appears
+
+Test result: Pass
 
 ### Admin Role
 

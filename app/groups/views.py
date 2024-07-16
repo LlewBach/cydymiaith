@@ -54,7 +54,7 @@ def add_group():
     return render_template("add_group.html", providers=providers, levels=levels)
 
 
-@groups_bp.route("/add_student/<username>", methods=["GET", "POST"]) # just post?
+@groups_bp.route("/add_student/<username>", methods=["POST"])
 @login_required
 def add_student(username):
     """
@@ -68,10 +68,12 @@ def add_student(username):
     Returns:
         Response: Redirects to the get_groups view.
     """
-    if request.method == "POST":
-        group_id = request.form.get("group_id")
+    group_id = request.form.get("group_id")
+    if group_id:
         Group.add_student_to_group(group_id, username)
         flash("Student Added")
+    else:
+        flash("Group ID not provided", "error")
 
     return redirect(url_for("groups.get_groups"))
 
