@@ -345,8 +345,27 @@ Test result: Pass
 
 The Admin role has all the abilities of the Tutor role plus more, which we will test below.
 
+For the purposes of the following tests, I will:
+- create an account with username: testadmin, password: testadmin
+- assign testadmin a role of Admin
+- create a post titled 'Admin visibility test' by testuser3 and comment on it
 
+#### Total CRUD Ability
 
+1) Log in as testadmin. 
+2) Navigate to the Posts page.
+3) Check that 'Edit' and 'Delete' links appear for the post titled 'Admin visibility test'.
+4) Go to the comments for that post. Check that that 'Edit' and 'Delete' links appear for the comment.
+5) Go to Users. At the bottom of each user card, check that the following links are visible; View Profile, Edit Profile, Delete Profile, Add to Class.
+
+Test result: Pass
+
+#### Role Setting Ability
+
+1) Under Users, click 'Edit Profile' for testuser3.
+2) Change the role to 'Tutor' and click 'Save'. testuser3 should now be listed with a role of Tutor.
+
+Test result: Pass
 
 ## Defensive Programming Testing
 
