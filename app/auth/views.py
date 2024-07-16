@@ -282,6 +282,10 @@ def view_users():
     Returns:
         Response: Renders the users view template with the list of users and additional context data.
     """
+    if current_user.role == 'Student': #make into decorator and same for groups?
+        flash("Unauthorized")
+        return redirect(url_for("auth.profile", username=current_user.username))
+
     users, query = User.get_users(None, None, None, None, None)
 
     if request.method == 'POST':

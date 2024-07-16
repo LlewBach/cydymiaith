@@ -65,9 +65,9 @@
     <p class="card-text">Location: {{ user.location }}</p>
     <p class="card-text">Bio: {{ user.bio }}</p>
   </div>
-  {% if current_user.role in ["Admin", "Tutor"] %}
   <div class="card-footer text-center">
     <a href="{{ url_for('auth.profile', username=user.username) }}" class="card-link">View Profile</a>
+    {% if current_user.role == "Admin" %}
     <a href="{{ url_for('auth.edit_profile', username=user.username) }}" class="card-link">Edit Profile</a>
     <a href="#" class="card-link" data-bs-toggle="modal" data-bs-target="#deleteModal{{ user._id }}">Delete Profile</a>
 
@@ -90,6 +90,7 @@
         </div>
       </div>
     </div>
+    {% endif %}
 
     <a href="#" class="card-link" data-bs-toggle="modal" data-bs-target="#addToClassModal{{ user._id }}">
       Add to Class
@@ -133,7 +134,6 @@
       </div>
     </div>
   </div>
-  {% endif %}
 </div>
 {% endfor %}
 

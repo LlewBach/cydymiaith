@@ -45,7 +45,7 @@ def add_group():
         year = request.form.get("year")
         weekday = request.form.get("weekday")
         Group.insert_group(tutor, provider, level, year, weekday)
-        flash("Group created")
+        flash("Group Created")
         return redirect(url_for('groups.get_groups'))
 
     providers = Group.get_providers()
@@ -71,7 +71,7 @@ def add_student(username):
     if request.method == "POST":
         group_id = request.form.get("group_id")
         Group.add_student_to_group(group_id, username)
-        flash("Student added")
+        flash("Student Added")
 
     return redirect(url_for("groups.get_groups"))
 
@@ -93,7 +93,7 @@ def remove_student(group_id, username):
         Response: Redirects to the get_groups view.
     """
     Group.remove_student(group_id, username)
-    flash("Student removed")
+    flash("Student Removed")
 
     return redirect(url_for('groups.get_groups'))
 
@@ -110,7 +110,7 @@ def edit_group(group_id):
         weekday = request.form.get("weekday")
         students = group["students"]
         Group.edit_group(group_id, tutor, provider, level, year, weekday, students)
-        flash("Group edited")
+        flash("Group Edited")
         return redirect(url_for('groups.get_groups'))
 
     providers = Group.get_providers()
@@ -136,6 +136,6 @@ def delete_group(group_id):
         Response: A redirect response to the 'get_groups' view.
     """
     Group.delete_group(group_id)
-    flash("Group deleted")
+    flash("Group Deleted")
 
     return redirect(url_for('groups.get_groups'))

@@ -65,7 +65,7 @@ Feature abilities and limitations are dependent on the user's role. I will start
   - Username: 'testuser1'
   - Password: 'testuser1'
 3) If the values pass form validation (tested in the 'Defensive Programming Testing' section below), then upon clicking 'Register' the user should be redirected to the user's new profile page, that displays the username, 'Role: Student' and a flash message - "Registration Successful!".
-4) The navbar menu items should have changed from 'Home, Posts, Log In, Register' to 'Home, Posts, Profile, Users, Log Out'.
+4) The navbar menu items should have changed from 'Home, Posts, Log In, Register' to 'Home, Posts, Profile, Log Out'.
 
 Test result: Pass
 
@@ -233,9 +233,72 @@ Test
 
 Test result: Pass
 
+### Tutor Role
+
+The Tutor role has all the abilities of the Student role plus more, which we will test below.
+
+Using an Admin profile, I will set testuser2's role as 'Tutor' for the following tests. I will also create a new Student profile by registering an account using the following details:
+- Email: testuser3@abc.com
+- Username: testuser3
+- Password: testuser3
+
+#### Visibility
+
+1) Log in as testuser2 and on the profile page, check that the role is set to 'Tutor'.
+2) Check that the following navbar options are: Home, Posts, Profile, Users, Groups, Log Out
+3) Navigate to the Users page. Check that at the bottom of each user card, only two links are visible: 'View Profile' and 'Add to Class'.
+
+Test result: Pass
+
+#### User Filtering
+
+1) Set profile details for testuser2 to filter by.
+2) On the Users page, filter by Level. Only users of that level should be visible, or no users at all.
+3) Repeat for each level.
+4) Set Level back to 'All' and repeat steps 2 and 3 but for Provider.
+5) Reset Provider to 'All'.
+6) Filter users by testuser2's Username, Email and Location, clearing the filter between each one. The filters are currently case sensitive.
+7) The filter fields should remember filter settings. 
+
+Test result: Pass
+
+#### Group Creation
+
+1) Navigate to the Groups page. There should be no groups currently visible.
+2) Click 'Add Group'. The user should be taken to the Add Group page.
+3) Fill the form using the following details:
+- Provider: Y Fro / The Vale
+- Level: Mynediad
+- Year: 2024
+- Weekday: Monday
+4) The user should be redirected back to the Groups page, a flash message should display "Group Created" and the created group should be visible.
+
+Test result: Pass
+
+#### Group Editing
+
+1) On the Groups page, click 'Edit Group' for the newly created group.
+2) The user should be taken to the Edit Group page. Check that the form displays the current values. Change the values to the following:
+- Provider: Gwent
+- Level: Sylfaen
+- Year: 2025
+- Weekday: Tuesday
+3) Click 'Submit'. The user should be taken back to the Groups page. A flash message should display 'Group Edited', and the details for the group should have changed accordingly.
+
+Test result: Pass
+
+#### Adding Students to a Group
+
+1) Navigate to the Users page.
+2) Find the profile card for testuser3.
+3) Click 'Add to Class'. A modal should appear asking the user to choose a group, and there should appear an entry for the group 'Sylfaen, Tuesday, 2025'.
+4) Press 'Cancel'. The modal should disappear.
+5) Press 'Add to Class' again. This time select the radio button for the group and press 'Confirm'. The user should be redirected to the Groups page and a flash message should display "Student Added".
+6) Click on the 'Student List' dropdown.
+
 ### Admin Role
 
-The Admin role has all the abilities of the Student role plus more, which we will test below.
+The Admin role has all the abilities of the Tutor role plus more, which we will test below.
 
 
 

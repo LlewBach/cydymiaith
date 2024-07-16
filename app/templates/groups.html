@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Groups</h1>
+<header>
+  <div class="text-center">
+    <h1>Groups</h1>
+    <a href="{{ url_for('groups.add_group') }}" class="btn btn-outline-primary btn-lg">Add Group</a>
+  </div>
+</header>
 
-<a href="{{ url_for('groups.add_group') }}" class="btn btn-outline-primary btn-lg ask-button">Add Group</a>
 
 {% for group in groups %}
 
