@@ -34,7 +34,7 @@
         <select id="group" name="group" class="form-select" aria-label="Default select example">
           <option value="" selected>All Groups</option>
           {% for group in groups %}
-          {% if query.group_id == group._id %}
+          {% if query.group_id|string == group._id|string %}
           <option value="{{ group._id }}" selected>{{ group.weekday }}, {{ group.provider }}, {{ group.level }}</option>
           {% else %}
           <option value="{{ group._id }}">{{ group.weekday }}, {{ group.provider }}, {{ group.level }}</option>
