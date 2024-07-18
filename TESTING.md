@@ -520,6 +520,49 @@ This section considers two aspects.
     - **Expected Result**: The form should not allow any more characters to be added to the above string.
     - **Actual Result**: It is not possible to type any more than the limit of 25 characters. - PASS
 
+### URL Tampering
+
+#### Not logged-in user
+
+1. **Test Case**: Attempt to Make Post 
+    - **Input**: URL.../ask_question
+    - **Expected Result**: The user should be redirected to the login page, and a flash message saying 'Please log in to access this page.
+    - **Actual Result**: User redirected to login page and correct flash message shown. - PASS
+2. **Test Case**: Attempt to Edit Post 
+    - **Input**: URL/edit_question/6696866dc591c73174675c45
+    - **Expected Result**: The user should be redirected to the login page and correct flash message shown.
+    - **Actual Result**: User redirected to login page and correct flash message shown. - PASS
+3. **Test Case**: Attempt to Delete Post 
+    - **Input**: URL/delete_question/6696866dc591c73174675c45
+    - **Expected Result**: The user should be redirected to the login page and correct flash message shown - 'Please log in to access this page'.
+    - **Actual Result**: User redirected to login page and correct flash message shown. - PASS
+4. **Test Case**: Attempt to Add Comment 
+    - **Input**: URL/answer/6696866dc591c73174675c45
+    - **Expected Result**: The user should be redirected to the login page and correct flash message shown - 'Please log in to access this page'.
+    - **Actual Result**: User redirected to login page and correct flash message shown. - PASS
+5. **Test Case**: Attempt to Edit Comment 
+    - **Input**: URL/edit_answer/6696bff7c591c73174675c48
+    - **Expected Result**: The user should be redirected to the login page and correct flash message shown - 'Please log in to access this page'.
+    - **Actual Result**: User redirected to login page and correct flash message shown. - PASS
+6. **Test Case**: Attempt to Delete Comment 
+    - **Input**: URL/delete_answer/6696bff7c591c73174675c48
+    - **Expected Result**: The user should be redirected to the login page and correct flash message shown - 'Please log in to access this page'.
+    - **Actual Result**: User redirected to login page and correct flash message shown. - PASS
+7. **Test Case**: Attempt to Create Group
+    - **Input**: URL/
+    - **Expected Result**: The user should be redirected to the login page and correct flash message shown - 'Please log in to access this page'.
+    - **Actual Result**: User redirected to login page and correct flash message shown. - PASS
+
+ Not finished above!
+
+#### Admin Role
+
+1. **Test Case**: Navigating to non-existent page 
+    - **Input**: URL/test
+    - **Expected Result**: The user should be redirected to the 404 page.
+    - **Actual Result**: User redirected to 404 page. - PASS
+
+
 
 
 ## Responsiveness Testing
