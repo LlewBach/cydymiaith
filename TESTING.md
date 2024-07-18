@@ -490,6 +490,37 @@ This section considers two aspects.
     - **Expected Result**: The form should not allow any more characters to be added to the above string. This string length allows users flexibility, eg 'Monday Nights - 7pm'.
     - **Actual Result**: It is not possible to type any more than the limit of 20 characters. - PASS
 
+#### Reset Password Form
+
+1. **Test Case**: Empty Field
+    - **Input**: Field left empty.
+    - **Expected Result**: The form should display an error message indicating that the New Password field is required.
+    - **Actual Result**: The required field raises a request for the user to fill out the field. - PASS.
+2. **Test Case**: <5 characters in Password field
+    - **Input**: 4 character string
+    - **Expected Result**: The form should not submit and request 'Please lengthen this text to 5 characters or more (you are currently using 4 characters)'.
+    - **Actual Result**: The form does not submit and displays the expected request. - PASS
+3. **Test Case**: >15 characters in Password field
+    - **Input**: 15 character string
+    - **Expected Result**: The form should not allow any more characters to be added to the above string.
+    - **Actual Result**: It is not possible to type any more than the limit of 15 characters. - PASS
+
+#### Users Filter
+
+1. **Test Case**: >15 characters in Username field
+    - **Input**: 15 character string
+    - **Expected Result**: The form should not allow any more characters to be added to the above string.
+    - **Actual Result**: It is not possible to type any more than the limit of 15 characters. - PASS
+2. **Test Case**: Invalid email format in Email field
+    - **Input**: abc.com
+    - **Expected Result**: Form should not submit and should display a validation message indicating the email format is incorrect.
+    - **Actual Result**: Form did not submit and did display a validation message indicating the email format is incorrect. - PASS
+3. **Test Case**: >25 characters in Location field
+    - **Input**: 25 character string
+    - **Expected Result**: The form should not allow any more characters to be added to the above string.
+    - **Actual Result**: It is not possible to type any more than the limit of 25 characters. - PASS
+
+
 
 ## Responsiveness Testing
 
