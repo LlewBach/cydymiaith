@@ -98,12 +98,15 @@ def register():
 
     if request.method == "POST":
         existing_user = User.find_by_username(request.form.get("username"))
-        # also check for existing email
         if existing_user:
-            flash("Username already exists", "error")    
+            flash("That username is already in use", "error")    
             return redirect(url_for("auth.login"))
-        
         email = request.form.get("email")
+        if User.find_by_email(email):
+            flash("That email is already in use")
+            return redirect(url_for('auth.register'))
+        
+        # email = request.form.get("email")
         username = request.form.get("username").lower()
         password = request.form.get("password")
         user = User.create_new(username, password, email)

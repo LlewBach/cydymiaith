@@ -35,11 +35,13 @@
       </div>
       <div class="mb-3">
         <label for="year" class="form-label">Year</label>
-        <input type="text" id="year" name="year" class="form-control" value="{{ group.year }}">
+        <input type="text" id="year" name="year" class="form-control" pattern="20[0-9]{2}$" value="{{ group.year }}"
+          required>
       </div>
       <div class="mb-3">
         <label for="weekday" class="form-label">Weekday</label>
-        <input type="text" id="weekday" name="weekday" class="form-control" value="{{ group.weekday }}">
+        <input type="text" id="weekday" name="weekday" class="form-control" value="{{ group.weekday }}" maxlength="20"
+          selected>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>

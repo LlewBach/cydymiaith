@@ -9,14 +9,14 @@
     <input type="email" class="form-control" id="email" name="email" placeholder="Email" maxlength="50" required>
   </div>
   <div class="mb-3">
-    <label for="username" class="form-label">Username</label>
-    <input type="text" class="form-control" id="username" name="username" placeholder="Username" minlength="5"
-      maxlength="15" pattern="^[a-zA-Z0-9]{5,15}$" required>
+    <label for="username" class="form-label">Username - 5-15 characters, letters and numbers only</label>
+    <input type="text" class="form-control" id="username" name="username" placeholder="Username" minlength="3"
+      maxlength="15" pattern="^[a-zA-Z0-9]{3,15}$" required>
   </div>
   <div class="mb-3">
-    <label for="password" class="form-label">Password</label>
+    <label for="password" class="form-label">Password - max 15 characters</label>
     <input type="password" class="form-control" id="password" name="password" minlength="5" maxlength="15"
-      pattern="^[a-zA-Z0-9]{5,15}$" placeholder="xxxx" required>
+      placeholder="xxxx" required>
   </div>
   <button type="submit" class="btn btn-primary">Register</button>
 </form>

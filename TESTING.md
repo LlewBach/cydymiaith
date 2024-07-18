@@ -203,7 +203,7 @@ Test result: Pass
 2) Click 'Reset Password'. A flash message should display "A confirmation email has been sent".
 3) Find the email from cydymiaith@gmail.com in your inbox with the subject 'Password Reset Request'.
 4) Open the email and click the link. The user should be taken to Cydymiaith's Reset Password page.
-5) Enter the Email and New Password, and click 'Reset Password'. The user should be sent back to the profile page and a flash message should display "Your password has been reset".
+5) Enter the New Password, and click 'Reset Password'. The user should be sent back to the profile page and a flash message should display "Your password has been reset".
 6) Log out and log back in with the new password. Log in should succeed.
 
 Test result: Pass
@@ -414,8 +414,82 @@ This section considers two aspects.
     - **Actual Result**: Form did not submit and did display a validation message indicating the email format is incorrect. - PASS
 2. **Test Case**: Email address already in use
     - **Input**: testuser3@abc.com
+    - **Expected Result**: Form should reload and flash a message displaying "That email is already in use".
+    - **Actual Result**: Form reloads and correct flash message appears. - PASS
+
+#### Registration Form
+
+1. **Test Case**: Invalid email format
+    - **Input**: abc.com
     - **Expected Result**: Form should not submit and should display a validation message indicating the email format is incorrect.
     - **Actual Result**: Form did not submit and did display a validation message indicating the email format is incorrect. - PASS
+2. **Test Case**: Empty Fields
+    - **Input**: Fields left empty.
+    - **Expected Result**: The form should display error messages indicating that the Email, Username and Password fields are required.
+    - **Actual Result**: All required fields raise a request for the user to fill out the field. - PASS.
+3. **Test Case**: >50 Characters in Email field
+    - **Input**: 50 character string
+    - **Expected Result**: The form should not allow any more characters to be added to the above string.
+    - **Actual Result**: It is not possible to type any more than the limit of 50 characters. - PASS
+4. **Test Case**: <3 characters in Username field
+    - **Input**: 2 character string
+    - **Expected Result**: The form should not submit and request 'Please match the requested format'.
+    - **Actual Result**: The form does not submit and requests 'Please match the requested format'. - PASS
+5. **Test Case**: >15 characters in Username field
+    - **Input**: 16 character string
+    - **Expected Result**: The form should not allow any more characters to be added to the above string.
+    - **Actual Result**: It is not possible to type any more than the limit of 15 characters. - PASS
+6. **Test Case**: Non-letter/number in Username field
+    - **Input**: testuser-4!
+    - **Expected Result**: The form should not submit and request 'Please match the requested format'.
+    - **Actual Result**: The form does not submit and requests 'Please match the requested format'. - PASS
+7. **Test Case**: <5 characters in Password field
+    - **Input**: 4 character string
+    - **Expected Result**: The form should not submit and request 'Please lengthen this text to 5 characters or more (you are currently using 4 characters)'.
+    - **Actual Result**: The form does not submit and displays the expected request. - PASS
+8. **Test Case**: >15 characters in Password field
+    - **Input**: 15 character string
+    - **Expected Result**: The form should not allow any more characters to be added to the above string.
+    - **Actual Result**: It is not possible to type any more than the limit of 15 characters. - PASS
+9. **Test Case**: Email address already in use
+    - **Input**: testuser3@abc.com
+    - **Expected Result**: Form should reload and flash a message displaying "That email is already in use".
+    - **Actual Result**: Form reloads and correct flash message appears. - PASS
+10. **Test Case**: Username already in use
+    - **Input**: testuser3
+    - **Expected Result**: User redirected to Log In page and see a flash message - "That username is already in use".
+    - **Actual Result**: User redirected to Log In page and correct flash message appears. - PASS
+
+#### Log In Form
+
+1. **Test Case**: Empty Fields
+    - **Input**: Fields left empty.
+    - **Expected Result**: The form should display error messages indicating that the Username and Password fields are required.
+    - **Actual Result**: All required fields raise a request for the user to fill out the field. - PASS.
+2. **Test Case**: Username not recognized
+    - **Input**: Username: testuser4, Password: testuser3
+    - **Expected Result**: The page should reload and flash a message - "Incorrect username and/or password".
+    - **Actual Result**: The page reloads and flashes a message - "Incorrect username and/or password". - PASS
+3. **Test Case**: Password incorrect
+    - **Input**: Username: testuser3, Password: testuser4
+    - **Expected Result**: The page should reload and flash a message - "Incorrect username and/or password".
+    - **Actual Result**: The page reloads and flashes a message - "Incorrect username and/or password". - PASS
+
+#### Add/Edit Group Forms
+
+1. **Test Case**: Empty Fields
+    - **Input**: Fields left empty.
+    - **Expected Result**: The form should display error messages indicating that the Provider, Level, Year and Weekday fields are required.
+    - **Actual Result**: All required fields raise a request for the user to fill out the field. - PASS.
+2. **Test Case**: Invalid input for Year field
+    - **Input**: 2123
+    - **Expected Result**: Form should not submit and request 'Please match the requested format', which is any value of the form '20XX'.
+    - **Actual Result**: Form does not submit and displays correct request message.
+3. **Test Case**: >20 characters in Weekday field
+    - **Input**: 20 character string
+    - **Expected Result**: The form should not allow any more characters to be added to the above string. This string length allows users flexibility, eg 'Monday Nights - 7pm'.
+    - **Actual Result**: It is not possible to type any more than the limit of 20 characters. - PASS
+
 
 ## Responsiveness Testing
 
