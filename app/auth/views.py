@@ -225,9 +225,10 @@ def edit_profile(username):
     
     if request.method == "POST":
         email = request.form.get("email")
-        if User.find_by_email(email):
+        found_user = User.find_by_email(email)
+        if found_user.username != username:
             flash("That email is already in use")
-            return redirect(url_for('auth.edit_profile', username=current_user.username))
+            return redirect(url_for('auth.profile', username=current_user.username))
         role = request.form.get("role")
         level = request.form.get("level")
         provider = request.form.get("provider")
