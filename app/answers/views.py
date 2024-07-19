@@ -1,3 +1,4 @@
+from functools import wraps
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
 from bson.objectid import ObjectId
@@ -56,8 +57,24 @@ def answer(question_id):
         return redirect(url_for("answers.view_answers", question_id=question_id))
     
 
+def user_owns_answer_or_admin(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        answer_id = kwargs.get('answer_id')
+        answer = Answer.find_by_id(answer_id)
+        if answer is None:
+            flash("Comment not found.", "error")
+            return redirect(url_for('questions.get_questions'))
+        if current_user.username != answer['username'] and current_user.role != 'Admin':
+            flash("You are not authorized to do this.", "error")
+            return redirect(url_for('auth.profile', username=current_user.username))
+        return f(*args, **kwargs)
+    return wrapper
+
+
 @answers_bp.route("/edit_answer/<answer_id>", methods=["GET", "POST"])
 @login_required
+@user_owns_answer_or_admin
 def edit_answer(answer_id):
     """
     Handles the editing of an existing answer and updates the database.
@@ -90,6 +107,7 @@ def edit_answer(answer_id):
 
 @answers_bp.route("/delete_answer/<answer_id>")
 @login_required
+@user_owns_answer_or_admin
 def delete_answer(answer_id):
     """
     Deletes a specific answer from the database and updates the associated question's answer count.

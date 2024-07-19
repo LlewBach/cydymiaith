@@ -8,6 +8,30 @@ from app import mongo
 class Answer:
     # Docstrings written by GPT4o and edited by myself.
     @staticmethod
+    def find_by_id(answer_id):
+        """
+        Retrieves an answer from the database by its ID.
+
+        This method queries the database to find a answer document that matches the provided answer ID.
+
+        Args:
+            answer_id (str): The ID of the question to be retrieved.
+
+        Returns:
+            dict: The answer document matching the provided ID, or None if an exception occurs.
+
+        Raises:
+            Exception: If there is an issue with the database query, the exception is caught and an error message is printed.
+        """
+        try:
+            answer = mongo.db.answers.find_one({"_id": ObjectId(answer_id)})
+            return answer
+        except Exception as e:
+            print(f"Error in find_by_id method: {e}")
+            return None
+
+
+    @staticmethod
     def find_answers_by_question_id(question_id):
         """
         Retrieves answers from the database associated with the given question ID and adds a time_ago property to each answer.

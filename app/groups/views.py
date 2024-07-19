@@ -1,3 +1,4 @@
+from functools import wraps
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import current_user, login_required
 from app.groups.models import Group
@@ -6,9 +7,20 @@ from app.groups.models import Group
 groups_bp = Blueprint('groups', __name__, template_folder='../templates')
 
 
+def must_be_tutor_or_admin(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        if current_user.role not in ["Admin", "Tutor"]:
+            flash("You are not authorized to do this.", "error")
+            return redirect(url_for('auth.profile', username=current_user.username))
+        return f(*args, **kwargs)
+    return wrapper
+
+
 # Docstrings written by GPT4o and edited by myself.
 @groups_bp.route("/get_groups")
 @login_required
+@must_be_tutor_or_admin
 def get_groups():
     """
     Renders the groups template with a list of groups filtered by the current user's role and username.
@@ -25,6 +37,7 @@ def get_groups():
 
 @groups_bp.route("/add_group", methods=["GET", "POST"])
 @login_required
+@must_be_tutor_or_admin
 def add_group():
     """
     Handles the creation of a new group and renders the add_group template.
@@ -56,6 +69,7 @@ def add_group():
 
 @groups_bp.route("/add_student/<username>", methods=["POST"])
 @login_required
+@must_be_tutor_or_admin
 def add_student(username):
     """
     Adds a student to a group's students list and redirects to the groups view.
@@ -80,6 +94,7 @@ def add_student(username):
 
 @groups_bp.route("/remove_student/<group_id>/<username>")
 @login_required
+@must_be_tutor_or_admin
 def remove_student(group_id, username):
     """
     Removes a student from a group's students list and redirects to the groups view.
@@ -102,6 +117,7 @@ def remove_student(group_id, username):
 
 @groups_bp.route("/edit_group/<group_id>", methods=["GET", "POST"])
 @login_required
+@must_be_tutor_or_admin
 def edit_group(group_id):
     group = Group.get_group_by_id(group_id)
     if request.method == "POST":
@@ -123,6 +139,7 @@ def edit_group(group_id):
 
 @groups_bp.route("/delete_group/<group_id>")
 @login_required
+@must_be_tutor_or_admin
 def delete_group(group_id):
     """
     Deletes a group and redirects to the groups list view.

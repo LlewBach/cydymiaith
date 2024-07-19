@@ -1,3 +1,4 @@
+from functools import wraps
 from flask import Blueprint, render_template, request, redirect, url_for, flash, current_app
 from flask_login import login_user, logout_user, current_user, login_required
 from flask_mail import Message
@@ -197,8 +198,20 @@ def profile(username):
     return render_template("profile.html", user=user, questions=questions)
 
 
+def user_owns_profile_or_admin(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        username = kwargs.get('username')
+        if current_user.username != username and current_user.role != "Admin":
+            flash("You are not authorized to do this.", "error")
+            return redirect(url_for('auth.profile', username=current_user.username))
+        return f(*args, **kwargs)
+    return wrapper
+
+
 @auth_bp.route("/edit_profile/<username>", methods=["GET", "POST"])
 @login_required
+@user_owns_profile_or_admin
 def edit_profile(username):
     """
     Handles the editing of a user's profile.
@@ -219,9 +232,6 @@ def edit_profile(username):
         Response: Redirects to the users view page if the current user is an Admin.
         Response: Redirects to the current user's profile page if they are not authorized to edit the profile.
     """
-    if current_user.username != username and current_user.role != "Admin":
-        flash(f"You are not authorized to view this profile, {current_user.username}.", "error") # make into own function?
-        return redirect(url_for('auth.profile', username=current_user.username))
     
     if request.method == "POST":
         email = request.form.get("email")
@@ -251,6 +261,7 @@ def edit_profile(username):
 
 @auth_bp.route("/delete_profile/<username>")
 @login_required
+@user_owns_profile_or_admin
 def delete_profile(username):
     """
     Deletes a user's profile.
@@ -266,9 +277,6 @@ def delete_profile(username):
         Response: Redirects to the users view page if the current user is an Admin.
         Response: Redirects to the login page after successful profile deletion if the current user is not an Admin.
     """
-    if current_user.username != username and current_user.role != "Admin":
-        flash(f"You are not authorized to do this, {current_user.username}.", "error") # make into own function?
-        return redirect(url_for('auth.profile', username=current_user.username))
     
     User.delete_profile(username)
     flash("Account Deleted")
@@ -292,7 +300,7 @@ def view_users():
     Returns:
         Response: Renders the users view template with the list of users and additional context data.
     """
-    if current_user.role == 'Student': #make into decorator and same for groups?
+    if current_user.role == 'Student':
         flash("Unauthorized")
         return redirect(url_for("auth.profile", username=current_user.username))
 
