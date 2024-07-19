@@ -629,9 +629,6 @@ For clarification, here testuser3 has the role of Student.
     - **Expected Result**: The user should be redirected to the 404 page.
     - **Actual Result**: User redirected to 404 page. - PASS
 
-
-
-
 ## Responsiveness Testing
 
 [Back to top](#cydymiaith-testing-documentation)

@@ -166,21 +166,20 @@ The information of Profiles, Posts, Comments, Users and Groups will be displayed
 ##### Registration
 
 - The registration form asks for an email, username and password.
-- The password must be correctly entered twice CHECK.
-- The email and username must be unique and not already exist in the database CHECK.
-- The password is required to be in a certain form and contain certain characters CHECK. 
-- If the user has forgotten their password, they are able to reset it via email confirmation CHECK.
-- Form validation will inform the user of any errors in user input CHECK.
-- Flash messages will inform the user if the email or username are already taken CHECK.
+- The email and username must be unique and not already exist in the database.
+- The password is required to be in a certain form and contain certain characters. 
+- If the user wants to change their password, they are able to reset it via email confirmation.
+- Form validation will inform the user of any errors in user input.
+- Flash messages will inform the user if the email or username are already taken.
 - Entering a unique email, username and valid password will successfully register the user, who will be redirected to their profile.
 - A flash message will display informing the user that registration was successful.
 
 ##### Log In
 
 - The Log In form requests the user's username and password. 
-- The form validation requires that the email be in a certain format CHECK.
-- The form validation requires that the password has a certain format CHECK.
-- If the entered username or password do not correspond to a user in the database, a flash message will display to the user CHECK.
+- The form validation requires that the email be in a certain format.
+- The form validation requires that the password has a certain format.
+- If the entered username or password do not correspond to a user in the database, a flash message will display to the user.
 - Entering a username and password that successfully correspond to a user's details in the database will log the user in to that profile.
 - A flash message will inform the user that login was successful.
 
@@ -196,23 +195,24 @@ The information of Profiles, Posts, Comments, Users and Groups will be displayed
 - Create, view, edit and delete their own posts.
 - Add, view, edit and delete their own comments on posts.
 - Assign and filter posts by category or assigned group.
-- Edit and delete their own profile with confirmational flash messages CHECK.
+- Edit and delete their own profile with confirmational flash messages.
 - Reset password with email confirmation.
 - A flash message will inform the user if password reset was successful.
-- SHALL I ALLOW STUDENTS TO VIEW USERS LIST?
 
 ##### Tutor Powers
 
-- Include Student powers plus the following...
+Include Student powers plus the following...
+
 - Create, view, edit and delete own Groups.
 - View a list of Users. Add Students from the user list to own Groups.
-- Remove Students from own Group.
+- Remove Students from own Groups.
 - Filter Posts by own Groups.
-- Filter Users by level, provider, username, email and location. Filter text inputs can be upper or lower case CHECK!
+- Filter Users by level, provider, username, email and location.
 
 ##### Admin Powers
 
-- Include Tutor powers plus the following...
+Include Tutor powers plus the following...
+
 - View, edit, and delete all Groups.
 - Edit and delete any Profile.
 - Filter posts by any existing Group.
