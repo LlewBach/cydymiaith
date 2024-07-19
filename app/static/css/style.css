@@ -1,3 +1,68 @@
+/* BASE ---------------------------- */
+
+body {
+  background-color: rgb(34, 40, 49);
+}
+
+nav.navbar {
+  background: linear-gradient(to right, rgb(49, 188, 216), rgb(67, 217, 181));
+  margin-bottom: 20px;
+}
+
+header {
+  margin-bottom: 20px;
+}
+
+h1 {
+  color: rgb(242, 242, 242);
+  margin-bottom: 20px;
+}
+
+/* a.btn-outline {
+  color: rgb(55, 210, 228);
+} */
+
+a {
+  text-decoration: none;
+}
+
+.card {
+  background-color: rgb(83, 93, 107);
+  margin-bottom: 20px;
+}
+
+p.category {
+  color: rgb(113, 255, 205);
+  font-style: italic;
+}
+
+p.card-title {
+  color: rgb(242, 242, 242);
+  font-size: 20px;
+}
+
+p.card-subtitle a {
+  color: rgb(55, 210, 228);
+}
+
+p.card-subtitle .ago-span {
+  color: rgb(202, 203, 206);
+}
+
+p.card-text {
+  color: rgb(202, 203, 206);
+}
+
+.card-link {
+  color: rgb(55, 210, 228);
+}
+
+form label {
+  color: rgb(202, 203, 206);
+}
+
+/* HOME ---------------------------- */
+
 .home-header {
   position: relative;
   background-image: url(../images/dragon.jpg);
@@ -77,4 +142,10 @@
 
 .act-meetup {
   background-image: url(../images/meetup.jpg);
+}
+
+/* POSTS ---------------------------- */
+
+form.posts-form {
+  margin-bottom: 20px;
 }
