@@ -524,6 +524,10 @@ This section considers two aspects.
 
 #### Not logged-in user
 
+Using flask-login, I used the @login_required decorator on all functions I wanted to make unavailable to users that are not signed in. This includes the following functions:
+
+
+
 1. **Test Case**: Attempt to Make Post 
     - **Input**: URL.../ask_question
     - **Expected Result**: The user should be redirected to the login page, and a flash message saying 'Please log in to access this page.
@@ -549,11 +553,37 @@ This section considers two aspects.
     - **Expected Result**: The user should be redirected to the login page and correct flash message shown - 'Please log in to access this page'.
     - **Actual Result**: User redirected to login page and correct flash message shown. - PASS
 7. **Test Case**: Attempt to Create Group
-    - **Input**: URL/
+    - **Input**: URL/add_group
+    - **Expected Result**: The user should be redirected to the login page and correct flash message shown - 'Please log in to access this page'.
+    - **Actual Result**: User redirected to login page and correct flash message shown. - PASS
+8. **Test Case**: Attempt to Edit Group
+    - **Input**: URL/edit_group/6692becac80cf3b2eb4b14f1
+    - **Expected Result**: The user should be redirected to the login page and correct flash message shown - 'Please log in to access this page'.
+    - **Actual Result**: User redirected to login page and correct flash message shown. - PASS
+9. **Test Case**: Attempt to Delete Group
+    - **Input**: URL/delete_group/6692becac80cf3b2eb4b14f1
+    - **Expected Result**: The user should be redirected to the login page and correct flash message shown - 'Please log in to access this page'.
+    - **Actual Result**: User redirected to login page and correct flash message shown. - PASS
+10. **Test Case**: Attempt to View Profile
+    - **Input**: URL/profile/testadmin
+    - **Expected Result**: The user should be redirected to the login page and correct flash message shown - 'Please log in to access this page'.
+    - **Actual Result**: User redirected to login page and correct flash message shown. - PASS
+11. **Test Case**: Attempt to Edit Profile
+    - **Input**: URL/edit_profile/testadmin
+    - **Expected Result**: The user should be redirected to the login page and correct flash message shown - 'Please log in to access this page'.
+    - **Actual Result**: User redirected to login page and correct flash message shown. - PASS
+12. **Test Case**: Attempt to Delete Profile
+    - **Input**: URL/delete_profile/testadmin
     - **Expected Result**: The user should be redirected to the login page and correct flash message shown - 'Please log in to access this page'.
     - **Actual Result**: User redirected to login page and correct flash message shown. - PASS
 
- Not finished above!
+#### Student Role
+
+1. **Test Case**: Attempt to Edit Other User's Post
+    - **Input**: URL/delete_profile/testadmin
+    - **Expected Result**: The user should be redirected to the login page and correct flash message shown - 'Please log in to access this page'.
+    - **Actual Result**: User redirected to login page and correct flash message shown. - PASS
+
 
 #### Admin Role
 
