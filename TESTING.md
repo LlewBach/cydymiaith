@@ -579,10 +579,18 @@ Using flask-login, I used the @login_required decorator on all functions I wante
 
 #### Student Role
 
-1. **Test Case**: Attempt to Edit Other User's Post
-    - **Input**: URL/delete_profile/testadmin
-    - **Expected Result**: The user should be redirected to the login page and correct flash message shown - 'Please log in to access this page'.
-    - **Actual Result**: User redirected to login page and correct flash message shown. - PASS
+1. **Test Case**: testuser3 attempts to edit testuser2's post
+    - **Input**: URL/edit_question/669575542cbebbe1051931c4
+    - **Expected Result**: The user should be redirected to own Profile page and correct flash message shown - 'You are not authorized to do this'.
+    - **Actual Result**: User redirected to Profile page and correct flash message shown. - PASS
+2. **Test Case**: testuser3 attempts to delete testuser2's post
+    - **Input**: URL/delete_question/669575542cbebbe1051931c4
+    - **Expected Result**: The user should be redirected to own Profile page and correct flash message shown - 'You are not authorized to do this'.
+    - **Actual Result**: User redirected to Profile page and correct flash message shown. - PASS
+2. **Test Case**: testuser3 attempts to edit testadmin's comment
+    - **Input**: URL/edit_answer/669683a1c591c73174675c44
+    - **Expected Result**: The user should be redirected to own Profile page and correct flash message shown - 'You are not authorized to do this'.
+    - **Actual Result**: User redirected to Profile page and correct flash message shown. - PASS
 
 
 #### Admin Role
