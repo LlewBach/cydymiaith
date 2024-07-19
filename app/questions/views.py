@@ -1,3 +1,4 @@
+from functools import wraps
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import current_user, login_required
 from app.questions.models import Question
@@ -66,8 +67,24 @@ def ask_question():
     return render_template("ask_question.html", categories=categories, groups=groups)
 
 
+def user_owns_question_or_admin(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        question_id = kwargs.get('question_id')
+        question = Question.find_by_id(question_id)
+        if question is None:
+            flash("Question not found.", "error")
+            return redirect(url_for('questions.get_questions'))
+        if current_user.username != question['username'] and current_user.role != 'Admin':
+            flash("You are not authorized to do this.", "error")
+            return redirect(url_for('auth.profile', username=current_user.username))
+        return f(*args, **kwargs)
+    return wrapper
+
+
 @questions_bp.route("/edit_question/<question_id>", methods=["GET", "POST"])
 @login_required
+@user_owns_question_or_admin
 def edit_question(question_id):
     """
     Handles the editing of an existing question and renders the edit_question template.
@@ -101,6 +118,7 @@ def edit_question(question_id):
 
 @questions_bp.route("/delete_question/<question_id>")
 @login_required
+@user_owns_question_or_admin
 def delete_question(question_id):
     """
     Deletes a question from the database and redirects to the get_questions view.
