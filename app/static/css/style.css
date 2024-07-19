@@ -155,3 +155,9 @@ p.alt-option {
   color: rgb(202, 203, 206);
   margin-bottom: 0;
 }
+
+/* PROFILE ---------------------------- */
+
+h2.card-title {
+  color: rgb(242, 242, 242);
+}
