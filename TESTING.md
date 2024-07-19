@@ -524,10 +524,6 @@ This section considers two aspects.
 
 #### Not logged-in user
 
-Using flask-login, I used the @login_required decorator on all functions I wanted to make unavailable to users that are not signed in. This includes the following functions:
-
-
-
 1. **Test Case**: Attempt to Make Post 
     - **Input**: URL.../ask_question
     - **Expected Result**: The user should be redirected to the login page, and a flash message saying 'Please log in to access this page.
@@ -579,6 +575,8 @@ Using flask-login, I used the @login_required decorator on all functions I wante
 
 #### Student Role
 
+For clarification, here testuser3 has the role of Student.
+
 1. **Test Case**: testuser3 attempts to edit testuser2's post
     - **Input**: URL/edit_question/669575542cbebbe1051931c4
     - **Expected Result**: The user should be redirected to own Profile page and correct flash message shown - 'You are not authorized to do this'.
@@ -587,11 +585,42 @@ Using flask-login, I used the @login_required decorator on all functions I wante
     - **Input**: URL/delete_question/669575542cbebbe1051931c4
     - **Expected Result**: The user should be redirected to own Profile page and correct flash message shown - 'You are not authorized to do this'.
     - **Actual Result**: User redirected to Profile page and correct flash message shown. - PASS
-2. **Test Case**: testuser3 attempts to edit testadmin's comment
+3. **Test Case**: testuser3 attempts to edit testadmin's comment
     - **Input**: URL/edit_answer/669683a1c591c73174675c44
     - **Expected Result**: The user should be redirected to own Profile page and correct flash message shown - 'You are not authorized to do this'.
     - **Actual Result**: User redirected to Profile page and correct flash message shown. - PASS
-
+4. **Test Case**: testuser3 attempts to delete testadmin's comment
+    - **Input**: URL/delete_answer/669683a1c591c73174675c44
+    - **Expected Result**: The user should be redirected to own Profile page and correct flash message shown - 'You are not authorized to do this'.
+    - **Actual Result**: User redirected to Profile page and correct flash message shown. - PASS
+4. **Test Case**: testuser3 attempts to edit testadmin's profile
+    - **Input**: URL/edit_profile/testadmin
+    - **Expected Result**: The user should be redirected to own Profile page and correct flash message shown - 'You are not authorized to do this'.
+    - **Actual Result**: User redirected to Profile page and correct flash message shown. - PASS
+5. **Test Case**: testuser3 attempts to delete testadmin's profile
+    - **Input**: URL/delete_profile/testadmin
+    - **Expected Result**: The user should be redirected to own Profile page and correct flash message shown - 'You are not authorized to do this'.
+    - **Actual Result**: User redirected to Profile page and correct flash message shown. - PASS
+6. **Test Case**: testuser3 attempts to view Users page
+    - **Input**: URL/view_users
+    - **Expected Result**: The user should be redirected to own Profile page and correct flash message shown - 'Unauthorized'.
+    - **Actual Result**: User redirected to Profile page and correct flash message shown. - PASS
+7. **Test Case**: testuser3 attempts to view Groups page
+    - **Input**: URL/view_users
+    - **Expected Result**: The user should be redirected to own Profile page and correct flash message shown - 'Unauthorized'.
+    - **Actual Result**: User redirected to Profile page and correct flash message shown. - PASS
+8. **Test Case**: testuser3 attempts to add group
+    - **Input**: URL/add_group
+    - **Expected Result**: The user should be redirected to own Profile page and correct flash message shown - 'You are not authorized to do this'.
+    - **Actual Result**: User redirected to Profile page and correct flash message shown. - PASS
+9. **Test Case**: testuser3 attempts to edit group
+    - **Input**: URL/edit_group/6692becac80cf3b2eb4b14f1
+    - **Expected Result**: The user should be redirected to own Profile page and correct flash message shown - 'You are not authorized to do this'.
+    - **Actual Result**: User redirected to Profile page and correct flash message shown. - PASS
+10. **Test Case**: testuser3 attempts to delete group
+    - **Input**: URL/delete_group/6692becac80cf3b2eb4b14f1
+    - **Expected Result**: The user should be redirected to own Profile page and correct flash message shown - 'You are not authorized to do this'.
+    - **Actual Result**: User redirected to Profile page and correct flash message shown. - PASS
 
 #### Admin Role
 
