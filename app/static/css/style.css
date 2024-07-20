@@ -67,6 +67,26 @@ form select.form-select {
   background-color: rgb(202, 203, 206);
 }
 
+/* REGISTER ---------------------------- */
+
+p.alt-option {
+  color: rgb(202, 203, 206);
+  margin-bottom: 0;
+}
+
+/* PROFILE ---------------------------- */
+
+h2.card-title {
+  color: rgb(242, 242, 242);
+}
+
+/* GROUPS ---------------------------- */
+
+span.card-value {
+  color: red;
+}
+
+
 /* HOME ---------------------------- */
 
 .home-header {
@@ -148,17 +168,4 @@ form select.form-select {
 
 .act-meetup {
   background-image: url(../images/meetup.jpg);
-}
-
-/* REGISTER ---------------------------- */
-
-p.alt-option {
-  color: rgb(202, 203, 206);
-  margin-bottom: 0;
-}
-
-/* PROFILE ---------------------------- */
-
-h2.card-title {
-  color: rgb(242, 242, 242);
 }
