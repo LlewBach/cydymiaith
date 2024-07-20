@@ -64,10 +64,8 @@
       </p>
       <p class="category highlight2"><em>{{ question.category }}</em></p>
     </div>
-
     <p class="card-title">{{ question.title }}</p>
     <p class="secondary-text">{{ question.description }}</p>
-
   </div>
   <div class="card-footer d-flex justify-content-between">
     <a href="{{ url_for('answers.view_answers', question_id=question._id) }}" class="card-link">{{ question.answer_count
