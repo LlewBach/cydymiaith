@@ -57,16 +57,16 @@
 <div class="card">
   <div class="card-body">
     <div class="d-flex justify-content-between">
-      <p class="card-subtitle mb-2 text-body-secondary"><a
-          href="{{ url_for('auth.profile', username=question.username) }}">{{ question.username }}</a>: <span
-          class="ago-span">{{
-          question.time_ago }}</span>
+      <p><a class="highlight1" href="{{ url_for('auth.profile', username=question.username) }}">{{
+          question.username
+          }}</a>: <em class="secondary-text">{{
+          question.time_ago }}</em>
       </p>
-      <p class="category">{{ question.category }}</p>
+      <p class="category highlight2"><em>{{ question.category }}</em></p>
     </div>
 
     <p class="card-title">{{ question.title }}</p>
-    <p class="card-text">{{ question.description }}</p>
+    <p class="secondary-text">{{ question.description }}</p>
 
   </div>
   <div class="card-footer d-flex justify-content-between">

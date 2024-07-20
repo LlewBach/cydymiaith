@@ -8,51 +8,51 @@
 <div class="card">
   <div class="card-body text-center">
     <h2 class="card-title">{{ user.username }}</h2>
-    <p class="card-subtitle">{{ user.role }}</p>
+    <p class="card-subtitle highlight2"><em>{{ user.role }}</em></p>
     <div class="container">
       <div class="row">
         <div class="col-7">
           <div class="row">
             <div class="col-4">
-              <p class="card-text text-end">E-mail:</p>
+              <p class="text-end secondary-text">E-mail:</p>
             </div>
             <div class="col-8">
-              <p class="card-text text-start">{{ user.email }}</p>
+              <p class="text-start primary-text">{{ user.email }}</p>
             </div>
           </div>
           <div class="row">
             <div class="col-4">
-              <p class="card-text text-end">Level:</p>
+              <p class="text-end secondary-text">Level:</p>
             </div>
             <div class="col-8">
-              <p class="card-text text-start">{{ user.level }}</p>
+              <p class="text-start primary-text">{{ user.level }}</p>
             </div>
           </div>
           <div class="row">
             <div class="col-4">
-              <p class="card-text text-end">Provider:</p>
+              <p class="text-end secondary-text">Provider:</p>
             </div>
             <div class="col-8">
-              <p class="card-text text-start">{{ user.provider }}</p>
+              <p class="text-start primary-text">{{ user.provider }}</p>
             </div>
           </div>
           <div class="row">
             <div class="col-4">
-              <p class="card-text text-end">Location:</p>
+              <p class="text-end secondary-text">Location:</p>
             </div>
             <div class="col-8">
-              <p class="card-text text-start">{{ user.location }}</p>
+              <p class="text-start primary-text">{{ user.location }}</p>
             </div>
           </div>
         </div>
         <div class="col-5">
           <div class="row">
             <div class="col-12">
-              <p class="card-text text-start">Bio:</p>
+              <p class="text-start secondary-text">Bio:</p>
             </div>
             <!-- {% if user.bio %} -->
             <div class="col-12">
-              <p class="card-text text-start">{{ user.bio }}</p>
+              <p class="text-start primary-text">{{ user.bio }}</p>
             </div>
             <!-- {% endif %} -->
           </div>
@@ -93,16 +93,15 @@
 <div class="card">
   <div class="card-body">
     <div class="d-flex justify-content-between">
-      <p class="card-subtitle mb-2 text-body-secondary"><a
-          href="{{ url_for('auth.profile', username=question.username) }}">{{ question.username }}</a>: <span
-          class="ago-span">{{
-          question.time_ago }}</span>
+      <p><a class="highlight1" href="{{ url_for('auth.profile', username=question.username) }}">{{ question.username
+          }}</a>: <em class="secondary-text">{{
+          question.time_ago }}</em>
       </p>
-      <p class="category">{{ question.category }}</p>
+      <p class="highlight2"><em>{{ question.category }}</em></p>
     </div>
 
     <p class="card-title">{{ question.title }}</p>
-    <p class="card-text">{{ question.description }}</p>
+    <p class="secondary-text">{{ question.description }}</p>
 
   </div>
   <div class="card-footer d-flex justify-content-between">
