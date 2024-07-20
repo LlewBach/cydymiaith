@@ -1,24 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<!-- <header class="home-header">
-  <div class="hero-text">
-    <h1>Croeso</h1>
-    <p>To your Welsh language learning Community</p>
-    <p>
-      Cydymiaith is a blend of two words, 'cydymaith' (companion) and 'iaith' (language) and that pretty much sums it
-      up!
-      The aim of Cydymiaith is to provide a place for LearnWelsh students and tutors to come together and share,
-      practice
-      and learn.
-    </p>
-    <div>
-      <a href="#">Log In</a>
-      <a href="#">Register</a>
-    </div>
-  </div>
-
-</header> -->
 
 <header>
   <div class="card text-center">
@@ -31,10 +13,10 @@
           </div>
           <div class="col-4 d-flex justify-content-around align-items-center">
             {% if not current_user.is_authenticated %}
-            <a class="btn btn-outline-warning" href="#">Log In</a>
-            <a class="btn btn-outline-info" href="#">Register</a>
+            <a class="btn btn-outline-warning" href="{{ url_for('auth.login') }}">Log In</a>
+            <a class="btn btn-outline-info" href="{{ url_for('auth.register') }}">Register</a>
             {% else %}
-            <a class="btn btn-outline-warning" href="#">See Posts</a>
+            <a class="btn btn-outline-warning" href="{{ url_for('questions.get_questions') }}">See Posts</a>
             {% endif %}
           </div>
         </div>
