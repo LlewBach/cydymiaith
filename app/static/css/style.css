@@ -64,6 +64,10 @@ a {
   color: var(--highlight1);
 }
 
+.edit-comment-card {
+  border: 1px solid red;
+}
+
 .modal h1 {
   color: var(--background);
 }
