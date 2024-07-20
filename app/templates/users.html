@@ -130,8 +130,9 @@
             <p>Changes cannot be undone!</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <a href="{{ url_for('auth.delete_profile', username=user.username) }}" class="btn btn-primary">Confirm</a>
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            <a href="{{ url_for('auth.delete_profile', username=user.username) }}"
+              class="btn btn-outline-danger">Confirm</a>
           </div>
         </div>
       </div>
