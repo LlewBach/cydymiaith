@@ -81,6 +81,7 @@ form label {
 }
 
 form input.form-control,
-form select.form-select {
+form select.form-select,
+textarea.form-control {
   background-color: var(--secondary-text);
 }
