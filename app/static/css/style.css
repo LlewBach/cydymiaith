@@ -27,7 +27,8 @@ a {
   margin-bottom: 20px;
 }
 
-p.category {
+p.category,
+.card-subtitle {
   color: rgb(113, 255, 205);
   font-style: italic;
 }

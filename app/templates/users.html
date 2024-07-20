@@ -48,8 +48,8 @@
         <input type="text" id="location" name="location" class="form-control" value="{{ query.location }}"
           maxlength="25">
       </div>
-      <div class="col-2">
-        <button type="submit" class="btn btn-primary">Filter</button>
+      <div class="col-2 d-flex align-items-end justify-content-center">
+        <button type="submit" class="btn btn-outline-warning">Filter</button>
       </div>
     </div>
   </div>
@@ -59,15 +59,59 @@
 <div class="card">
   <div class="card-body text-center">
     <h2 class="card-title">{{ user.username }}</h2>
-    <!-- <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6> -->
-    <p class="card-text">Email: {{ user.email }}</p>
-    <p class="card-text">Role: {{ user.role }}</p>
-    <p class="card-text">Level: {{ user.level }}</p>
-    <p class="card-text">Provider: {{ user.provider }}</p>
-    <p class="card-text">Location: {{ user.location }}</p>
-    <p class="card-text">Bio: {{ user.bio }}</p>
+    <p class="card-subtitle">{{ user.role }}</p>
+    <div class="container">
+      <div class="row">
+        <div class="col-7">
+          <div class="row">
+            <div class="col-4">
+              <p class="card-text text-end">E-mail:</p>
+            </div>
+            <div class="col-8">
+              <p class="card-text text-start">{{ user.email }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4">
+              <p class="card-text text-end">Level:</p>
+            </div>
+            <div class="col-8">
+              <p class="card-text text-start">{{ user.level }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4">
+              <p class="card-text text-end">Provider:</p>
+            </div>
+            <div class="col-8">
+              <p class="card-text text-start">{{ user.provider }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4">
+              <p class="card-text text-end">Location:</p>
+            </div>
+            <div class="col-8">
+              <p class="card-text text-start">{{ user.location }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-5">
+          <div class="row">
+            <div class="col-12">
+              <p class="card-text text-start">Bio:</p>
+            </div>
+            <!-- {% if user.bio %} -->
+            <div class="col-12">
+              <p class="card-text text-start">{{ user.bio }}</p>
+            </div>
+            <!-- {% endif %} -->
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="card-footer text-center">
+  <div class="card-footer d-flex justify-content-around">
     <a href="{{ url_for('auth.profile', username=user.username) }}" class="card-link">View Profile</a>
     {% if current_user.role == "Admin" %}
     <a href="{{ url_for('auth.edit_profile', username=user.username) }}" class="card-link">Edit Profile</a>
