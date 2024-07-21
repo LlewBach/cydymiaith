@@ -152,14 +152,9 @@
             <h1 class="modal-title fs-5" id="modalLabel">Choose Class</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <form method="POST" action="{{ url_for('groups.add_student', username=user.username ) }}">
-            <div class="modal-body">
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" disabled>
-                <label class="form-check-label" for="flexRadioDefault2">
-                  Choose Group
-                </label>
-              </div>
+
+          <div class="modal-body">
+            <form method="POST" action="{{ url_for('groups.add_student', username=user.username ) }}">
               {% for group in groups %}
               {% if user.username not in group.students %}
               <div class="form-check">
@@ -171,12 +166,15 @@
               </div>
               {% endif %}
               {% endfor %}
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn btn-primary">Confirm</button>
-            </div>
-          </form>
+            </form>
+          </div>
+          <div class="text-center">
+            <p>You can remove students from a class on the Groups page.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-warning">Confirm</button>
+          </div>
         </div>
       </div>
     </div>
