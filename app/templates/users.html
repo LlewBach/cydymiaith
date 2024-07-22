@@ -8,7 +8,7 @@
 <form method="POST" action="{{ url_for('auth.view_users') }}">
   <div class="container">
     <div class="row">
-      <div class="col-2">
+      <div class="mb-2 col-12 col-sm-6 col-md-2">
         <label for="level" class="form-label">Level</label>
         <select id="level" name="level" class="form-select">
           <option value="" selected>All</option>
@@ -21,7 +21,7 @@
           {% endfor %}
         </select>
       </div>
-      <div class="col-2">
+      <div class="mb-2 col-12 col-sm-6 col-md-2">
         <label for="provider" class="form-label">Provider</label>
         <select id="provider" name="provider" class="form-select">
           <option value="" selected>All</option>
@@ -34,21 +34,21 @@
           {% endfor %}
         </select>
       </div>
-      <div class="col-2">
+      <div class="mb-2 col-12 col-sm-6 col-md-2">
         <label for="username" class="form-label">Username</label>
         <input type="text" id="username" name="username" class="form-control" value="{{ query.username }}"
           maxlength="15" pattern="^[a-zA-Z0-9]{1,15}$">
       </div>
-      <div class="col-2">
+      <div class="mb-2 col-12 col-sm-6 col-md-2">
         <label for="email" class="form-label">Email</label>
         <input type="email" id="email" name="email" class="form-control" value="{{ query.email }}" maxlength="50">
       </div>
-      <div class="col-2">
+      <div class="mb-2 col-12 col-sm-6 col-md-2">
         <label for="location" class="form-label">Location</label>
         <input type="text" id="location" name="location" class="form-control" value="{{ query.location }}"
           maxlength="25">
       </div>
-      <div class="col-2 d-flex align-items-end justify-content-center">
+      <div class="mb-2 col-12 col-sm-6 col-md-2 d-flex align-items-end justify-content-center">
         <button type="submit" class="btn btn-outline-warning">Filter</button>
       </div>
     </div>
@@ -57,125 +57,123 @@
 
 {% for user in users %}
 <div class="card">
-  <div class="card-body text-center">
-    <h2 class="card-title">{{ user.username }}</h2>
-    <p class="highlight2"><em>{{ user.role }}</em></p>
+  <div class="card-body">
+    <div class="d-flex justify-content-between">
+      <h2 class="card-title">{{ user.username }}</h2>
+      <p class="highlight2"><em>{{ user.role }}</em></p>
+    </div>
     <div class="container">
       <div class="row">
-        <div class="col-7">
-          <div class="row">
-            <div class="col-4">
-              <p class="card-text text-end secondary-text">E-mail:</p>
-            </div>
-            <div class="col-8">
-              <p class="card-text text-start primary-text">{{ user.email }}</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-4">
-              <p class="card-text text-end secondary-text">Level:</p>
-            </div>
-            <div class="col-8">
-              <p class="card-text text-start primary-text">{{ user.level }}</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-4">
-              <p class="card-text text-end secondary-text">Provider:</p>
-            </div>
-            <div class="col-8">
-              <p class="card-text text-start primary-text">{{ user.provider }}</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-4">
-              <p class="card-text text-end secondary-text">Location:</p>
-            </div>
-            <div class="col-8">
-              <p class="card-text text-start primary-text">{{ user.location }}</p>
-            </div>
-          </div>
+        <div class="col-sm-7">
+          <p>
+            <span class="card-text secondary-text">E-mail:</span> <span class="card-text text-start primary-text">{{
+              user.email }}</span>
+          </p>
         </div>
-        <div class="col-5">
-          <div class="row">
-            <div class="col-12">
-              <p class="card-text text-start secondary-text">Bio:</p>
-            </div>
-            <!-- {% if user.bio %} -->
-            <div class="col-12">
-              <p class="card-text text-start primary-text">{{ user.bio }}</p>
-            </div>
-            <!-- {% endif %} -->
-          </div>
+        <div class="col-sm-5">
+          <p>
+            <span class="card-text secondary-text">Level:</span> <span class="card-text text-start primary-text">{{
+              user.level }}</span>
+          </p>
+        </div>
+        <div class="col-sm-7">
+          <p>
+            <span class="card-text text-end secondary-text">Provider:</span> <span
+              class="card-text text-start primary-text">{{ user.provider }}</span>
+          </p>
+        </div>
+        <div class="col-sm-5">
+          <p>
+            <span class="card-text text-end secondary-text">Location:</span> <span
+              class="card-text text-start primary-text">{{ user.location }}</span>
+          </p>
+        </div>
+        <div class="col-12">
+          <p>
+            <span class="card-text text-start secondary-text">Bio:</span> <span
+              class="card-text text-start primary-text">{{ user.bio }}</span>
+          </p>
         </div>
       </div>
     </div>
   </div>
-  <div class="card-footer d-flex justify-content-around">
-    <a href="{{ url_for('auth.profile', username=user.username) }}" class="card-link">View Profile</a>
-    {% if current_user.role == "Admin" %}
-    <a href="{{ url_for('auth.edit_profile', username=user.username) }}" class="card-link">Edit Profile</a>
-    <a href="#" class="card-link" data-bs-toggle="modal" data-bs-target="#deleteModal{{ user._id }}">Delete Profile</a>
-
-    <!-- Modal -->
-    <div class="modal fade" id="deleteModal{{ user._id }}" tabindex="-1" aria-labelledby="modalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="modalLabel">Are you sure?</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <p>Changes cannot be undone!</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-            <a href="{{ url_for('auth.delete_profile', username=user.username) }}"
-              class="btn btn-outline-danger">Confirm</a>
-          </div>
+  <div class="card-footer">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-6 col-sm-{% if current_user.role == 'Admin' %}3{% else %}6{% endif %}">
+          <a href="{{ url_for('auth.profile', username=user.username) }}" class="card-link">View Profile</a>
         </div>
-      </div>
-    </div>
-    {% endif %}
+        {% if current_user.role == "Admin" %}
+        <div class="col-6 col-sm-3">
+          <a href="{{ url_for('auth.edit_profile', username=user.username) }}" class="card-link">Edit Profile</a>
+        </div>
+        <div class="col-6 col-sm-3">
+          <a href="#" class="card-link" data-bs-toggle="modal" data-bs-target="#deleteModal{{ user._id }}">Delete
+            Profile</a>
 
-    <a href="#" class="card-link" data-bs-toggle="modal" data-bs-target="#addToClassModal{{ user._id }}">
-      Add to Class
-    </a>
-
-    <!-- Modal -->
-    <div class="modal fade" id="addToClassModal{{ user._id }}" tabindex="-1" aria-labelledby="modalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="modalLabel">Choose Class</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-
-
-          <form method="POST" action="{{ url_for('groups.add_student', username=user.username ) }}">
-            <div class="modal-body">
-              {% for group in groups %}
-              {% if user.username not in group.students %}
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="group_id" id="{{ group._id }}"
-                  value="{{ group._id }}">
-                <label class="form-check-label" for="{{ group._id }}">
-                  {{ group.level }}, {{ group.weekday }}, {{ group.year }}
-                </label>
-              </div>
-              {% endif %}
-              {% endfor %}
-              <div class="text-center">
-                <p>You can remove students from a class on the Groups page.</p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-warning">Confirm</button>
+          <!-- Modal -->
+          <div class="modal fade" id="deleteModal{{ user._id }}" tabindex="-1" aria-labelledby="modalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="modalLabel">Are you sure?</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p>Changes cannot be undone!</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                  <a href="{{ url_for('auth.delete_profile', username=user.username) }}"
+                    class="btn btn-outline-danger">Confirm</a>
+                </div>
               </div>
             </div>
-          </form>
+          </div>
+        </div>
+        {% endif %}
+        <div class="col-6 col-sm-{% if current_user.role == 'Admin' %}3{% else %}6{% endif %}">
+          <a href="#" class="card-link" data-bs-toggle="modal" data-bs-target="#addToClassModal{{ user._id }}">
+            Add to Class
+          </a>
+
+          <!-- Modal -->
+          <div class="modal fade" id="addToClassModal{{ user._id }}" tabindex="-1" aria-labelledby="modalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="modalLabel">Choose Class</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+
+                <form method="POST" action="{{ url_for('groups.add_student', username=user.username ) }}">
+                  <div class="modal-body">
+                    {% for group in groups %}
+                    {% if user.username not in group.students %}
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="group_id" id="{{ group._id }}"
+                        value="{{ group._id }}">
+                      <label class="form-check-label" for="{{ group._id }}">
+                        {{ group.level }}, {{ group.weekday }}, {{ group.year }}
+                      </label>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    <div class="text-center">
+                      <p>You can remove students from a class on the Groups page.</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                      <button type="submit" class="btn btn-warning">Confirm</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
