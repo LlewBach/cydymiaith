@@ -90,12 +90,12 @@ def register():
 
     Returns:
         Response: Renders the registration template on GET requests.
-        Response: Redirects to the login page if the username already exists.
+        Response: Redirects to the login page if the username or email already exists.
         Response: Redirects to the profile page after successful registration and login.
         Response: Redirects to the home page if the user is already authenticated.
     """
     if current_user.is_authenticated:
-        return redirect(url_for('home'))#
+        return redirect(url_for('core.home'))
 
     if request.method == "POST":
         existing_user = User.find_by_username(request.form.get("username"))
@@ -105,9 +105,8 @@ def register():
         email = request.form.get("email")
         if User.find_by_email(email):
             flash("That email is already in use")
-            return redirect(url_for('auth.register'))
+            return redirect(url_for('auth.login'))
         
-        # email = request.form.get("email")
         username = request.form.get("username").lower()
         password = request.form.get("password")
         user = User.create_new(username, password, email)
