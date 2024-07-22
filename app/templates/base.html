@@ -29,21 +29,26 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{{ url_for('core.home') }}">Home</a>
+            <a class="nav-link{% if active_page == 'home' %} active{% endif %}" aria-current="page"
+              href="{{ url_for('core.home') }}">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('questions.get_questions') }}">Posts</a>
+            <a class="nav-link{% if active_page == 'posts' %} active{% endif %}"
+              href="{{ url_for('questions.get_questions') }}">Posts</a>
           </li>
           {% if current_user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('auth.profile', username=current_user.username) }}">Profile</a>
+            <a class="nav-link{% if active_page == 'profile' %} active{% endif %}"
+              href="{{ url_for('auth.profile', username=current_user.username) }}">Profile</a>
           </li>
           {% if current_user.role in ["Tutor", "Admin"] %}
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('auth.view_users') }}">Users</a>
+            <a class="nav-link{% if active_page == 'users' %} active{% endif %}"
+              href="{{ url_for('auth.view_users') }}">Users</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('groups.get_groups') }}">Groups</a>
+            <a class="nav-link{% if active_page == 'groups' %} active{% endif %}"
+              href="{{ url_for('groups.get_groups') }}">Groups</a>
           </li>
           {% endif %}
           <li class="nav-item">
@@ -51,10 +56,12 @@
           </li>
           {% else %}
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('auth.login') }}">Log In</a>
+            <a class="nav-link{% if active_page == 'login' %} active{% endif %}" href="{{ url_for('auth.login') }}">Log
+              In</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('auth.register') }}">Register</a>
+            <a class="nav-link{% if active_page == 'register' %} active{% endif %}"
+              href="{{ url_for('auth.register') }}">Register</a>
           </li>
           {% endif %}
         </ul>
