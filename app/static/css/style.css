@@ -97,3 +97,25 @@ textarea.form-control {
 input[type="radio"] {
   border: 2px solid black;
 }
+
+.feature-col {
+  border-radius: 10px;
+}
+
+.feature-col-1 {
+  border: 1px solid var(--highlight1);
+}
+
+.feature-col-2 {
+  border: 1px solid var(--highlight2);
+}
+
+.feature-col-3 {
+  border: 1px solid #ffc107;
+}
+
+@media (max-width: 576px) {
+  form.posts-filter select {
+    /* max-width: 200px; */
+  }
+}

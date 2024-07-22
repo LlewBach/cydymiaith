@@ -7,12 +7,16 @@
     <div class="card-body">
       <div class="container">
         <div class="row">
-          <div class="col-12 col-sm-8">
+          <div class="col-12 col-md-8">
+            {% if not current_user.is_authenticated %}
+            <h1>Cydymiaith</h1>
+            <p class="secondary-text">your Welsh language learning community</p>
+            {% else %}
             <h1>Croeso</h1>
-            <p class="secondary-text">to your Welsh language learning community!</p>
-            <p class="secondary-text">"Ry'n ni yma ynghyd! Yma ynghyyyd!"</p>
+            <p class="secondary-text">"Ry'n ni yma ynghyd!"</p>
+            {% endif %}
           </div>
-          <div class="col-12 col-sm-4 d-flex justify-content-around align-items-center">
+          <div class="col-12 col-md-4 d-flex justify-content-around align-items-center">
             {% if not current_user.is_authenticated %}
             <a class="btn btn-outline-warning" href="{{ url_for('auth.login') }}">Log In</a>
             <a class="btn btn-outline-info" href="{{ url_for('auth.register') }}">Register</a>
@@ -29,30 +33,13 @@
 <section>
   <div class="card secondary-text">
     <div class="card-body text-center">
-      <h2>Features</h2>
-      <div class="container">
-        <div class="row">
-          <div class="col-12 col-sm-4">
-            <h3 class="text-warning">Write</h3>
-            <p>Questions</p>
-            <p>Blog posts</p>
-            <p>Creative pieces</p>
-          </div>
-          <div class="col-12 col-sm-4">
-            <h3 class="highlight2">Share</h3>
-            <p>Knowledge</p>
-            <p>Feedback</p>
-            <p>News</p>
-          </div>
-          <div class="col-12 col-sm-4">
-            <h3 class="highlight1">Connect</h3>
-            <p>With your class</p>
-            <p>Arrange meetups</p>
-            <p>Book exchanges</p>
-          </div>
-        </div>
-      </div>
-      <p class="highlight1">Ac ati! / And so on! </p>
+      <h2>About</h2>
+      <p>Cydymiaith is a place for Welsh language students, tutors and speakers to
+        communicate and practice online.</p>
+      <p>It was made by a former LearnWelsh tutor as part of a Web App Development course.
+      </p>
+      <p>If you have any feedback,
+        please email roepjynamy@hotmail.com</p>
     </div>
   </div>
 </section>
@@ -60,13 +47,36 @@
 <section>
   <div class="card secondary-text">
     <div class="card-body text-center">
-      <h2>About</h2>
-      <p><span class="highlight1">Cydymiaith</span> is a place for Welsh language students, tutors and speakers to
-        communicate and practice online.</p>
-      <p>It was made by a former LearnWelsh tutor as part of a Web App Development course.
-      </p>
-      <p>If you have any feedback,
-        please email roepjynamy@hotmail.com</p>
+      <h2>Features</h2>
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-sm-4 mb-3">
+            <div class="feature-col feature-col-1 p-2">
+              <h3>Write</h3>
+              <p>Questions</p>
+              <p>Blog posts</p>
+              <p>Creative pieces</p>
+            </div>
+          </div>
+          <div class="col-12 col-sm-4 mb-3">
+            <div class="feature-col feature-col-2 p-2">
+              <h3>Share</h3>
+              <p>Knowledge</p>
+              <p>Feedback</p>
+              <p>News</p>
+            </div>
+          </div>
+          <div class="col-12 col-sm-4 mb-3">
+            <div class="feature-col feature-col-3 p-2">
+              <h3>Connect</h3>
+              <p>With your class</p>
+              <p>Arrange meetups</p>
+              <p>Book exchanges</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p>Ac ati! / And so on! </p>
     </div>
   </div>
 </section>
