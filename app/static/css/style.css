@@ -51,6 +51,8 @@ a {
   text-decoration: none;
 }
 
+/* CARDS */
+
 .card {
   background-color: var(--card);
   margin-bottom: 20px;
@@ -68,6 +70,8 @@ a {
   border: 1px solid red;
 }
 
+/* MODALS */
+
 .modal h1 {
   color: var(--background);
 }
@@ -75,6 +79,8 @@ a {
 .modal-content {
   background-color: var(--modal-background);
 }
+
+/* FORMS */
 
 form {
   margin-bottom: 20px;
@@ -98,6 +104,12 @@ input[type="radio"] {
   border: 2px solid black;
 }
 
+#edit-profile-form {
+  max-width: 750px;
+}
+
+/* HOME PAGE */
+
 .feature-col {
   border-radius: 10px;
 }
@@ -114,8 +126,10 @@ input[type="radio"] {
   border: 1px solid #ffc107;
 }
 
+/* MEDIA QUERIES */
+
 @media (max-width: 576px) {
-  form.posts-filter select {
-    /* max-width: 200px; */
+  #edit-profile-form {
+    max-width: 400px;
   }
 }
