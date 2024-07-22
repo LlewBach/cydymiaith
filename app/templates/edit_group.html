@@ -9,12 +9,12 @@
     <form method="POST" action="{{ url_for('groups.edit_group', group_id=group._id) }}">
       <div class="container">
         <div class="row">
-          <div class="col-4 mb-3">
+          <div class="col-12 col-md-4 mb-3">
             <label for="weekday" class="form-label">Weekday</label>
             <input type="text" id="weekday" name="weekday" class="form-control" value="{{ group.weekday }}"
               maxlength="20" selected>
           </div>
-          <div class="col-4 mb-3">
+          <div class="col-12 col-md-4 mb-3">
             <label for="level" class="form-label">Level</label>
             <select id="level" name="level" class="form-select" aria-label="#" required>
               <option value="" disabled {% if not group.level %}selected{% endif %}>Choose Level</option>
@@ -27,7 +27,7 @@
               {% endfor %}
             </select>
           </div>
-          <div class="col-4 mb-3">
+          <div class="col-12 col-md-4 mb-3">
             <label for="year" class="form-label">Year</label>
             <input type="text" id="year" name="year" class="form-control" pattern="20[0-9]{2}$" value="{{ group.year }}"
               required>
