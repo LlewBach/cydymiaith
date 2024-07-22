@@ -9,7 +9,7 @@
       <form method="POST" action="{{ url_for('questions.edit_question', question_id=question._id) }}">
         <div class="container">
           <div class="row">
-            <div class="col-6 mb-2">
+            <div class="col-sm-6 mb-2">
               <label for="category" class="form-label">Category</label>
               <select id="category" name="category" class="form-select" aria-label="Default select example" required>
                 <option value="" disabled {% if not question.category %}selected{% endif %}>Choose Category</option>
@@ -22,7 +22,7 @@
                 {% endfor %}
               </select>
             </div>
-            <div class="col-6 mb-2">
+            <div class="col-sm-6 mb-2">
               <label for="group" class="form-label">For All or Group?</label>
               <select id="group" name="group" class="form-select" aria-label="Default select example">
                 <option value="" {% if not question.group_id %}selected{% endif %}>All</option>
