@@ -84,7 +84,9 @@
   {% endif %}
 </div>
 
-<h2 class="text-center">Posts by you</h2>
+{% if questions %}
+<h2 class="text-center">Posts by {{ user.username }}</h2>
+{% endif %}
 
 {% for question in questions %}
 
