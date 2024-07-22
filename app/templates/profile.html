@@ -106,8 +106,9 @@
 
   </div>
   <div class="card-footer d-flex justify-content-between">
-    <a href="{{ url_for('answers.view_answers', question_id=question._id) }}" class="card-link">{{ question.answer_count
-      }} Comments</a>
+    <a href="{{ url_for('answers.view_answers', question_id=question._id) }}" class="card-link">View comments ({{
+      question.answer_count
+      }})</a>
     {% if current_user.username == question.username or current_user.role == 'Admin' %}
     <div>
       <a href="{{ url_for('questions.edit_question', question_id=question._id) }}" class="card-link">Edit</a>
