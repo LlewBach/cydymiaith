@@ -6,62 +6,52 @@
 </header>
 
 <div class="card">
-  <div class="card-body text-center">
-    <h2 class="card-title">{{ user.username }}</h2>
-    <p class="card-subtitle highlight2"><em>{{ user.role }}</em></p>
+  <div class="card-body">
+    <div class="d-flex justify-content-between">
+      <h2 class="card-title">{{ user.username }}</h2>
+      <p class="highlight2"><em>{{ user.role }}</em></p>
+    </div>
     <div class="container">
       <div class="row">
-        <div class="col-7">
-          {% if current_user.role in ["Admin", "Tutor"] or current_user.username == user.username %}
-          <div class="row">
-            <div class="col-4">
-              <p class="text-end secondary-text">E-mail:</p>
-            </div>
-            <div class="col-8">
-              <p class="text-start primary-text">{{ user.email }}</p>
-            </div>
-          </div>
-          {% endif %}
-          <div class="row">
-            <div class="col-4">
-              <p class="text-end secondary-text">Level:</p>
-            </div>
-            <div class="col-8">
-              <p class="text-start primary-text">{{ user.level }}</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-4">
-              <p class="text-end secondary-text">Provider:</p>
-            </div>
-            <div class="col-8">
-              <p class="text-start primary-text">{{ user.provider }}</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-4">
-              <p class="text-end secondary-text">Location:</p>
-            </div>
-            <div class="col-8">
-              <p class="text-start primary-text">{{ user.location }}</p>
-            </div>
-          </div>
+        <div class="col-sm-7">
+          <p>
+            <span class="card-text secondary-text">E-mail:</span>
+            {% if current_user.role in ["Admin", "Tutor"] or current_user.username == user.username %}
+            <span class="card-text primary-text">{{
+              user.email }}</span>
+            {% else %}
+            <span class="card-text text-start primary-text">Hidden</span>
+            {% endif %}
+          </p>
         </div>
-        <div class="col-5">
-          <div class="row">
-            <div class="col-12">
-              <p class="text-start secondary-text">Bio:</p>
-            </div>
-            <!-- {% if user.bio %} -->
-            <div class="col-12">
-              <p class="text-start primary-text">{{ user.bio }}</p>
-            </div>
-            <!-- {% endif %} -->
-          </div>
+        <div class="col-sm-5">
+          <p>
+            <span class="card-text secondary-text">Level:</span> <span class="card-text primary-text">{{
+              user.level }}</span>
+          </p>
+        </div>
+        <div class="col-sm-7">
+          <p>
+            <span class="card-text text-end secondary-text">Provider:</span> <span class="card-text primary-text">{{
+              user.provider }}</span>
+          </p>
+        </div>
+        <div class="col-sm-5">
+          <p>
+            <span class="card-text text-end secondary-text">Location:</span> <span class="card-text primary-text">{{
+              user.location }}</span>
+          </p>
+        </div>
+        <div class="col-12">
+          <p>
+            <span class="card-text secondary-text">Bio:</span> <span class="card-text primary-text">{{ user.bio
+              }}</span>
+          </p>
         </div>
       </div>
     </div>
   </div>
+
   {% if current_user.username == user.username %}
   <div class="card-footer d-flex justify-content-around">
     <a href="{{ url_for('auth.send_confirmation', email=user.email) }}" class="card-link">Reset Password</a>
@@ -90,6 +80,8 @@
   </div>
   {% endif %}
 </div>
+
+<h2 class="text-center">Posts by you</h2>
 
 {% for question in questions %}
 
