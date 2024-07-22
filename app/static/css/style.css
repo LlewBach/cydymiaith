@@ -126,6 +126,14 @@ input[type="radio"] {
   border: 1px solid #ffc107;
 }
 
+/* ERROR PAGES */
+
+.error-page {
+  height: 100%;
+  border: 1px dashed red;
+  border-radius: 10px;
+}
+
 /* MEDIA QUERIES */
 
 @media (max-width: 576px) {
