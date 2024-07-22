@@ -14,26 +14,40 @@
   <div class="card-body">
     <div class="container">
       <div class="row">
-        <div class="col-6">
+        <div class="col-12 col-md-8 col-xxl-9">
           <div class="row">
-            <div class="col-6">
-              <p class="card-text secondary-text">Weekday: <span class="primary-text">{{ group.weekday }}</span></p>
-              <p class="card-text secondary-text">Tutor: <span class="primary-text">{{ group.tutor }}</span></p>
+            <div class="col-md-8">
+              <div class="row">
+                <div class="col-12 col-xxl-6">
+                  <p class="card-text secondary-text">Tutor: <span class="primary-text">{{ group.tutor }}</span></p>
+                </div>
+                <div class="col-12 col-xxl-6">
+                  <p class="card-text secondary-text">Weekday: <span class="primary-text">{{ group.weekday }}</span></p>
+                </div>
+              </div>
             </div>
-            <div class="col-6">
-              <p class="card-text secondary-text">Level: <span class="card-value primary-text">{{ group.level}}</span>
-              </p>
-              <p class="card-text secondary-text">Year: <span class="card-value primary-text">{{ group.year }}</span>
-              </p>
+            <div class="col-md-4">
+              <div class="row">
+                <div class="col-12 col-xxl-6">
+                  <p class="card-text secondary-text">Level: <span class="card-value primary-text">{{
+                      group.level}}</span>
+                  </p>
+                </div>
+                <div class="col-12 col-xxl-6">
+                  <p class="card-text secondary-text">Year: <span class="card-value primary-text">{{ group.year
+                      }}</span>
+                  </p>
+                </div>
+              </div>
             </div>
-            <div class="col-12 mt-3">
+            <div class="col-12">
               <p class="card-text secondary-text">Provider: <span class="card-value primary-text">{{
                   group.provider}}</span></p>
             </div>
           </div>
 
         </div>
-        <div class="col-6">
+        <div class="col-12 col-md-4 col-xxl-3">
           <div class="accordion" id="accordionExample">
             <div class="accordion-item">
               <h2 class="accordion-header">
