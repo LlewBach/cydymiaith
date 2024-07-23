@@ -10,8 +10,8 @@ answers_bp = Blueprint('answers', __name__, template_folder='../templates')
 
 
 # Docstrings written by GPT4o and edited by myself.
-@answers_bp.route("/view_answers/<question_id>")
-def view_answers(question_id):
+@answers_bp.route("/view_comments/<question_id>")
+def view_comments(question_id):
     """
     Renders the view_answers template for a specific question.
 
@@ -54,7 +54,7 @@ def answer(question_id):
         Question.increase_answer_count(question_id)
         flash("Comment added")
 
-        return redirect(url_for("answers.view_answers", question_id=question_id))
+        return redirect(url_for("answers.view_comments", question_id=question_id))
     
 
 def user_owns_answer_or_admin(f):
@@ -97,7 +97,7 @@ def edit_answer(answer_id):
         Answer.edit_answer(answer_id, question_id, text, username)
         flash("Comment Edited")
 
-        return redirect(url_for("answers.view_answers", question_id=question_id))
+        return redirect(url_for("answers.view_comments", question_id=question_id))
     
     question = Question.find_by_id(question_id)
     answers = Answer.find_answers_by_question_id(question_id)
@@ -126,4 +126,4 @@ def delete_answer(answer_id):
     Answer.delete_answer(answer_id)
     flash("Comment Deleted")
     
-    return redirect(url_for("answers.view_answers", question_id=question_id))
+    return redirect(url_for("answers.view_comments", question_id=question_id))

@@ -72,7 +72,7 @@
     <p class="secondary-text">{{ question.description }}</p>
   </div>
   <div class="card-footer d-flex justify-content-between">
-    <a href="{{ url_for('answers.view_answers', question_id=question._id) }}" class="card-link">View comments ({{
+    <a href="{{ url_for('answers.view_comments', question_id=question._id) }}" class="card-link">View comments ({{
       question.answer_count
       }})</a>
     {% if current_user.username == question.username or current_user.role == 'Admin' %}
