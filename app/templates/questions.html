@@ -14,10 +14,11 @@
   </div>
 </header>
 
-<form class="posts-filter" method="POST" action="{{ url_for('questions.get_questions') }}">
+<form id="filter-form" class="posts-filter" method="POST" action="{{ url_for('questions.get_questions') }}">
   <div class="container">
     <div class="row">
-      <div class="{% if current_user.is_authenticated %}col-sm-5{% else %}col-sm-10{% endif %} mb-3 text-center">
+      <div
+        class="{% if current_user.is_authenticated %}col-sm-4 col-lg-5{% else %}col-sm-10{% endif %} mb-3 text-center">
         <select id="category" name="category" class="form-select" aria-label="Default select example">
           <option value="" selected>All Categories</option>
           {% for category in categories %}
@@ -30,7 +31,7 @@
         </select>
       </div>
       {% if current_user.is_authenticated %}
-      <div class="col-sm-5 mb-3 text-center">
+      <div class="col-sm-4 col-lg-5 mb-3 text-center">
         <select id="group" name="group" class="form-select" aria-label="Default select example">
           <option value="" selected>All Groups</option>
           {% for group in groups %}
@@ -43,8 +44,11 @@
         </select>
       </div>
       {% endif %}
-      <div class="col-sm-2 mb-3 text-center">
+      <div class="col-6 col-sm-2 col-lg-1 mb-3 text-center">
         <button type="submit" class="btn btn-outline-info">Filter</button>
+      </div>
+      <div class="col-6 col-sm-2 col-lg-1 mb-3 text-center">
+        <button type="button" class="btn btn-outline-danger" onclick="clearFilters()">Clear</button>
       </div>
     </div>
   </div>
@@ -101,5 +105,7 @@
 </div>
 
 {% endfor %}
+
+<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 
 {% endblock %}
