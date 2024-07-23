@@ -72,10 +72,10 @@ def user_owns_answer_or_admin(f):
     return wrapper
 
 
-@answers_bp.route("/edit_answer/<answer_id>", methods=["GET", "POST"])
+@answers_bp.route("/edit_comment/<answer_id>", methods=["GET", "POST"])
 @login_required
 @user_owns_answer_or_admin
-def edit_answer(answer_id):
+def edit_comment(answer_id):
     """
     Handles the editing of an existing answer and updates the database.
 

@@ -88,7 +88,7 @@
             </p>
             {% if current_user.username == question.username or current_user.role == 'Admin' %}
             <div>
-              <a href="{{ url_for('answers.edit_answer', answer_id=answer._id) }}" class="card-link">Edit</a>
+              <a href="{{ url_for('answers.edit_comment', answer_id=answer._id) }}" class="card-link">Edit</a>
               <a href="#" class="card-link" data-bs-toggle="modal" data-bs-target="#{{ answer._id }}">Delete</a>
 
               <!-- Delete Comment Modal -->
