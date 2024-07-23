@@ -1,18 +1,26 @@
-// The clearFilters function was written by GPT-4
+// The clearFilters function was written with the help of GPT-4 and refactored by myself
 
 function clearFilters() {
-  // Get the form element
   const form = document.getElementById('filter-form');
 
-  // Reset the form fields
-  form.reset();
-
-  // Clear the select fields specifically
-  document.getElementById('category').selectedIndex = 0;
-  if (document.getElementById('group')) {
-    document.getElementById('group').selectedIndex = 0;
+  const selectInputs = form.querySelectorAll('select');
+  if (selectInputs) {
+    selectInputs.forEach(select => {
+      select.selectedIndex = 0;
+    });
   }
 
-  // Submit the form to reload the page with default values
+  const textInputs = form.querySelectorAll('input[type="text"]');
+  if (textInputs) {
+    textInputs.forEach(input => {
+      input.value = '';
+    });
+  }
+
+  const emailInput = form.querySelector('input[type="email"]');
+  if (emailInput) {
+    emailInput.value = '';
+  }
+
   form.submit();
 }

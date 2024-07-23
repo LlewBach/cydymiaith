@@ -7,10 +7,10 @@
   <h1 class="text-center">Users</h1>
 </header>
 
-<form method="POST" action="{{ url_for('auth.view_users') }}">
+<form id="filter-form" method="POST" action="{{ url_for('auth.view_users') }}">
   <div class="container">
     <div class="row">
-      <div class="mb-2 col-12 col-sm-6 col-md-2">
+      <div class="mb-2 col-12 col-sm-6 col-lg-2">
         <label for="level" class="form-label">Level</label>
         <select id="level" name="level" class="form-select">
           <option value="" selected>All</option>
@@ -23,7 +23,7 @@
           {% endfor %}
         </select>
       </div>
-      <div class="mb-2 col-12 col-sm-6 col-md-2">
+      <div class="mb-2 col-12 col-sm-6 col-lg-2">
         <label for="provider" class="form-label">Provider</label>
         <select id="provider" name="provider" class="form-select">
           <option value="" selected>All</option>
@@ -36,22 +36,23 @@
           {% endfor %}
         </select>
       </div>
-      <div class="mb-2 col-12 col-sm-6 col-md-2">
+      <div class="mb-2 col-12 col-sm-6 col-lg-2">
         <label for="username" class="form-label">Username</label>
         <input type="text" id="username" name="username" class="form-control" value="{{ query.username }}"
           maxlength="15" pattern="^[a-zA-Z0-9]{1,15}$">
       </div>
-      <div class="mb-2 col-12 col-sm-6 col-md-2">
+      <div class="mb-2 col-12 col-sm-6 col-lg-2">
         <label for="email" class="form-label">Email</label>
         <input type="email" id="email" name="email" class="form-control" value="{{ query.email }}" maxlength="50">
       </div>
-      <div class="mb-2 col-12 col-sm-6 col-md-2">
+      <div class="mb-2 col-12 col-sm-6 col-lg-2">
         <label for="location" class="form-label">Location</label>
         <input type="text" id="location" name="location" class="form-control" value="{{ query.location }}"
           maxlength="25">
       </div>
-      <div class="mb-2 col-12 col-sm-6 col-md-2 d-flex align-items-end justify-content-center">
+      <div class="mb-2 col-12 col-sm-6 col-lg-2 d-flex align-items-end justify-content-around">
         <button type="submit" class="btn btn-outline-warning">Filter</button>
+        <button type="button" class="btn btn-outline-danger" onclick="clearFilters()">Clear</button>
       </div>
     </div>
   </div>
@@ -182,5 +183,7 @@
   </div>
 </div>
 {% endfor %}
+
+<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 
 {% endblock %}
