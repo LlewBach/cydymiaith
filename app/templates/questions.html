@@ -77,7 +77,7 @@
       }})</a>
     {% if current_user.username == question.username or current_user.role == 'Admin' %}
     <div>
-      <a href="{{ url_for('questions.edit_question', question_id=question._id) }}" class="card-link">Edit</a>
+      <a href="{{ url_for('questions.edit_post', question_id=question._id) }}" class="card-link">Edit</a>
       <a href="#" class="card-link" data-bs-toggle="modal" data-bs-target="#{{ question._id }}">Delete</a>
 
       <!-- Modal -->

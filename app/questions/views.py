@@ -82,10 +82,10 @@ def user_owns_question_or_admin(f):
     return wrapper
 
 
-@questions_bp.route("/edit_question/<question_id>", methods=["GET", "POST"])
+@questions_bp.route("/edit_post/<question_id>", methods=["GET", "POST"])
 @login_required
 @user_owns_question_or_admin
-def edit_question(question_id):
+def edit_post(question_id):
     """
     Handles the editing of an existing question and renders the edit_question template.
 
