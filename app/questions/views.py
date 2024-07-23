@@ -116,10 +116,10 @@ def edit_post(question_id):
     return render_template("edit_question.html", question=question, groups=groups, categories=categories)
 
 
-@questions_bp.route("/delete_question/<question_id>")
+@questions_bp.route("/delete_post/<question_id>")
 @login_required
 @user_owns_question_or_admin
-def delete_question(question_id):
+def delete_post(question_id):
     """
     Deletes a question from the database and redirects to the get_posts view.
 
