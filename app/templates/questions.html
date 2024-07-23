@@ -7,7 +7,7 @@
   <div class="text-center">
     <h1>Posts</h1>
     {% if current_user.is_authenticated %}
-    <a href="{{ url_for('questions.ask_question') }}" class="btn btn-outline-warning btn-lg">Make Post</a>
+    <a href="{{ url_for('questions.make_post') }}" class="btn btn-outline-warning btn-lg">Make Post</a>
     {% else %}
     <a href="{{ url_for('auth.login') }}" class="btn btn-outline-warning btn-lg">Login to Make Post</a>
     {% endif %}

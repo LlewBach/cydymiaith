@@ -35,13 +35,13 @@ def get_posts():
     return render_template("questions.html", questions=questions, categories=categories, groups=groups, query=query)
 
 
-@questions_bp.route("/ask_question", methods=["GET", "POST"])
+@questions_bp.route("/make_post", methods=["GET", "POST"])
 @login_required
-def ask_question():
+def make_post():
     """
-    Handles the creation of a new question and renders the ask_question template.
+    Handles the creation of a new question and renders the make_post template.
 
-    On a GET request, this function renders the ask_question template with the necessary
+    On a GET request, this function renders the make_post template with the necessary
     data for creating a question, including the list of categories and groups relevant to
     the current user's role and username.
 
