@@ -64,7 +64,7 @@ def user_owns_answer_or_admin(f):
         answer = Answer.find_by_id(answer_id)
         if answer is None:
             flash("Comment not found.", "error")
-            return redirect(url_for('questions.get_questions'))
+            return redirect(url_for('questions.get_posts'))
         if current_user.username != answer['username'] and current_user.role != 'Admin':
             flash("You are not authorized to do this.", "error")
             return redirect(url_for('auth.profile', username=current_user.username))

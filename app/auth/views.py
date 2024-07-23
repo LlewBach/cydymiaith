@@ -136,7 +136,7 @@ def login():
         Response: Redirects to the login page with an error message if the credentials are incorrect.
     """
     if current_user.is_authenticated:
-        return redirect(url_for('questions.get_questions'))
+        return redirect(url_for('questions.get_posts'))
     
     if request.method == "POST":
         existing_user = User.find_by_username(request.form.get("username"))

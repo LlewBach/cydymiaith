@@ -9,8 +9,8 @@ questions_bp = Blueprint('questions', __name__, template_folder='../templates')
 
 
 # Docstrings written by GPT4o and edited by myself.
-@questions_bp.route("/get_questions", methods=["GET", "POST"])
-def get_questions():
+@questions_bp.route("/get_posts", methods=["GET", "POST"])
+def get_posts():
     """
     Renders the questions template showing a list of all questions or filtered questions.
 
@@ -46,11 +46,11 @@ def ask_question():
     the current user's role and username.
 
     On a POST request, it retrieves the form data, inserts the new question into the database,
-    flashes a success message to the user, and redirects to the get_questions view.
+    flashes a success message to the user, and redirects to the get_posts view.
 
     Returns:
         Response: Renders the ask_question.html template with the list of categories and groups on a GET request.
-        Response: Redirects to the get_questions view on a POST request.
+        Response: Redirects to the get_posts view on a POST request.
     """
     if request.method == "POST":
         username = current_user.username
@@ -60,7 +60,7 @@ def ask_question():
         description = request.form.get("description")
         Question.insert_question(username, category, group_id, title, description)
         flash("Post Published")
-        return redirect(url_for('questions.get_questions'))
+        return redirect(url_for('questions.get_posts'))
 
     groups = Group.get_groups_by_role(current_user.role, current_user.username)
     categories = Question.get_categories()
@@ -74,7 +74,7 @@ def user_owns_question_or_admin(f):
         question = Question.find_by_id(question_id)
         if question is None:
             flash("Question not found.", "error")
-            return redirect(url_for('questions.get_questions'))
+            return redirect(url_for('questions.get_posts'))
         if current_user.username != question['username'] and current_user.role != 'Admin':
             flash("You are not authorized to do this.", "error")
             return redirect(url_for('auth.profile', username=current_user.username))
@@ -91,14 +91,14 @@ def edit_question(question_id):
 
     On a GET request, this function retrieves the question by its ID and renders the edit_question template with the question's current data.
 
-    On a POST request, it retrieves the updated title and description from the form data, updates the question in the database, flashes a success message to the user, and redirects to the get_questions view.
+    On a POST request, it retrieves the updated title and description from the form data, updates the question in the database, flashes a success message to the user, and redirects to the get_posts view.
 
     Args:
         question_id (str): The ID of the question to be edited.
 
     Returns:
         Response: Renders the edit_question.html template with the question's current data on a GET request.
-        Response: Redirects to the get_questions view on a POST request.
+        Response: Redirects to the get_posts view on a POST request.
     """
     if request.method == "POST":
         username = current_user.username
@@ -108,7 +108,7 @@ def edit_question(question_id):
         description = request.form.get("description")
         Question.update_question(question_id, username, category, group_id, title, description)
         flash("Post Updated")
-        return redirect(url_for('questions.get_questions'))
+        return redirect(url_for('questions.get_posts'))
     
     groups = Group.get_groups_by_role(current_user.role, current_user.username)
     categories = Question.get_categories()
@@ -121,17 +121,17 @@ def edit_question(question_id):
 @user_owns_question_or_admin
 def delete_question(question_id):
     """
-    Deletes a question from the database and redirects to the get_questions view.
+    Deletes a question from the database and redirects to the get_posts view.
 
     This function deletes the specified question from the database. It then flashes a success message
-    to the user and redirects to the get_questions view.
+    to the user and redirects to the get_posts view.
 
     Args:
         question_id (str): The ID of the question to be deleted.
 
     Returns:
-        Response: Redirects to the get_questions view after deleting the question.
+        Response: Redirects to the get_posts view after deleting the question.
     """
     Question.delete_question(question_id)
     flash("Post Deleted")
-    return redirect(url_for("questions.get_questions"))
+    return redirect(url_for("questions.get_posts"))

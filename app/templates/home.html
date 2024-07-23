@@ -23,7 +23,7 @@
             <a class="btn btn-outline-warning" href="{{ url_for('auth.login') }}">Log In</a>
             <a class="btn btn-outline-info" href="{{ url_for('auth.register') }}">Register</a>
             {% else %}
-            <a class="btn btn-outline-warning" href="{{ url_for('questions.get_questions') }}">See Posts</a>
+            <a class="btn btn-outline-warning" href="{{ url_for('questions.get_posts') }}">See Posts</a>
             {% endif %}
           </div>
         </div>
