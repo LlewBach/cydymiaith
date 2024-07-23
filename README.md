@@ -30,6 +30,8 @@ By Gareth Llewelyn
 
 Cydymiaith is a basic social network for Welsh language tutors and students to share information, practice and connect.
 
+For the assessor - Originally, I had planned a questions and answers site. I later changed this to posts and comments for more category options such as 'diary entry'. This is why the backend code still refers to questions and answers. However, at the request of my mentor, I changed user-facing view names to refer to 'posts' and 'comments' for the sake of UX.
+
 ## UX
 
 [Back to top](#milestone-3-project---cydymiaith)
