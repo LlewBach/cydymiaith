@@ -83,17 +83,72 @@ def reset_password(token):
     return render_template('reset_password.html', token=token)
 
 
-@auth_bp.route("/register", methods=["GET", "POST"])
-def register():
+@auth_bp.route('/reg_confirmation', methods=['GET', 'POST'])
+def reg_confirmation():
+    """
+    Handles the email confirmation process for user registration.
+
+    On GET requests, it renders a form where users can enter their email address
+       to receive a confirmation link for registration.
+    
+    On POST requests, it generates a secure token using the provided email address
+       and the application's secret key. It then constructs a confirmation URL containing
+       the token and sends an email with this URL to the specified email address. A success
+       message is flashed to the user and the user is redirected back to the confirmation page.
+
+    Returns:
+        Response: Renders the email confirmation form template on GET requests.
+        Response: Redirects to same page with a success message on POST requests.
+    """
+    if request.method == 'POST':
+        email = request.form.get("reg_email")
+        s = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
+        token = s.dumps(email, salt='reg-confirmation-salt')
+        confirmation_url = url_for('auth.register', token=token, _external=True)
+        msg = Message("Confirm email address to register", recipients=[email])
+        msg.body = f"To confirm email, please visit the following link: {confirmation_url}"
+        mail.send(msg)
+        flash('A confirmation email has been sent.', 'success')
+        return redirect(url_for('auth.reg_confirmation'))
+    
+    return render_template('reg_email.html')
+
+
+@auth_bp.route("/register/<token>", methods=["GET", "POST"])
+def register(token):
     """
     Handles the user registration process.
 
+    This function processes user registration through an email confirmation link. It verifies 
+    the provided token to confirm the email address. If the token is valid and the user is 
+    not authenticated, it renders a registration form on GET requests. On POST requests, 
+    it attempts to register the user with the provided username and password.
+
+    Args:
+        token (str): The token used to verify the email confirmation request.
+
     Returns:
-        Response: Renders the registration template on GET requests.
-        Response: Redirects to the login page if the username or email already exists.
-        Response: Redirects to the profile page after successful registration and login.
-        Response: Redirects to the home page if the user is already authenticated.
+        Response: 
+            - Renders the registration template on GET requests.
+            - Redirects to the email confirmation page with an error message if the token is invalid or expired.
+            - Redirects to the login page with an error message if the username already exists.
+            - Redirects to the profile page with a success message after successful registration and login.
+            - Redirects to the home page if the user is already authenticated.
+
+    Raises:
+        SignatureExpired: If the token has expired.
+        BadSignature: If the token is invalid.
     """
+    try:
+        email = URLSafeTimedSerializer(current_app.config['SECRET_KEY']).loads(
+            token, salt='reg-confirmation-salt', max_age=3600)
+    except SignatureExpired:
+        flash('The reset link has expired.', 'error')
+        return redirect(url_for('auth.reg_confirmation'))
+    except BadSignature:
+        flash('The reset link is invalid.', 'error')
+        return redirect(url_for('auth.reg_confirmation'))
+
     if current_user.is_authenticated:
         return redirect(url_for('core.home'))
 
@@ -102,10 +157,6 @@ def register():
         if existing_user:
             flash("That username is already in use", "error")    
             return redirect(url_for("auth.login"))
-        email = request.form.get("email")
-        if User.find_by_email(email):
-            flash("That email is already in use")
-            return redirect(url_for('auth.login'))
         
         username = request.form.get("username").lower()
         password = request.form.get("password")
@@ -114,7 +165,7 @@ def register():
         flash("Registration Successful!", "success")
         return redirect(url_for("auth.profile", username=user.username))
 
-    return render_template("register.html")
+    return render_template("register.html", token=token)
 
 
 @auth_bp.route("/login", methods=["GET", "POST"])
