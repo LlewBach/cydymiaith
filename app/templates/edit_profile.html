@@ -6,8 +6,9 @@
 
 <h1 class="text-center">Edit Profile</h1>
 
+
 <form method="POST" action="{{ url_for('auth.edit_profile', username=user.username) }}">
-  <div class="container" id="edit-profile-form">
+  <div class="container">
     <div class="row">
       {% if current_user.role == "Admin" %}
       <div class="col-12 col-md-6 mb-3">
@@ -70,5 +71,7 @@
     </div>
   </div>
 </form>
+
+
 
 {% endblock %}

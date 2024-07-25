@@ -110,10 +110,6 @@ input[type="radio"] {
   border: 2px solid black;
 }
 
-#edit-profile-form {
-  max-width: 750px;
-}
-
 /* HOME PAGE */
 
 .feature-col {
