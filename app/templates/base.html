@@ -24,7 +24,7 @@
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
       <a class="navbar-brand" href="{{ url_for('core.home') }}">
-        <img src="{{ url_for('static', filename='favicon/favicon-32x32.png') }}">
+        <img src="{{ url_for('static', filename='favicon/favicon-32x32.png') }}" alt="logo">
         Cydymiaith
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -74,7 +74,7 @@
     </div>
   </nav>
 
-  <section>
+  <div>
     <!-- Flash messages -->
     {% with messages = get_flashed_messages() %}
     {% if messages %}
@@ -85,7 +85,7 @@
     {% endfor %}
     {% endif %}
     {% endwith %}
-  </section>
+  </div>
 
   <div class="container">
     {% block content %}

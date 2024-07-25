@@ -685,11 +685,39 @@ I don't own a Safari device.
 
 [Back to top](#cydymiaith-testing-documentation)
 
-
-
 ### HTML Validation
 
+[https://validator.w3.org/](https://validator.w3.org/)
+
+The procedure I used was to go to the relevant webpage, right click, click 'View page source' then copy and paste the code into the validator. This was to avoid issues with the use of Jinja2 and templates.
+
+| Template tested | Test result |
+| :---: | :---: |
+| base.html | Pass |
+| home.html | Pass |
+| reg_email.html | Pass |
+| register.html | Pass |
+| login.html | Pass |
+| profile.html | Pass |
+| forgot_password.html | Pass |
+| reset_password.html | Pass |
+| questions.html | Pass |
+| ask_question.html | Pass |
+| edit_question.html |  |
+| view_answers.html |  |
+| edit_answer.html |  |
+| edit_profile.html |  |
+| users.html |  |
+| groups.html |  |
+| add_group.html |  |
+| edit_group.html |  |
+| 404.html |  |
+| 500.html |  |
+
+
 ### CSS Validation
+
+### JS Validation
 
 ### Python Validation
 
