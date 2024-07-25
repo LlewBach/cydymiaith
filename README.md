@@ -172,7 +172,7 @@ Since the site is text based, I opted for a dark theme to make reading easier on
 
 #### Fonts
 
-
+The fonts used are from Google fonts. The brand name and titles use Outfit, and the rest is Urbanist.
 
 ## Features
 
