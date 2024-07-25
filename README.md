@@ -105,7 +105,8 @@ AC5 - "Users can create an account and log in and be sure that others can't see 
 - Allow Tutor to create groups and add/remove students
 - Allow Admin to read, update and delete everything
 - Allow Admin to set the roles of other users
-- Allow visibility of content based on login status, class, filters
+- Allow visibility of content based on login status, group, filters
+- Email confirmation for registration and forgot/reset password functionality
 
 #### Content requirements
 
@@ -115,13 +116,13 @@ AC5 - "Users can create an account and log in and be sure that others can't see 
 
 This model contains the following data: username, password hash, bio, level, provider, location, role and email.
 
-Username and password hash are set at profile creation. The user can set their level, provider, location and bio on their profile.
+Email, username and password hash are set at profile creation. The user can set their level, provider, location and bio on their profile.
 
 ##### Posts
 
 This model contains the following data: username, category, group_id, title, description, answer_count
 
-Users set the title and description. The other data are automatically collected. The group_id allows filtering by group and answer count allows the number of comments to be displayed.
+Users set the title, description, category and group_id. The username and answer_count are automatically collected. The group_id allows filtering by group and answer count allows the number of comments to be displayed.
 
 ##### Comments
 
@@ -133,7 +134,7 @@ The user writes the text.
 
 This model contains the following data: tutor, level, provider, year, weekday, and students, which is an array of usernames.
 
-Tutors and Admins can create groups, and set provider, level, year and weekday. Students can be added by going to the Users page and adding users to one of their own groups.
+Tutors and Admins can create groups, and set provider, level, year and weekday. Students can be added by going to the Users page and adding users to one of their own groups. Students can be removed from a group by finding the group on the Groups page, opening the Student List and removing the appropriate student.
 
 ### Structure
 
@@ -141,11 +142,11 @@ Tutors and Admins can create groups, and set provider, level, year and weekday. 
 
 For unregistered/logged out users, the site navbar will contain the following links: Home, Posts, Log In, Register.
 
-For logged in Students, the site navbar will contain the following links: Home, Posts, Profile, Users, Log Out.
+For logged in Students, the site navbar will contain the following links: Home, Posts, Profile, Log Out.
 
 For logged in Tutors and Admins, the site navbar will contain the following links: Home, Posts, Profile, Users, Groups, Log Out.
 
-The information of Profiles, Posts, Comments, Users and Groups will be displayed together as cards.
+The information of Profiles, Posts, Comments, Users and Groups will be displayed as cards.
 
 ### Skeleton
 
@@ -154,6 +155,24 @@ The information of Profiles, Posts, Comments, Users and Groups will be displayed
 ### Surface
 
 [Back to top](#milestone-3-project---cydymiaith)
+
+#### Favicon and Logo
+
+I asked GPT-4 to create some logo options for me, and I picked the final choice. I then used a favicon converter to generate the favicon images and link tags.
+
+![Favicon](app/static/favicon/favicon-32x32.png)
+
+#### Colour Palette
+
+Here is the colour palette I used.
+
+![Palette](app/static/captures/palette.PNG)
+
+Since the site is text based, I opted for a dark theme to make reading easier on the eyes.
+
+#### Fonts
+
+
 
 ## Features
 
