@@ -3,7 +3,7 @@ By Gareth Llewelyn
 
 [View website on deployed Heroku site](link!)
 
-![Am I Responsive](link!)
+![Am I Responsive](app/static/captures/am-i-responsive.PNG)
 
 ## Table of contents
 
@@ -303,7 +303,6 @@ Close thread - The ability to set a post as closed, having been answered or beco
 - Heroku for hosting
 - GPT-4 for debugging, information gathering, writing docstrings, logo generation
 - [favicon.io](https://favicon.io/) - Logo to favicon converter
-- [ImageResizer.com](https://imageresizer.com/image-compressor) - Image compression
 
 ## Testing
 
@@ -377,28 +376,39 @@ os.environ.setdefault("MAIL_DEFAULT_SENDER", "your own value")
 
 ```
 
-
 ## Credits
 
 [Back to top](#milestone-3-project---cydymiaith)
 
 ### Code
 
-How to Generate App Passwords in Google | Fix App Passwords option not found
-https://www.youtube.com/watch?v=MkLX85XU5rU
+#### YouTube
 
-YouTube - [Python Flask Tutorial: Full-Featured Web App Part 12 - Custom Error Pages](https://www.youtube.com/watch?v=uVNfQDohYNI) - Corey Schafer
+- [How to Generate App Passwords in Google | Fix App Passwords option not found](https://www.youtube.com/watch?v=MkLX85XU5rU) - Harish Bhathee
+
+- [Python Flask Tutorial: Full-Featured Web App Part 12 - Custom Error Pages](https://www.youtube.com/watch?v=uVNfQDohYNI) - Corey Schafer
+
+#### GPT-4
+
+- Wrote the first draft of the docstrings which I edited.
+- Helped me set up Flask-Mail.
+
+#### My mentor Ben Kavanagh
+
+- How to set up Jinja variables for dynamic navbar link highlighting
 
 ### Media
 
-GPTo - drew the logo
+Logo - Created by GPTo
 
 ## Acknowledgements
 
 [Back to top](#milestone-3-project---cydymiaith)
 
-I'd like to thank my mentor Ben Kavanagh for this guidance with this project.
+I'd like to thank Ben Kavanagh, my mentor and coding goals personified, for his guidance with this project.
 
 ## Disclaimer
 
 [Back to top](#milestone-3-project---cydymiaith)
+
+This website is currently for educational purposes only.
