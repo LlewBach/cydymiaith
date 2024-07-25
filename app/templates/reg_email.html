@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h1 class="text-center">Confirm Email</h1>
+<h1 class="text-center">Confirm Email to Register</h1>
 
 <form method="POST" action="{{ url_for('auth.reg_confirmation') }}">
   <div class="container">
@@ -17,5 +17,10 @@
     </div>
   </div>
 </form>
+
+<div class="text-center mb-4">
+  <p class="secondary-text mb-0">Already have an account?</p>
+  <a href="{{ url_for('auth.login') }}">Log in here</a>
+</div>
 
 {% endblock %}

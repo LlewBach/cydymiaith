@@ -35,7 +35,7 @@ def send_confirmation(email):
     msg.body = f"To reset your password, please visit the following link: {reset_url}"
     mail.send(msg)
     flash('A confirmation email has been sent.', 'success')
-    return redirect(url_for('auth.profile', username=current_user.username))
+    return redirect(url_for('auth.login'))
 
 
 @auth_bp.route('/reset_password/<token>', methods=['GET', 'POST'])
@@ -54,7 +54,7 @@ def reset_password(token):
     Returns:
         Response: Renders the password reset template on GET requests.
         Response: Redirects to the login page if the token is invalid or expired.
-        Response: Redirects to the user's profile page after successfully resetting the password.
+        Response: Redirects to the log in page after successfully resetting the password.
     """
     try:
         email = URLSafeTimedSerializer(current_app.config['SECRET_KEY']).loads(
@@ -75,12 +75,34 @@ def reset_password(token):
         new_password = request.form.get('new_password')
         if new_password:
             user.set_password(new_password)
+            logout_user()
             flash('Your password has been reset.', 'success')
-            return redirect(url_for('auth.profile', username=current_user.username))
+            return redirect(url_for('auth.login'))
         else:
             flash('Password cannot be empty.', 'error')
 
     return render_template('reset_password.html', token=token)
+
+
+@auth_bp.route('/forgot_password', methods=['GET', 'POST'])
+def forgot_password():
+    """
+    Handles the password reset request process.
+
+    This function allows users to initiate the password reset process. It serves two purposes:
+    1. On GET requests, it renders a form where users can enter their email address to receive a password reset link.
+    2. On POST requests, it captures the provided email address from the form and redirects to the route that sends the password reset confirmation email.
+
+    Returns:
+        Response: 
+            - Renders the forgot password form template on GET requests.
+            - Redirects to the route that sends the password reset confirmation email on POST requests.
+    """
+    if request.method == 'POST':
+        email = request.form.get('email')
+        return redirect(url_for('auth.send_confirmation', email=email))
+    
+    return render_template('forgot_password.html')
 
 
 @auth_bp.route('/reg_confirmation', methods=['GET', 'POST'])
@@ -286,9 +308,10 @@ def edit_profile(username):
     if request.method == "POST":
         email = request.form.get("email")
         found_user = User.find_by_email(email)
-        if found_user.username != username:
-            flash("That email is already in use")
-            return redirect(url_for('auth.profile', username=current_user.username))
+        if found_user:
+            if found_user.username != username:
+                flash("That email is already in use")
+                return redirect(url_for('auth.profile', username=current_user.username))
         role = request.form.get("role")
         level = request.form.get("level")
         provider = request.form.get("provider")
