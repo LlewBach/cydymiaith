@@ -152,6 +152,14 @@ The information of Profiles, Posts, Comments, Users and Groups will be displayed
 
 [Back to top](#milestone-3-project---cydymiaith)
 
+Home Page Wireframe
+
+![wireframe1](app/static/wireframes/Home.png)
+
+Posts Page Wireframe
+
+![wireframe1](app/static/wireframes/Posts.png)
+
 ### Surface
 
 [Back to top](#milestone-3-project---cydymiaith)
