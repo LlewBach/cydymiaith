@@ -4,18 +4,13 @@ Go to [README.md](README.md)
 
 ## Table of contents
 
-> 1. User Stories Testing
-> 2. Feature Testing
-> 3. Defensive Programming Testing
-> 4. Responsiveness Testing
-> 5. Browser Testing
-> 6. Automated Testing
->> 1. HTML Validator
->> 2. CSS Validator
->> 3. PEP8 CI Python Linter (https://pep8ci.herokuapp.com/)
->> 4. WAVE
->> 5. Lighthouse
-> 7. Bugs
+> 1. [User Stories Testing](#user-stories-testing)
+> 2. [Feature Testing](#feature-testing)
+> 3. [Defensive Programming Testing](#defensive-programming-testing)
+> 4. [Responsiveness Testing](#responsiveness-testing)
+> 5. [Browser Testing](#browser-testing)
+> 6. [Automated Testing](#automated-testing)
+> 7. [Bugs](#bugs)
 
 ## User Stories Testing
 
@@ -703,6 +698,8 @@ I don't own a Safari device.
 ### Lighthouse
 
 ## Bugs
+
+[Back to top](#cydymiaith-testing-documentation)
 
 - Getting edit question form to remember associated group - I was having trouble handling id vs ObjectId - I consulted GPT4o who advised me how to use jinja filters properly, such as 
 
