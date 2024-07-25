@@ -635,13 +635,56 @@ For clarification, here testuser3 has the role of Student.
 
 [Back to top](#cydymiaith-testing-documentation)
 
+This is my testing procedure:
 
+Setup
+
+1) Open the website in the Chrome browser. Stay on the Home page as a logged out / unregistered user.
+2) Right click and click 'Inspect'.
+3) Click the toggle device toolbar.
+
+Testing function
+
+4) From the device menu, select the one being tested.
+5) Check that there is no overlapping text or buttons.
+6) Check that the page does not scroll horizontally.
+7) Check that the page items align in an aesthetic manner.
+8) Check that the headings and text are clearly visible.
+9) Repeat steps 5-8 for every page visible in the navbar to a logged out / unregistered user.
+10) Log in as testadmin and repeat steps 5-8 for every page visible in the navbar to an Admin user, except Log out of course, as well as the following pages:
+- the add/edit posts forms
+- the view comments page, edit comment form
+- the edit profile form
+- the add/edit group forms
+- the main registration form
+- the reset password form
+- the forgot password form
+
+| Device | Test Result |
+| :-----: | :-----: |
+| iPhone SE | Pass |
+| iPhone XR | Pass |
+| iPhone 12 Pro | Pass |
+| iPhone 14 Pro Max | Pass |
+| Samsung Galaxy S8+ | Pass |
+| Samsung Galaxy S20 Ultra | Pass |
+| iPad Mini | Pass |
+| iPad Air | Pass |
+| iPad Pro | Pass |
+| Monitor lg-breakpoint+ | Pass |
+| Monitor xxl-breakpoint+ | Pass |
 
 ## Browser Testing
 
 [Back to top](#cydymiaith-testing-documentation)
 
+To test the site on different browsers, I repeated steps 5-9 of the section above, without trying different devices, only on a lg-breakpoint+ laptop screen. In addition, I logged in and reset my password to test email functionality, and then logging in the with new password.
 
+- Chrome: Pass
+- Edge: Pass
+- Firefox: Pass
+
+I don't own a Safari device.
 
 ## Automated Testing
 
