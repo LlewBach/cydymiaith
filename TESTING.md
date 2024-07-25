@@ -33,10 +33,10 @@ Please note that these tests flow sequentially.
 
 #### Navigation
 
-1) Navigate to cydymiaith in the Chrome browser.
+1) Navigate to Cydymiaith in the Chrome browser.
 2) From the Home page, click on the Posts navbar item.
 3) On the Posts page, click 'Log In To Make Post' button. The user should be redirected to the Log In page.
-4) On the Log In page, click 'Register here'. The user should be sent to the Register page.
+4) On the Log In page, click 'Register here'. The user should be sent to the Confirm Email to Register page.
 5) Click 'Log In' from the navbar. The user should navigate to the Log In page.
 6) Click 'Register' from the navbar. The user should navigate to the Register page.
 
@@ -59,13 +59,14 @@ Feature abilities and limitations are dependent on the user's role. I will start
 
 #### Registration 
 
-1) Navigate to cydymiaith in the Chrome browser, and click on the 'Register' navbar option.
-2)  For the following form fields, enter these details.
-  - Email: 'testuser1@abc.com'
+1) Navigate to Cydymiaith in the Chrome browser, and click on the 'Register' navbar option.
+2) On the Confirm Email to Register page, enter an email address you have access to. Click 'Send'.
+3) Look for the confirmation email in your inbox and click the provided link. Check that the user is taken to the Register page.
+4)  For the following form fields, enter these details.
   - Username: 'testuser1'
   - Password: 'testuser1'
-3) If the values pass form validation (tested in the 'Defensive Programming Testing' section below), then upon clicking 'Register' the user should be redirected to the user's new profile page, that displays the username, 'Role: Student' and a flash message - "Registration Successful!".
-4) The navbar menu items should have changed from 'Home, Posts, Log In, Register' to 'Home, Posts, Profile, Log Out'.
+5) If the values pass form validation (tested in the 'Defensive Programming Testing' section below), then upon clicking 'Register' the user should be redirected to the user's new profile page, that displays the username, 'Role: Student' and a flash message - "Registration Successful!".
+6) The navbar menu items should have changed to 'Home, Posts, Profile, Log Out'.
 
 Test result: Pass
 
@@ -135,7 +136,7 @@ We will test group filtering later.
 1) If there are not multiple posts visible on the Posts page already, create some more test posts with differing categories.
 2) From the Category drop down menu, select the first menu item, and press 'Filter'. The page should reload and only display posts of that category or no posts. The Category filter should also display the selected category.
 3) Repeat for all category menu items.
-4) Having tested each category, filter for 'All Categories'. All posts should now be visible to the user.
+4) Having tested each category, click the 'Clear' button to reset the filter. Posts of every category should reappear.
 
 Test result: Pass
 
@@ -146,19 +147,19 @@ Test result: Pass
 - For All or Group?: All
 - Title: "Comment CRUD testing"
 - Description: "testing"
-2) On the post, click the 'Comments' link. The user should be directed to a page displaying the post with a comment box beneath.
+2) On the post, click the 'View Comments' link. The user should be directed to a page displaying the post with a comment box beneath.
 3) In the comment box, type in "Comment creation test" and press 'Submit'. Check the following:
 - The page should reload
 - a flash message "Comment Added" should display
--  the new comment should be visible beneath the comment box
-- the post's Comments number should have updated from 'O Comments' to '1 Comments'
+-  the new comment should be visible beneath the comment box and be right-aligned
+- the post's Comments number should have updated from 'Comments (0)' to 'Comments (1)'
 
 Test result: Pass
 
 #### Comment Editing
 
 1) On the comments page for the 'Comment CRUD testing' post, click on the 'Edit' link for the new comment. The user should be taken to a page with an 'Edit Comment' text box that's populated with the previous comment.
-2) Edit the comment to 'Comment edit test'. Press 'Save'.
+2) Edit the comment to 'Comment edit test'. Press 'Save Edit'.
 3) Check that:
 - The user is taken back to the comments page for the post
 - A flash message reads 'Comment Edited'
@@ -182,18 +183,17 @@ Test result: Pass
 
 1) Click the 'Profile' navbar option
 2) On the profile, click 'Edit Profile'
-3) Change the values to the following and press 'Save'
-- Email: testuser1@abcd.com
+3) First, just change the email to one that already exists (roepjynamy@hotmail.com), and click 'Save'. The user should be redirected to the Profile page and a flash message should display "That email is already in use".
+4) Click 'Edit Profile' again and change the values to the following and press 'Save'
 - Level: Blasu
 - Provider: Caerdydd / Cardiff
-- Location: Abertawe
+- Location: Swansea
 - Bio: "Hello world!"
-4) Check that:
+5) Check that:
 - the user is taken back to the profile page
 - a flash message displays 'Profile Updated'
 - the profile information has been updated
-5) Click 'Edit Profile' again. On the Edit Profile page check that the input fields are populated with the current values.
-6) Change the email address to one that you have access to in order to test password reset functionality in the next section. Click 'Save'.
+6) Click 'Edit Profile' again. On the Edit Profile page check that the input fields are populated with the current values.
 
 Test result: Pass
 
@@ -203,8 +203,8 @@ Test result: Pass
 2) Click 'Reset Password'. A flash message should display "A confirmation email has been sent".
 3) Find the email from cydymiaith@gmail.com in your inbox with the subject 'Password Reset Request'.
 4) Open the email and click the link. The user should be taken to Cydymiaith's Reset Password page.
-5) Enter the New Password, and click 'Reset Password'. The user should be sent back to the profile page and a flash message should display "Your password has been reset".
-6) Log out and log back in with the new password. Log in should succeed.
+5) Enter the New Password, and click 'Reset Password'. The user should be sent back to the login page and a flash message should display "Your password has been reset".
+6) Log back in with the new password. Log in should succeed.
 
 Test result: Pass
 
@@ -215,7 +215,7 @@ This test is more involved as it requires a bit of set up to fully test the full
 Set up
 
 1) As testuser1, add a comment ('testuser1 deletion cascade test') to testuser1's post titled 'Comment CRUD testing'.
-2) Log Out and Register a new profile of username 'testuser2', password 'testuser2'.
+2) Log Out and Register a new profile of username 'testuser2', password 'testuser2'. You will need to use a second email account that you have access to.
 3) Create a post titled 'profile deletion cascade test'
 4) Log Out and Log In as testuser1.
 5) Find the post 'profile deletion cascade test' and add a comment.
@@ -238,7 +238,7 @@ Test result: Pass
 The Tutor role has all the abilities of the Student role plus more, which we will test below.
 
 Using an Admin profile, I will set testuser2's role as 'Tutor' for the following tests. I will also create a new Student profile by registering an account using the following details:
-- Email: testuser3@abc.com
+- Email: (the first email address you used for testuser1)
 - Username: testuser3
 - Password: testuser3
 
@@ -246,17 +246,17 @@ Using an Admin profile, I will set testuser2's role as 'Tutor' for the following
 
 1) Log in as testuser2 and on the profile page, check that the role is set to 'Tutor'.
 2) Check that the following navbar options are: Home, Posts, Profile, Users, Groups, Log Out
-3) Navigate to the Users page. Check that at the bottom of each user card, only two links are visible: 'View Profile' and 'Add to Class'.
+3) Navigate to the Users page. Check that at the bottom of each user card, only two links are visible: 'View Profile' and 'Add to Group'.
 
 Test result: Pass
 
 #### User Filtering
 
-1) Set profile details for testuser2 to filter by.
+1) Set profile details for testuser2 in order to test the filters.
 2) On the Users page, filter by Level. Only users of that level should be visible, or no users at all.
 3) Repeat for each level.
-4) Set Level back to 'All' and repeat steps 2 and 3 but for Provider.
-5) Reset Provider to 'All'.
+4) Click 'Clear'. The filters should reset.
+5) Repeat for Provider.
 6) Filter users by testuser2's Username, Email and Location, clearing the filter between each one. The filters are currently case sensitive.
 7) The filter fields should remember filter settings. 
 
@@ -349,6 +349,7 @@ For the purposes of the following tests, I will:
 - create an account with username: testadmin, password: testadmin
 - assign testadmin a role of Admin
 - create a post titled 'Admin visibility test' by testuser3 and comment on it
+This account will be available for the assessor to use.
 
 #### Total CRUD Ability
 
@@ -417,45 +418,46 @@ This section considers two aspects.
     - **Expected Result**: Form should reload and flash a message displaying "That email is already in use".
     - **Actual Result**: Form reloads and correct flash message appears. - PASS
 
-#### Registration Form
-
-1. **Test Case**: Invalid email format
+#### Confirm Email to Register Form
+1. **Test Case**: Empty Field
+    - **Input**: Field left empty.
+    - **Expected Result**: The form should display error messages indicating that the Email is required.
+    - **Actual Result**: The required field raises a request for the user to fill out the field. - PASS.
+2. **Test Case**: Invalid email format
     - **Input**: abc.com
     - **Expected Result**: Form should not submit and should display a validation message indicating the email format is incorrect.
     - **Actual Result**: Form did not submit and did display a validation message indicating the email format is incorrect. - PASS
-2. **Test Case**: Empty Fields
-    - **Input**: Fields left empty.
-    - **Expected Result**: The form should display error messages indicating that the Email, Username and Password fields are required.
-    - **Actual Result**: All required fields raise a request for the user to fill out the field. - PASS.
 3. **Test Case**: >50 Characters in Email field
     - **Input**: 50 character string
     - **Expected Result**: The form should not allow any more characters to be added to the above string.
     - **Actual Result**: It is not possible to type any more than the limit of 50 characters. - PASS
-4. **Test Case**: <3 characters in Username field
+
+#### Registration Form
+1. **Test Case**: Empty Fields
+    - **Input**: Fields left empty.
+    - **Expected Result**: The form should display error messages indicating that the Username and Password fields are required.
+    - **Actual Result**: All required fields raise a request for the user to fill out the field. - PASS.
+2. **Test Case**: <3 characters in Username field
     - **Input**: 2 character string
     - **Expected Result**: The form should not submit and request 'Please match the requested format'.
     - **Actual Result**: The form does not submit and requests 'Please match the requested format'. - PASS
-5. **Test Case**: >15 characters in Username field
+3. **Test Case**: >15 characters in Username field
     - **Input**: 16 character string
     - **Expected Result**: The form should not allow any more characters to be added to the above string.
     - **Actual Result**: It is not possible to type any more than the limit of 15 characters. - PASS
-6. **Test Case**: Non-letter/number in Username field
+4. **Test Case**: Non-letter/number in Username field
     - **Input**: testuser-4!
     - **Expected Result**: The form should not submit and request 'Please match the requested format'.
     - **Actual Result**: The form does not submit and requests 'Please match the requested format'. - PASS
-7. **Test Case**: <5 characters in Password field
+5. **Test Case**: <5 characters in Password field
     - **Input**: 4 character string
     - **Expected Result**: The form should not submit and request 'Please lengthen this text to 5 characters or more (you are currently using 4 characters)'.
     - **Actual Result**: The form does not submit and displays the expected request. - PASS
-8. **Test Case**: >15 characters in Password field
+6. **Test Case**: >15 characters in Password field
     - **Input**: 15 character string
     - **Expected Result**: The form should not allow any more characters to be added to the above string.
     - **Actual Result**: It is not possible to type any more than the limit of 15 characters. - PASS
-9. **Test Case**: Email address already in use
-    - **Input**: testuser3@abc.com
-    - **Expected Result**: Form should reload and flash a message displaying "That email is already in use".
-    - **Actual Result**: Form reloads and correct flash message appears. - PASS
-10. **Test Case**: Username already in use
+7. **Test Case**: Username already in use
     - **Input**: testuser3
     - **Expected Result**: User redirected to Log In page and see a flash message - "That username is already in use".
     - **Actual Result**: User redirected to Log In page and correct flash message appears. - PASS
