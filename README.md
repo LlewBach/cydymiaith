@@ -194,8 +194,11 @@ The fonts used are from Google fonts. The brand name and titles use Outfit, and 
 
 ##### Registration
 
-- The registration form asks for an email, username and password.
-- The email and username must be unique and not already exist in the database.
+- The initial registration page prompts the user for an email to be verified.
+- The email must be unique and not already exist in the database.
+- An email is then sent to that address, and when the link therein is clicked, the user is taken to the main registration page.
+- The main registration form asks for a username and password.
+- The username must be unique and not already exist in the database.
 - The password is required to be in a certain form and contain certain characters. 
 - If the user wants to change their password, they are able to reset it via email confirmation.
 - Form validation will inform the user of any errors in user input.
@@ -211,6 +214,7 @@ The fonts used are from Google fonts. The brand name and titles use Outfit, and 
 - If the entered username or password do not correspond to a user in the database, a flash message will display to the user.
 - Entering a username and password that successfully correspond to a user's details in the database will log the user in to that profile.
 - A flash message will inform the user that login was successful.
+- If the user has forgotten their password, they are able to reset it via email confirmation.
 
 ##### Log Out
 
@@ -224,16 +228,15 @@ The fonts used are from Google fonts. The brand name and titles use Outfit, and 
 - Create, view, edit and delete their own posts.
 - Add, view, edit and delete their own comments on posts.
 - Assign and filter posts by category or assigned group.
-- Edit and delete their own profile with confirmational flash messages.
+- Edit and delete their own profile.
 - Reset password with email confirmation.
-- A flash message will inform the user if password reset was successful.
 
 ##### Tutor Powers
 
 Include Student powers plus the following...
 
 - Create, view, edit and delete own Groups.
-- View a list of Users. Add Students from the user list to own Groups.
+- View a list of Users. Add Students from the Users list to own Groups.
 - Remove Students from own Groups.
 - Filter Posts by own Groups.
 - Filter Users by level, provider, username, email and location.
@@ -257,7 +260,7 @@ Include Tutor powers plus the following...
 #### Comments
 
 - Comments can be viewed and added on the same page.
-- Flash messages inform the user if comments created, edited and deleted successfully CHECK.
+- Flash messages inform the user if comments created, edited and deleted successfully.
 - Adding and deleting comments will change the question's comment count.
 
 #### Profiles
@@ -267,6 +270,16 @@ Include Tutor powers plus the following...
 ### Future Feature Considerations
 
 [Back to top](#milestone-3-project---cydymiaith)
+
+Bilingual - To be officially adopted by the LearnWelsh organization, the site would have to be bilingual.
+
+User map - A map of the locations of registered users.
+
+Word of the day
+
+Friends - The ability to add friends and filter posts by friends list.
+
+Close thread - The ability to set a post as closed, having been answered or becoming out of date.
 
 ## Technologies Used
 
@@ -292,10 +305,11 @@ Include Tutor powers plus the following...
 - [favicon.io](https://favicon.io/) - Logo to favicon converter
 - [ImageResizer.com](https://imageresizer.com/image-compressor) - Image compression
 
-
 ## Testing
 
 [Back to top](#milestone-3-project---cydymiaith)
+
+For the testing procedures and results, please see [TESTING.md](TESTING.md)
 
 ## Deployment
 
@@ -379,30 +393,11 @@ YouTube - [Python Flask Tutorial: Full-Featured Web App Part 12 - Custom Error P
 
 GPTo - drew the logo
 
-Neil Mark Thomas - Unsplash - https://unsplash.com/photos/mountain-under-cloudy-sky-10mHvFA6Ykg X
-
-Jonathan Kemper - Unsplash - https://unsplash.com/photos/black-dragon-head-wall-decor-zQMN9fLJehM
-
-RetroSupply - Unsplash - https://unsplash.com/photos/vintage-teal-typewriter-beside-book-jLwVAUtLOAQ
-
-Marcos Paulo Prado - Unsplash - https://unsplash.com/photos/unknown-person-writing-tcyW6Im5Uug
-
-Camylla Battani - Unsplash - https://unsplash.com/photos/short-coated-brown-dog-AoqgGAqrLpU
-
-Pim de Boer - Unsplash - https://unsplash.com/photos/a-book-shelf-next-to-a-street-sign-and-a-bicycle-nkGjJRQigYM
-
-Solen Feyissa - Unsplash - https://unsplash.com/photos/man-in-white-crew-neck-t-shirt-wearing-black-framed-eyeglasses-WG7v_wYZW4Q
-
-Anne Nygard - Unsplash - https://unsplash.com/photos/brown-wooden-bench-on-dock-near-lake-during-daytime-bLooSpzyuHc
-
-Ali Bakhtiari - Unsplash - https://unsplash.com/photos/assorted-postage-stamps-on-blue-and-white-textile-81eOv8Vox8k
-
-Priscilla Du Preez - Unsplash - https://unsplash.com/photos/woman-in-black-long-sleeve-shirt-holding-black-ceramic-mug-K8XYGbw4Ahg
-
-
 ## Acknowledgements
 
 [Back to top](#milestone-3-project---cydymiaith)
+
+I'd like to thank my mentor Ben Kavanagh for this guidance with this project.
 
 ## Disclaimer
 
