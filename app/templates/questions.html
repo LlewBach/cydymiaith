@@ -17,8 +17,11 @@
 <form id="filter-form" class="posts-filter" method="POST" action="{{ url_for('questions.get_posts') }}">
   <div class="container">
     <div class="row">
+      {% if not current_user.is_authenticated %}
+      <div class="d-none d-lg-block col-lg-2"></div>
+      {% endif %}
       <div
-        class="{% if current_user.is_authenticated %}col-sm-4 col-lg-5{% else %}col-sm-10{% endif %} mb-3 text-center">
+        class="{% if current_user.is_authenticated %}col-sm-4 col-lg-5{% else %}col-sm-8 col-lg-6{% endif %} mb-3 text-center">
         <select id="category" name="category" class="form-select" aria-label="Default select example">
           <option value="" selected>All Categories</option>
           {% for category in categories %}
