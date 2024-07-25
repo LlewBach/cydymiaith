@@ -6,21 +6,24 @@
 
 <h1 class="text-center">Register</h1>
 
-<form method="POST" action="{{ url_for('auth.register', token=token) }}">
-  <div class="mb-3">
-    <label for="username" class="form-label">Username</label>
-    <input type="text" class="form-control" id="username" name="username" placeholder="(5-15 letters/numbers only)"
-      minlength="3" maxlength="15" pattern="^[a-zA-Z0-9]{3,15}$" required>
-  </div>
-  <div class="mb-3">
-    <label for="password" class="form-label">Password</label>
-    <input type="password" class="form-control" id="password" name="password" minlength="5" maxlength="15"
-      placeholder="(5-15 characters)" required>
-  </div>
-  <div class="d-flex justify-content-center">
-    <button type="submit" class="btn btn-outline-warning btn-lg">Register</button>
-  </div>
-</form>
+<div class="container d-flex justify-content-center">
+  <form method="POST" action="{{ url_for('auth.register', token=token) }}">
+    <div class="mb-3">
+      <label for="username" class="form-label">Username</label>
+      <input type="text" class="form-control" id="username" name="username" placeholder="(5-15 letters/numbers only)"
+        minlength="3" maxlength="15" pattern="^[a-zA-Z0-9]{3,15}$" required>
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" class="form-control" id="password" name="password" minlength="5" maxlength="15"
+        placeholder="(5-15 characters)" required>
+    </div>
+    <div class="d-flex justify-content-center">
+      <button type="submit" class="btn btn-outline-warning btn-lg">Register</button>
+    </div>
+  </form>
+</div>
+
 
 <div class="text-center mb-4">
   <p class="secondary-text mb-0">Already have an account?</p>
