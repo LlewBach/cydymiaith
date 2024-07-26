@@ -28,11 +28,12 @@
       <a href="#" class="card-link" data-bs-toggle="modal" data-bs-target="#{{ question._id }}">Delete</a>
 
       <!-- Delete post modal -->
-      <div class="modal fade" id="{{ question._id }}" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+      <div class="modal fade" id="{{ question._id }}" tabindex="-1" aria-labelledby="modalLabel{{ question._id }}"
+        aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="modalLabel">Are you sure?</h1>
+              <h1 class="modal-title fs-5" id="modalLabel{{ question._id }}">Are you sure?</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -93,12 +94,12 @@
               <a href="#" class="card-link" data-bs-toggle="modal" data-bs-target="#{{ answer._id }}">Delete</a>
 
               <!-- Delete comment modal -->
-              <div class="modal fade" id="{{ answer._id }}" tabindex="-1" aria-labelledby="modalLabel"
+              <div class="modal fade" id="{{ answer._id }}" tabindex="-1" aria-labelledby="modalLabel{{ answer._id }}"
                 aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="modalLabel">Are you sure?</h1>
+                      <h1 class="modal-title fs-5" id="modalLabel{{ answer._id }}">Are you sure?</h1>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">

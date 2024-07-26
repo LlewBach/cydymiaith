@@ -13,8 +13,7 @@
       {% if current_user.role == "Admin" %}
       <div class="col-12 col-md-6 mb-3">
         <label for="role" class="form-label">Role</label>
-        <select id="role" name="role" class="form-select" aria-label="Default select example">
-          <option selected>Choose Role</option>
+        <select id="role" name="role" class="form-select" aria-label="Select Role">
           {% for role in roles %}
           {% if role.role_name == user.role %}
           <option value="{{ role.role_name }}" selected>{{ role.role_name }}</option>
@@ -27,8 +26,8 @@
       {% endif %}
       <div class="col-12 col-md-6 mb-3">
         <label for="level" class="form-label">Level</label>
-        <select id="level" name="level" class="form-select" aria-label="Default select example">
-          <option selected>Choose Level</option>
+        <select id="level" name="level" class="form-select" aria-label="Select Level">
+          <option value="">Level</option>
           {% for level in levels %}
           {% if level.level_name == user.level %}
           <option value="{{ level.level_name }}" selected>{{ level.level_name }}</option>
@@ -40,8 +39,8 @@
       </div>
       <div class="col-12 col-md-6 mb-3">
         <label for="provider" class="form-label">Provider</label>
-        <select id="provider" name="provider" class="form-select" aria-label="Default select example">
-          <option selected>Provider</option>
+        <select id="provider" name="provider" class="form-select" aria-label="Select Provider">
+          <option value="">Provider</option>
           {% for provider in providers %}
           {% if provider.provider_name == user.provider %}
           <option value="{{ provider.provider_name }}" selected>{{ provider.provider_name }}</option>

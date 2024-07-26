@@ -703,12 +703,12 @@ The procedure I used was to go to the relevant webpage, right click, click 'View
 | reset_password.html | Pass |
 | questions.html | Pass |
 | ask_question.html | Pass |
-| edit_question.html |  |
-| view_answers.html |  |
-| edit_answer.html |  |
-| edit_profile.html |  |
-| users.html |  |
-| groups.html |  |
+| edit_question.html | Pass |
+| view_answers.html | Pass |
+| edit_answer.html | Pass |
+| edit_profile.html | Pass |
+| users.html | Pass |
+| groups.html | Pass |
 | add_group.html |  |
 | edit_group.html |  |
 | 404.html |  |

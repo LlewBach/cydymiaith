@@ -50,15 +50,17 @@
 
         </div>
         <div class="col-12 col-md-4 col-xxl-3">
-          <div class="accordion" id="accordionExample">
+          <div class="accordion" id="accordion{{ group._id }}">
             <div class="accordion-item">
               <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                  data-bs-target="#{{ group._id }}" aria-expanded="true" aria-controls="collapseOne">
+                  data-bs-target="#collapse{{ group._id }}" aria-expanded="true"
+                  aria-controls="collapse{{ group._id }}">
                   Student List
                 </button>
               </h2>
-              <div id="{{ group._id }}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+              <div id="collapse{{ group._id }}" class="accordion-collapse collapse"
+                data-bs-parent="accordion{{ group._id }}">
                 <div class="accordion-body">
                   {% for student in group.students %}
                   <div class="d-flex justify-content-between">
@@ -66,12 +68,12 @@
                     <a href="#" data-bs-toggle="modal" data-bs-target="#{{ student }}">Remove</a>
 
                     <!-- Modal -->
-                    <div class="modal fade" id="{{ student }}" tabindex="-1" aria-labelledby="deleteModalLabel"
-                      aria-hidden="true">
+                    <div class="modal fade" id="{{ student }}" tabindex="-1"
+                      aria-labelledby="deleteModalLabel{{ student }}" aria-hidden="true">
                       <div class="modal-dialog">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="modalLabel">Are you sure?</h1>
+                            <h1 class="modal-title fs-5" id="deleteModalLabel{{ student }}">Are you sure?</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                           </div>
                           <div class="modal-body">
@@ -102,12 +104,12 @@
       Group</a>
 
     <!-- Modal -->
-    <div class="modal fade" id="deleteModal{{ group._id }}" tabindex="-1" aria-labelledby="deleteModalLabel"
-      aria-hidden="true">
+    <div class="modal fade" id="deleteModal{{ group._id }}" tabindex="-1"
+      aria-labelledby="deleteModalLabel{{ group._id }}" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="modalLabel">Are you sure?</h1>
+            <h1 class="modal-title fs-5" id="deleteModalLabel{{ group._id }}">Are you sure?</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">

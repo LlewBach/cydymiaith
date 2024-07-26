@@ -115,12 +115,12 @@
             Profile</a>
 
           <!-- Modal -->
-          <div class="modal fade" id="deleteModal{{ user._id }}" tabindex="-1" aria-labelledby="modalLabel"
-            aria-hidden="true">
+          <div class="modal fade" id="deleteModal{{ user._id }}" tabindex="-1"
+            aria-labelledby="modalLabel{{ user._id }}" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="modalLabel">Are you sure?</h1>
+                  <h1 class="modal-title fs-5" id="modalLabel{{ user._id }}">Are you sure?</h1>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -137,17 +137,17 @@
         </div>
         {% endif %}
         <div class="col-6 col-sm-{% if current_user.role == 'Admin' %}3{% else %}6{% endif %}">
-          <a href="#" class="card-link" data-bs-toggle="modal" data-bs-target="#addToClassModal{{ user._id }}">
+          <a href="#" class="card-link" data-bs-toggle="modal" data-bs-target="#addToGroupModal{{ user._id }}">
             Add to Group
           </a>
 
           <!-- Modal -->
-          <div class="modal fade" id="addToClassModal{{ user._id }}" tabindex="-1" aria-labelledby="modalLabel"
-            aria-hidden="true">
+          <div class="modal fade" id="addToGroupModal{{ user._id }}" tabindex="-1"
+            aria-labelledby="groupModalLabel{{ user._id }}" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="modalLabel">Choose Class</h1>
+                  <h1 class="modal-title fs-5" id="groupModalLabel{{ user._id }}">Choose Group</h1>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
@@ -157,9 +157,9 @@
                     {% for group in groups %}
                     {% if user.username not in group.students %}
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="group_id" id="{{ group._id }}"
-                        value="{{ group._id }}">
-                      <label class="form-check-label" for="{{ group._id }}">
+                      <input class="form-check-input" type="radio" name="group_id"
+                        id="group_{{ group._id }}user_{{ user._id }}" value="{{ group._id }}">
+                      <label class="form-check-label" for="group_{{ group._id }}user_{{ user._id }}">
                         {{ group.level }}, {{ group.weekday }}, {{ group.year }}
                       </label>
                     </div>
