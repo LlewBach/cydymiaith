@@ -752,6 +752,8 @@ Result: Pass
 
 ### Python Validation
 
+
+
 ### WAVE
 
 [https://wave.webaim.org/](https://wave.webaim.org/)
