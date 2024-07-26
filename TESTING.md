@@ -760,6 +760,8 @@ Using this accessibility validator, I saw that the colour contrast of my initial
 
 ### Lighthouse
 
+![Lighthouse results](app/static/captures/lighthouse.PNG)
+
 ## Bugs
 
 [Back to top](#cydymiaith-testing-documentation)
