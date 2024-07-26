@@ -655,19 +655,19 @@ Testing function
 - the reset password form
 - the forgot password form
 
-| Device | Test Result |
-| :-----: | :-----: |
-| iPhone SE | Pass |
-| iPhone XR | Pass |
-| iPhone 12 Pro | Pass |
-| iPhone 14 Pro Max | Pass |
-| Samsung Galaxy S8+ | Pass |
-| Samsung Galaxy S20 Ultra | Pass |
-| iPad Mini | Pass |
-| iPad Air | Pass |
-| iPad Pro | Pass |
-| Monitor lg-breakpoint+ | Pass |
-| Monitor xxl-breakpoint+ | Pass |
+| Device | Resolution | Test Result |
+| :-----: | :-----: | :-----: |
+| iPhone SE | 375 x 667 | Pass |
+| iPhone XR | 414 x 896 | Pass |
+| iPhone 12 Pro | 390 x 844 | Pass |
+| iPhone 14 Pro Max | 430 x 932 | Pass |
+| Samsung Galaxy S8+ | 360 x 740 | Pass |
+| Samsung Galaxy S20 Ultra | 412 x 915 | Pass |
+| iPad Mini | 768 x 1024 | Pass |
+| iPad Air | 820 x 1180 | Pass |
+| iPad Pro | 1024 x 1366 | Pass |
+| Laptop | 1280 x 720 | Pass |
+| Monitor | 1920 x 1080 | Pass |
 
 ## Browser Testing
 
