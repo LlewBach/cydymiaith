@@ -756,7 +756,7 @@ Result: Pass
 
 [https://wave.webaim.org/](https://wave.webaim.org/)
 
-
+Using this accessibility validator, I saw that the colour contrast of my initial palette was sub-optimal. With the help of [WebAIM's Contrast Checker](https://webaim.org/resources/contrastchecker/) I refined the palette for optimal readability.
 
 ### Lighthouse
 

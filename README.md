@@ -172,11 +172,15 @@ I asked GPT-4 to create some logo options for me, and I picked the final choice.
 
 #### Colour Palette
 
-Here is the colour palette I used.
+Here is the colour palette I initially chose.
 
 ![Palette](app/static/captures/palette.PNG)
 
 Since the site is text based, I opted for a dark theme to make reading easier on the eyes.
+
+However, by using [WebAIM's Contrast Checker](https://webaim.org/resources/contrastchecker/), I refined it to ensure good contrast and accessibility. This is the result.
+
+![Refined palette](app/static/captures/palette3.PNG)
 
 #### Fonts
 
