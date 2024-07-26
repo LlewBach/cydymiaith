@@ -60,12 +60,12 @@ class Group:
         """
         try:
             group = mongo.db.groups.find_one({"_id": ObjectId(group_id)})
-
             return group
         
         except Exception as e:
             print(f'Error in get_group_by_id method: {e}')
-            return None
+        
+        return None
 
 
     @staticmethod

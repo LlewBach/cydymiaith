@@ -2,6 +2,7 @@ from functools import wraps
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import current_user, login_required
 from app.groups.models import Group
+from app.auth.models import User
 
 
 groups_bp = Blueprint('groups', __name__, template_folder='../templates')
@@ -68,7 +69,7 @@ def add_group():
 
 
 @groups_bp.route("/add_student", defaults={"username": None})
-@groups_bp.route("/add_student/<username>", methods=["POST"])
+@groups_bp.route("/add_student/<username>")
 @login_required
 @must_be_tutor_or_admin
 def add_student(username):
@@ -84,6 +85,10 @@ def add_student(username):
         Response: Redirects to the get_groups view.
     """
     if username:
+        user_search = User.find_by_username(username, True)
+        if user_search == None:
+            flash("User Not Found")
+            return redirect(url_for("auth.view_users"))
         group_id = request.form.get("group_id")
         if group_id:
             Group.add_student_to_group(group_id, username)
@@ -132,6 +137,9 @@ def remove_student(group_id, username):
 def edit_group(group_id):
     if group_id:
         group = Group.get_group_by_id(group_id)
+        if group == None:
+            flash("No Group Found")
+            return redirect(url_for("groups.get_groups"))
         if request.method == "POST":
             tutor = current_user.username
             provider = request.form.get("provider")
@@ -172,6 +180,10 @@ def delete_group(group_id):
         Response: A redirect response to the 'get_groups' view.
     """
     if group_id:
+        group = Group.get_group_by_id(group_id)
+        if group == None:
+            flash("No Group Found")
+            return redirect(url_for("groups.get_groups"))
         Group.delete_group(group_id)
         flash("Group Deleted")
     else:
