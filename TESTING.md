@@ -709,10 +709,10 @@ The procedure I used was to go to the relevant webpage, right click, click 'View
 | edit_profile.html | Pass |
 | users.html | Pass |
 | groups.html | Pass |
-| add_group.html |  |
-| edit_group.html |  |
-| 404.html |  |
-| 500.html |  |
+| add_group.html | Pass |
+| edit_group.html | Pass |
+| 404.html | Pass |
+| 500.html | Pass |
 
 
 ### CSS Validation

@@ -14,11 +14,11 @@
           <div class="col-12 col-md-4 mb-3">
             <label for="weekday" class="form-label">Weekday</label>
             <input type="text" id="weekday" name="weekday" class="form-control" value="{{ group.weekday }}"
-              maxlength="20" selected>
+              maxlength="20">
           </div>
           <div class="col-12 col-md-4 mb-3">
             <label for="level" class="form-label">Level</label>
-            <select id="level" name="level" class="form-select" aria-label="#" required>
+            <select id="level" name="level" class="form-select" aria-label="Select Level" required>
               <option value="" disabled {% if not group.level %}selected{% endif %}>Choose Level</option>
               {% for level in levels %}
               {% if level.level_name == group.level %}
@@ -36,7 +36,7 @@
           </div>
           <div class="col-12 mb-3">
             <label for="provider" class="form-label">Provider</label>
-            <select id="provider" name="provider" class="form-select" aria-label="#" required>
+            <select id="provider" name="provider" class="form-select" aria-label="Select Provider" required>
               <option value="" disabled {% if not group.provider %}selected{% endif %}>Choose Provider</option>
               {% for provider in providers %}
               {% if provider.provider_name == group.provider %}
