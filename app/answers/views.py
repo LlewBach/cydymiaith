@@ -10,6 +10,7 @@ answers_bp = Blueprint('answers', __name__, template_folder='../templates')
 
 
 # Docstrings written by GPT4o and edited by myself.
+@answers_bp.route("/view_comments", defaults={"question_id": None})
 @answers_bp.route("/view_comments/<question_id>")
 def view_comments(question_id):
     """
@@ -25,12 +26,19 @@ def view_comments(question_id):
     Returns:
         Response: Renders the view_answers.html template with the question, answers, and the count of answers.
     """
-    question = Question.find_by_id(question_id)
-    Question.set_time_ago(question)
-    answers = Answer.find_answers_by_question_id(question_id)
-    answer_count = Answer.count_answers(answers)
+    if question_id:
+        question = Question.find_by_id(question_id)
+        if question == None:
+            flash("Post Not Found")
+            return redirect(url_for("questions.get_posts"))
+        Question.set_time_ago(question)
+        answers = Answer.find_answers_by_question_id(question_id)
+        answer_count = Answer.count_answers(answers)
 
-    return render_template("view_answers.html", question=question, answers=answers, answer_count=answer_count)
+        return render_template("view_answers.html", question=question, answers=answers, answer_count=answer_count)
+    else:
+        flash("Post Not Specified")
+        return redirect(url_for("questions.get_posts"))
 
 
 @answers_bp.route("/answer", defaults={"question_id": None})
@@ -49,6 +57,11 @@ def answer(question_id):
         Response: Redirects to the view_answers template to display the updated list of answers.
     """
     if question_id:
+        found_post = Question.find_by_id(question_id)
+        if not found_post:
+            flash("No Post Found")
+            return redirect(url_for("questions.get_posts"))
+
         if request.method == "POST":
             text = request.form.get("text")
             username = current_user.username
