@@ -12,6 +12,7 @@ auth_bp = Blueprint('auth', __name__, template_folder='../templates')
 
 
 # Docstrings written by GPT4o and edited by myself.
+@auth_bp.route("/send_confirmation", defaults={"email": None})
 @auth_bp.route('/send_confirmation/<email>')
 def send_confirmation(email):
     """
@@ -28,16 +29,21 @@ def send_confirmation(email):
     Returns:
     A redirect response to the user's profile page.
     """
-    s = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
-    token = s.dumps(email, salt='reset-password-salt')
-    reset_url = url_for('auth.reset_password', token=token, _external=True)
-    msg = Message("Password Reset Request", recipients=[email])
-    msg.body = f"To reset your password, please visit the following link: {reset_url}"
-    mail.send(msg)
-    flash('A confirmation email has been sent.', 'success')
-    return redirect(url_for('auth.login'))
+    if email:
+        s = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
+        token = s.dumps(email, salt='reset-password-salt')
+        reset_url = url_for('auth.reset_password', token=token, _external=True)
+        msg = Message("Password Reset Request", recipients=[email])
+        msg.body = f"To reset your password, please visit the following link: {reset_url}"
+        mail.send(msg)
+        flash('A confirmation email has been sent.', 'success')
+        return redirect(url_for('auth.login'))
+    else:
+        flash("Email Not Specified")
+        return redirect(url_for("core.home"))
 
 
+@auth_bp.route('/reset_password', defaults={"token": None})
 @auth_bp.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_password(token):
     """
@@ -56,32 +62,36 @@ def reset_password(token):
         Response: Redirects to the login page if the token is invalid or expired.
         Response: Redirects to the log in page after successfully resetting the password.
     """
-    try:
-        email = URLSafeTimedSerializer(current_app.config['SECRET_KEY']).loads(
-            token, salt='reset-password-salt', max_age=3600)
-    except SignatureExpired:
-        flash('The reset link has expired.', 'error')
-        return redirect(url_for('auth.login'))
-    except BadSignature:
-        flash('The reset link is invalid.', 'error')
-        return redirect(url_for('auth.login'))
-
-    user = User.find_by_email(email)
-    if not user:
-        flash('No user found with this email address.', 'error')
-        return redirect(url_for('auth.login'))
-    
-    if request.method == 'POST':
-        new_password = request.form.get('new_password')
-        if new_password:
-            user.set_password(new_password)
-            logout_user()
-            flash('Your password has been reset.', 'success')
+    if token:
+        try:
+            email = URLSafeTimedSerializer(current_app.config['SECRET_KEY']).loads(
+                token, salt='reset-password-salt', max_age=3600)
+        except SignatureExpired:
+            flash('The reset link has expired.', 'error')
             return redirect(url_for('auth.login'))
-        else:
-            flash('Password cannot be empty.', 'error')
+        except BadSignature:
+            flash('The reset link is invalid.', 'error')
+            return redirect(url_for('auth.login'))
 
-    return render_template('reset_password.html', token=token)
+        user = User.find_by_email(email)
+        if not user:
+            flash('No user found with this email address.', 'error')
+            return redirect(url_for('auth.login'))
+        
+        if request.method == 'POST':
+            new_password = request.form.get('new_password')
+            if new_password:
+                user.set_password(new_password)
+                logout_user()
+                flash('Your password has been reset.', 'success')
+                return redirect(url_for('auth.login'))
+            else:
+                flash('Password cannot be empty.', 'error')
+
+        return render_template('reset_password.html', token=token)
+    else:
+        flash("Token Not Specified")
+        return redirect(url_for("core.home"))
 
 
 @auth_bp.route('/forgot_password', methods=['GET', 'POST'])
@@ -136,6 +146,7 @@ def reg_confirmation():
     return render_template('reg_email.html')
 
 
+@auth_bp.route("/register", defaults={"token": None})
 @auth_bp.route("/register/<token>", methods=["GET", "POST"])
 def register(token):
     """
@@ -161,33 +172,37 @@ def register(token):
         SignatureExpired: If the token has expired.
         BadSignature: If the token is invalid.
     """
-    try:
-        email = URLSafeTimedSerializer(current_app.config['SECRET_KEY']).loads(
-            token, salt='reg-confirmation-salt', max_age=3600)
-    except SignatureExpired:
-        flash('The reset link has expired.', 'error')
-        return redirect(url_for('auth.reg_confirmation'))
-    except BadSignature:
-        flash('The reset link is invalid.', 'error')
-        return redirect(url_for('auth.reg_confirmation'))
+    if token:
+        try:
+            email = URLSafeTimedSerializer(current_app.config['SECRET_KEY']).loads(
+                token, salt='reg-confirmation-salt', max_age=3600)
+        except SignatureExpired:
+            flash('The reset link has expired.', 'error')
+            return redirect(url_for('auth.reg_confirmation'))
+        except BadSignature:
+            flash('The reset link is invalid.', 'error')
+            return redirect(url_for('auth.reg_confirmation'))
 
-    if current_user.is_authenticated:
-        return redirect(url_for('core.home'))
+        if current_user.is_authenticated:
+            return redirect(url_for('core.home'))
 
-    if request.method == "POST":
-        existing_user = User.find_by_username(request.form.get("username"))
-        if existing_user:
-            flash("That username is already in use", "error")    
-            return redirect(url_for("auth.login"))
-        
-        username = request.form.get("username").lower()
-        password = request.form.get("password")
-        user = User.create_new(username, password, email)
-        login_user(user)
-        flash("Registration Successful!", "success")
-        return redirect(url_for("auth.profile", username=user.username))
+        if request.method == "POST":
+            existing_user = User.find_by_username(request.form.get("username"))
+            if existing_user:
+                flash("That username is already in use", "error")    
+                return redirect(url_for("auth.login"))
+            
+            username = request.form.get("username").lower()
+            password = request.form.get("password")
+            user = User.create_new(username, password, email)
+            login_user(user)
+            flash("Registration Successful!", "success")
+            return redirect(url_for("auth.profile", username=user.username))
 
-    return render_template("register.html", token=token)
+        return render_template("register.html", token=token)
+    else:
+        flash("Token Not Specified")
+        return redirect(url_for("core.home"))
 
 
 @auth_bp.route("/login", methods=["GET", "POST"])
@@ -249,6 +264,7 @@ def logout():
     return redirect(url_for("auth.login"))
 
 
+@auth_bp.route("/profile", defaults={"username": None})
 @auth_bp.route("/profile/<username>")
 @login_required
 def profile(username):
@@ -264,10 +280,14 @@ def profile(username):
     Returns:
         Response: Renders the profile template with the user's information and questions.
     """
-    questions = Question.get_list_by_username(username)
-    user = User.find_by_username(username, True)
+    if username:
+        questions = Question.get_list_by_username(username)
+        user = User.find_by_username(username, True)
 
-    return render_template("profile.html", user=user, questions=questions)
+        return render_template("profile.html", user=user, questions=questions)
+    else:
+        flash("Username Not Specified")
+        return redirect(url_for("auth.profile", username=current_user.username))
 
 
 def user_owns_profile_or_admin(f):
@@ -281,6 +301,7 @@ def user_owns_profile_or_admin(f):
     return wrapper
 
 
+@auth_bp.route("/edit_profile", defaults={"username": None})
 @auth_bp.route("/edit_profile/<username>", methods=["GET", "POST"])
 @login_required
 @user_owns_profile_or_admin
@@ -304,34 +325,39 @@ def edit_profile(username):
         Response: Redirects to the users view page if the current user is an Admin.
         Response: Redirects to the current user's profile page if they are not authorized to edit the profile.
     """
+    if username:
+        if request.method == "POST":
+            email = request.form.get("email")
+            found_user = User.find_by_email(email)
+            if found_user:
+                if found_user.username != username:
+                    flash("That email is already in use")
+                    return redirect(url_for('auth.profile', username=current_user.username))
+            role = request.form.get("role")
+            level = request.form.get("level")
+            provider = request.form.get("provider")
+            location = request.form.get("location")
+            bio = request.form.get("bio")
+            User.update_profile(email, username, role, level, provider, location, bio)
+            flash("Profile Updated", "success")
+            if current_user.role == "Admin":
+                return redirect(url_for('auth.view_users'))
+            else:
+                return redirect(url_for('auth.profile', username=username))
+
+        user = User.find_by_username(username, True)
+        roles = User.get_roles()
+        levels = User.get_levels()
+        providers = User.get_providers()
+
+        return render_template("edit_profile.html", user=user,roles=roles, levels=levels, providers=providers) 
     
-    if request.method == "POST":
-        email = request.form.get("email")
-        found_user = User.find_by_email(email)
-        if found_user:
-            if found_user.username != username:
-                flash("That email is already in use")
-                return redirect(url_for('auth.profile', username=current_user.username))
-        role = request.form.get("role")
-        level = request.form.get("level")
-        provider = request.form.get("provider")
-        location = request.form.get("location")
-        bio = request.form.get("bio")
-        User.update_profile(email, username, role, level, provider, location, bio)
-        flash("Profile Updated", "success")
-        if current_user.role == "Admin":
-            return redirect(url_for('auth.view_users'))
-        else:
-            return redirect(url_for('auth.profile', username=username))
-
-    user = User.find_by_username(username, True)
-    roles = User.get_roles()
-    levels = User.get_levels()
-    providers = User.get_providers()
-
-    return render_template("edit_profile.html", user=user,roles=roles, levels=levels, providers=providers) 
+    else:
+        flash("Username Not Specified")
+        return redirect(url_for("auth.profile", username=current_user.username))
 
 
+@auth_bp.route("/delete_profile", defaults={"username": None})
 @auth_bp.route("/delete_profile/<username>")
 @login_required
 @user_owns_profile_or_admin
@@ -350,14 +376,17 @@ def delete_profile(username):
         Response: Redirects to the users view page if the current user is an Admin.
         Response: Redirects to the login page after successful profile deletion if the current user is not an Admin.
     """
-    
-    User.delete_profile(username)
-    flash("Account Deleted")
-    if current_user.role == "Admin":
-        return redirect(url_for("auth.view_users"))
+    if username:
+        User.delete_profile(username)
+        flash("Account Deleted")
+        if current_user.role == "Admin":
+            return redirect(url_for("auth.view_users"))
+        else:
+            logout_user()
+            return redirect(url_for("auth.login"))
     else:
-        logout_user()
-        return redirect(url_for("auth.login"))
+        flash("Username Not Specified")
+        return redirect(url_for("auth.profile", username=current_user.username))
 
 
 @auth_bp.route("/view_users", methods=["GET", "POST"])

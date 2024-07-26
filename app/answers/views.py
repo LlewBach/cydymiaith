@@ -33,6 +33,7 @@ def view_comments(question_id):
     return render_template("view_answers.html", question=question, answers=answers, answer_count=answer_count)
 
 
+@answers_bp.route("/answer", defaults={"question_id": None})
 @answers_bp.route("/answer/<question_id>", methods=["GET", "POST"])
 @login_required
 def answer(question_id):
@@ -47,14 +48,18 @@ def answer(question_id):
     Returns:
         Response: Redirects to the view_answers template to display the updated list of answers.
     """
-    if request.method == "POST":
-        text = request.form.get("text")
-        username = current_user.username
-        Answer.insert_answer(question_id, text, username)
-        Question.increase_answer_count(question_id)
-        flash("Comment added")
+    if question_id:
+        if request.method == "POST":
+            text = request.form.get("text")
+            username = current_user.username
+            Answer.insert_answer(question_id, text, username)
+            Question.increase_answer_count(question_id)
+            flash("Comment added")
 
-        return redirect(url_for("answers.view_comments", question_id=question_id))
+            return redirect(url_for("answers.view_comments", question_id=question_id))
+    else:
+        flash("Post Not Specified")
+        return redirect(url_for("questions.get_posts"))
     
 
 def user_owns_answer_or_admin(f):
@@ -63,7 +68,7 @@ def user_owns_answer_or_admin(f):
         answer_id = kwargs.get('answer_id')
         answer = Answer.find_by_id(answer_id)
         if answer is None:
-            flash("Comment not found.", "error")
+            flash("Comment Not Specified", "error")
             return redirect(url_for('questions.get_posts'))
         if current_user.username != answer['username'] and current_user.role != 'Admin':
             flash("You are not authorized to do this.", "error")
@@ -72,6 +77,7 @@ def user_owns_answer_or_admin(f):
     return wrapper
 
 
+@answers_bp.route("/edit_comment", defaults={"answer_id": None})
 @answers_bp.route("/edit_comment/<answer_id>", methods=["GET", "POST"])
 @login_required
 @user_owns_answer_or_admin
@@ -105,6 +111,7 @@ def edit_comment(answer_id):
     return render_template("edit_answer.html", question=question, answers=answers, answer_id=ObjectId(answer_id))
 
 
+@answers_bp.route("/delete_answer", defaults={"answer_id": None})
 @answers_bp.route("/delete_answer/<answer_id>")
 @login_required
 @user_owns_answer_or_admin

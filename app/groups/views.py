@@ -67,6 +67,7 @@ def add_group():
     return render_template("add_group.html", providers=providers, levels=levels)
 
 
+@groups_bp.route("/add_student", defaults={"username": None})
 @groups_bp.route("/add_student/<username>", methods=["POST"])
 @login_required
 @must_be_tutor_or_admin
@@ -82,16 +83,22 @@ def add_student(username):
     Returns:
         Response: Redirects to the get_groups view.
     """
-    group_id = request.form.get("group_id")
-    if group_id:
-        Group.add_student_to_group(group_id, username)
-        flash("Student Added")
+    if username:
+        group_id = request.form.get("group_id")
+        if group_id:
+            Group.add_student_to_group(group_id, username)
+            flash("Student Added")
+        else:
+            flash("Group ID not provided", "error")
+
+        return redirect(url_for("groups.get_groups"))
     else:
-        flash("Group ID not provided", "error")
+        flash("Student Not Specified")
+        return redirect(url_for("auth.view_users"))
 
-    return redirect(url_for("groups.get_groups"))
 
-
+@groups_bp.route("/remove_student", defaults={"group_id": None, "username": None})
+@groups_bp.route("/remove_student/<group_id>", defaults={"username": None})
 @groups_bp.route("/remove_student/<group_id>/<username>")
 @login_required
 @must_be_tutor_or_admin
@@ -109,34 +116,44 @@ def remove_student(group_id, username):
     Returns:
         Response: Redirects to the get_groups view.
     """
-    Group.remove_student(group_id, username)
-    flash("Student Removed")
+    if group_id and username:
+        Group.remove_student(group_id, username)
+        flash("Student Removed")
+        return redirect(url_for('groups.get_groups'))
+    else:
+        flash("Group and Student Not Specified")
+        return redirect(url_for("groups.get_groups"))
 
-    return redirect(url_for('groups.get_groups'))
 
-
+@groups_bp.route("/edit_group", defaults={"group_id": None})
 @groups_bp.route("/edit_group/<group_id>", methods=["GET", "POST"])
 @login_required
 @must_be_tutor_or_admin
 def edit_group(group_id):
-    group = Group.get_group_by_id(group_id)
-    if request.method == "POST":
-        tutor = current_user.username
-        provider = request.form.get("provider")
-        level = request.form.get("level")
-        year = request.form.get("year")
-        weekday = request.form.get("weekday")
-        students = group["students"]
-        Group.edit_group(group_id, tutor, provider, level, year, weekday, students)
-        flash("Group Edited")
-        return redirect(url_for('groups.get_groups'))
+    if group_id:
+        group = Group.get_group_by_id(group_id)
+        if request.method == "POST":
+            tutor = current_user.username
+            provider = request.form.get("provider")
+            level = request.form.get("level")
+            year = request.form.get("year")
+            weekday = request.form.get("weekday")
+            students = group["students"]
+            Group.edit_group(group_id, tutor, provider, level, year, weekday, students)
+            flash("Group Edited")
+            return redirect(url_for('groups.get_groups'))
 
-    providers = Group.get_providers()
-    levels = Group.get_levels()
+        providers = Group.get_providers()
+        levels = Group.get_levels()
 
-    return render_template("edit_group.html", group=group, providers=providers, levels=levels)
+        return render_template("edit_group.html", group=group, providers=providers, levels=levels)
+    
+    else:
+        flash("Group Not Specified")
+        return redirect(url_for("groups.get_groups"))
 
 
+@groups_bp.route("/delete_group", defaults={"group_id": None})
 @groups_bp.route("/delete_group/<group_id>")
 @login_required
 @must_be_tutor_or_admin
@@ -154,7 +171,10 @@ def delete_group(group_id):
     Returns:
         Response: A redirect response to the 'get_groups' view.
     """
-    Group.delete_group(group_id)
-    flash("Group Deleted")
+    if group_id:
+        Group.delete_group(group_id)
+        flash("Group Deleted")
+    else:
+        flash("Group Not Specified")
 
-    return redirect(url_for('groups.get_groups'))
+    return redirect(url_for("groups.get_groups"))

@@ -72,8 +72,8 @@ def user_owns_question_or_admin(f):
     def wrapper(*args, **kwargs):
         question_id = kwargs.get('question_id')
         question = Question.find_by_id(question_id)
-        if question is None:
-            flash("Question not found.", "error")
+        if question == None:
+            flash("Post not specified.", "error")
             return redirect(url_for('questions.get_posts'))
         if current_user.username != question['username'] and current_user.role != 'Admin':
             flash("You are not authorized to do this.", "error")
@@ -82,6 +82,7 @@ def user_owns_question_or_admin(f):
     return wrapper
 
 
+@questions_bp.route("/edit_post", defaults={"question_id": None})
 @questions_bp.route("/edit_post/<question_id>", methods=["GET", "POST"])
 @login_required
 @user_owns_question_or_admin
@@ -116,6 +117,7 @@ def edit_post(question_id):
     return render_template("edit_question.html", question=question, groups=groups, categories=categories)
 
 
+@questions_bp.route("/delete_post", defaults={"question_id": None})
 @questions_bp.route("/delete_post/<question_id>")
 @login_required
 @user_owns_question_or_admin
