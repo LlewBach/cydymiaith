@@ -174,8 +174,6 @@ class User(UserMixin):
         registrant = {
             "email": email,
             "username": username.lower(),
-            # can customize hash and salt methods, this standard
-            # if second field to confirm password, would confirm before here
             "password": generate_password_hash(password),
             "role": "Student",
             "level": None,

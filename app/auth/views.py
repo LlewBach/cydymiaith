@@ -177,10 +177,10 @@ def register(token):
             email = URLSafeTimedSerializer(current_app.config['SECRET_KEY']).loads(
                 token, salt='reg-confirmation-salt', max_age=3600)
         except SignatureExpired:
-            flash('The reset link has expired.', 'error')
+            flash('The registration link has expired.', 'error')
             return redirect(url_for('auth.reg_confirmation'))
         except BadSignature:
-            flash('The reset link is invalid.', 'error')
+            flash('The registration link is invalid.', 'error')
             return redirect(url_for('auth.reg_confirmation'))
 
         if current_user.is_authenticated:
@@ -283,6 +283,9 @@ def profile(username):
     if username:
         questions = Question.get_list_by_username(username)
         user = User.find_by_username(username, True)
+        if user == None:
+            flash("User Not Found")
+            return redirect(url_for("auth.profile", username=current_user.username))
 
         return render_template("profile.html", user=user, questions=questions)
     else:
@@ -346,6 +349,9 @@ def edit_profile(username):
                 return redirect(url_for('auth.profile', username=username))
 
         user = User.find_by_username(username, True)
+        if user == None:
+            flash("User Not Found")
+            return redirect(url_for("auth.profile", username=current_user.username))
         roles = User.get_roles()
         levels = User.get_levels()
         providers = User.get_providers()
@@ -377,6 +383,10 @@ def delete_profile(username):
         Response: Redirects to the login page after successful profile deletion if the current user is not an Admin.
     """
     if username:
+        user_search = User.find_by_username(username, True)
+        if user_search == None:
+            flash("User Not Found")
+            return redirect(url_for("auth.profile", username=current_user.username))
         User.delete_profile(username)
         flash("Account Deleted")
         if current_user.role == "Admin":
