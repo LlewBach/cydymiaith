@@ -714,14 +714,49 @@ The procedure I used was to go to the relevant webpage, right click, click 'View
 | 404.html | Pass |
 | 500.html | Pass |
 
+Result: Pass
 
 ### CSS Validation
 
+[https://jigsaw.w3.org/css-validator/](https://jigsaw.w3.org/css-validator/)
+
+Result: Pass
+
 ### JS Validation
+
+[https://jshint.com/](https://jshint.com/)
+
+These 'issues' were raised in the report:
+
+Six warnings
+
+4	'const' is available in ES6 (use 'esversion: 6') or Mozilla JS extensions (use moz).
+
+6	'const' is available in ES6 (use 'esversion: 6') or Mozilla JS extensions (use moz).
+
+8	'arrow function syntax (=>)' is only available in ES6 (use 'esversion: 6').
+
+13	'const' is available in ES6 (use 'esversion: 6') or Mozilla JS extensions (use moz).
+
+15	'arrow function syntax (=>)' is only available in ES6 (use 'esversion: 6').
+
+20	'const' is available in ES6 (use 'esversion: 6') or Mozilla JS extensions (use moz).
+
+One unused variable
+
+3	clearFilters
+
+The six warnings discuss the use of ES6 which is not an issue. The unused variable is used in an onclick event listener used by the Clear filter buttons.
+
+Result: Pass
 
 ### Python Validation
 
 ### WAVE
+
+[https://wave.webaim.org/](https://wave.webaim.org/)
+
+
 
 ### Lighthouse
 
