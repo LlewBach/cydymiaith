@@ -42,6 +42,18 @@ nav.navbar {
   font-family: "Outfit", sans-serif;
 }
 
+.navbar-nav .nav-item .nav-link {
+  color: black;
+}
+
+.navbar-nav .nav-item .nav-link.active {
+  text-decoration: underline;
+}
+
+.navbar-nav .nav-item .nav-link:hover {
+  font-weight: bold;
+}
+
 header {
   margin-bottom: 20px;
 }
