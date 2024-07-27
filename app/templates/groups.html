@@ -10,6 +10,14 @@
   </div>
 </header>
 
+{% if not groups %}
+
+<div class="d-flex flex-column justify-content-center text-center">
+  <p class="secondary-text">No groups created</p>
+</div>
+
+{% endif %}
+
 {% for group in groups %}
 
 <div class="card">

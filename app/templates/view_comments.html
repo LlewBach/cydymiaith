@@ -71,6 +71,14 @@
   </div>
 </div>
 
+{% if not comments %}
+
+<div class="d-flex flex-column justify-content-center text-center">
+  <p class="secondary-text">No comments yet</p>
+</div>
+
+{% endif %}
+
 <!-- Comment card template -->
 {% for comment in comments %}
 <div class="container">

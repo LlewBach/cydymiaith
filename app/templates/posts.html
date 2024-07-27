@@ -57,6 +57,15 @@
   </div>
 </form>
 
+{% if not posts %}
+
+<div class="d-flex flex-column justify-content-center text-center">
+  <h2>No posts to see!</h2>
+  <p class="secondary-text">Be the first!</p>
+</div>
+
+{% endif %}
+
 {% for post in posts %}
 
 <div class="card">
