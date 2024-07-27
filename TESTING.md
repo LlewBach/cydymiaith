@@ -522,27 +522,27 @@ This section considers two aspects.
 #### Not logged-in user
 
 1. **Test Case**: Attempt to Make Post 
-    - **Input**: URL.../ask_question
+    - **Input**: URL.../make_post
     - **Expected Result**: The user should be redirected to the login page, and a flash message saying 'Please log in to access this page.
     - **Actual Result**: User redirected to login page and correct flash message shown. - PASS
 2. **Test Case**: Attempt to Edit Post 
-    - **Input**: URL/edit_question/6696866dc591c73174675c45
+    - **Input**: URL/edit_post/6696866dc591c73174675c45
     - **Expected Result**: The user should be redirected to the login page and correct flash message shown.
     - **Actual Result**: User redirected to login page and correct flash message shown. - PASS
 3. **Test Case**: Attempt to Delete Post 
-    - **Input**: URL/delete_question/6696866dc591c73174675c45
+    - **Input**: URL/delete_post/6696866dc591c73174675c45
     - **Expected Result**: The user should be redirected to the login page and correct flash message shown - 'Please log in to access this page'.
     - **Actual Result**: User redirected to login page and correct flash message shown. - PASS
 4. **Test Case**: Attempt to Add Comment 
-    - **Input**: URL/answer/6696866dc591c73174675c45
+    - **Input**: URL/comment/6696866dc591c73174675c45
     - **Expected Result**: The user should be redirected to the login page and correct flash message shown - 'Please log in to access this page'.
     - **Actual Result**: User redirected to login page and correct flash message shown. - PASS
 5. **Test Case**: Attempt to Edit Comment 
-    - **Input**: URL/edit_answer/6696bff7c591c73174675c48
+    - **Input**: URL/edit_comment/6696bff7c591c73174675c48
     - **Expected Result**: The user should be redirected to the login page and correct flash message shown - 'Please log in to access this page'.
     - **Actual Result**: User redirected to login page and correct flash message shown. - PASS
 6. **Test Case**: Attempt to Delete Comment 
-    - **Input**: URL/delete_answer/6696bff7c591c73174675c48
+    - **Input**: URL/delete_comment/6696bff7c591c73174675c48
     - **Expected Result**: The user should be redirected to the login page and correct flash message shown - 'Please log in to access this page'.
     - **Actual Result**: User redirected to login page and correct flash message shown. - PASS
 7. **Test Case**: Attempt to Create Group
@@ -575,19 +575,19 @@ This section considers two aspects.
 For clarification, here testuser3 has the role of Student.
 
 1. **Test Case**: testuser3 attempts to edit testuser2's post
-    - **Input**: URL/edit_question/669575542cbebbe1051931c4
+    - **Input**: URL/edit_post/669575542cbebbe1051931c4
     - **Expected Result**: The user should be redirected to own Profile page and correct flash message shown - 'You are not authorized to do this'.
     - **Actual Result**: User redirected to Profile page and correct flash message shown. - PASS
 2. **Test Case**: testuser3 attempts to delete testuser2's post
-    - **Input**: URL/delete_question/669575542cbebbe1051931c4
+    - **Input**: URL/delete_post/669575542cbebbe1051931c4
     - **Expected Result**: The user should be redirected to own Profile page and correct flash message shown - 'You are not authorized to do this'.
     - **Actual Result**: User redirected to Profile page and correct flash message shown. - PASS
 3. **Test Case**: testuser3 attempts to edit testadmin's comment
-    - **Input**: URL/edit_answer/669683a1c591c73174675c44
+    - **Input**: URL/edit_comment/669683a1c591c73174675c44
     - **Expected Result**: The user should be redirected to own Profile page and correct flash message shown - 'You are not authorized to do this'.
     - **Actual Result**: User redirected to Profile page and correct flash message shown. - PASS
 4. **Test Case**: testuser3 attempts to delete testadmin's comment
-    - **Input**: URL/delete_answer/669683a1c591c73174675c44
+    - **Input**: URL/delete_comment/669683a1c591c73174675c44
     - **Expected Result**: The user should be redirected to own Profile page and correct flash message shown - 'You are not authorized to do this'.
     - **Actual Result**: User redirected to Profile page and correct flash message shown. - PASS
 4. **Test Case**: testuser3 attempts to edit testadmin's profile
@@ -701,11 +701,11 @@ The procedure I used was to go to the relevant webpage, right click, click 'View
 | profile.html | Pass |
 | forgot_password.html | Pass |
 | reset_password.html | Pass |
-| questions.html | Pass |
-| ask_question.html | Pass |
-| edit_question.html | Pass |
-| view_answers.html | Pass |
-| edit_answer.html | Pass |
+| posts.html | Pass |
+| make_post.html | Pass |
+| edit_post.html | Pass |
+| view_comments.html | Pass |
+| edit_comment.html | Pass |
 | edit_profile.html | Pass |
 | users.html | Pass |
 | groups.html | Pass |
@@ -768,9 +768,9 @@ Using this accessibility validator, I saw that the colour contrast of my initial
 
 [Back to top](#cydymiaith-testing-documentation)
 
-- Getting edit question form to remember associated group - I was having trouble handling id vs ObjectId - I consulted GPT4o who advised me how to use jinja filters properly, such as 
+- Getting edit post form to remember associated group - I was having trouble handling id vs ObjectId - I consulted GPT4o who advised me how to use jinja filters properly, such as 
 
-` {% if group._id|string == question.group_id|string %}`
+` {% if group._id|string == post.group_id|string %}`
 
 and this equates the types making them comparable.
 
