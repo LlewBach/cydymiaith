@@ -17,17 +17,20 @@ auth_bp = Blueprint('auth', __name__, template_folder='../templates')
 def send_confirmation(email):
     """
     Sends a password reset confirmation email to the specified email address.
-
-    This function generates a secure token using the email address and the application's
-    secret key. It then constructs a password reset URL containing the token and sends
-    an email with this URL to the specified email address. A success message is flashed
-    to the user and the user is redirected to their profile page.
+    
+    This function checks if an email is provided. If an email is present, it:
+      1. Generates a secure token using the email address and the application's secret key.
+      2. Constructs a URL for password reset using the token.
+      3. Sends an email with a password reset link to the specified email address.
+      4. Flashes a success message to the user.
+    If no email is provided, it flashes an error message. 
+    After the actions, it redirects the user either to the login page (on success) or to the home page (if email is not provided).
 
     Args:
-    email (str): The email address to which the confirmation email will be sent.
+        email (str, optional): The email address to which the confirmation email will be sent.
 
     Returns:
-    A redirect response to the user's profile page.
+        Response: A redirect response to either the login page or the home page, based on the input.
     """
     if email:
         s = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
@@ -47,20 +50,24 @@ def send_confirmation(email):
 @auth_bp.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_password(token):
     """
-    Resets user's password using a token sent via email.
+    Resets a user's password using a token sent via email.
 
-    Verifies the token provided in the URL to reset user's password.
-    If token is valid, it allows the user to set a new password. If the token is 
-    expired or invalid, it flashes an appropriate error message and redirects to the 
-    login page.
+    This function handles both GET and POST requests:
+      - For GET requests, it renders a password reset template if the token is valid.
+      - For POST requests, it processes the new password submission:
+        - If the token is valid and the new password meets criteria, updates the user's password.
+        - If the new password is empty, it flashes an error message.
+    The function verifies the token's validity (checking for expiration or tampering).
+    If the token is invalid or expired, it flashes an error message and redirects to the login page.
 
     Args:
-        token (str): The token used to verify the password reset request.
+        token (str, optional): The token used to verify the password reset request.
 
     Returns:
-        Response: Renders the password reset template on GET requests.
-        Response: Redirects to the login page if the token is invalid or expired.
-        Response: Redirects to the log in page after successfully resetting the password.
+        Response: Depending on the request type and token validity:
+        - Renders the password reset form on GET if the token is valid.
+        - Redirects to the login page on invalid/expired token or post-reset.
+        - Flashes an appropriate message based on the action outcome (error/success).
     """
     if token:
         try:
@@ -97,16 +104,16 @@ def reset_password(token):
 @auth_bp.route('/forgot_password', methods=['GET', 'POST'])
 def forgot_password():
     """
-    Handles the password reset request process.
+    Handles the password reset request process for users.
 
-    This function allows users to initiate the password reset process. It serves two purposes:
-    1. On GET requests, it renders a form where users can enter their email address to receive a password reset link.
-    2. On POST requests, it captures the provided email address from the form and redirects to the route that sends the password reset confirmation email.
+    This endpoint functions differently based on the request method:
+      - GET: It renders a form for users to enter their email address to initiate the password reset process.
+      - POST: It collects the email address submitted through the form. If an email address is provided, it redirects the user to the route that sends a password reset confirmation email.
 
     Returns:
-        Response: 
-            - Renders the forgot password form template on GET requests.
-            - Redirects to the route that sends the password reset confirmation email on POST requests.
+        Response:
+            - Renders the 'forgot_password.html' template on GET requests.
+            - Redirects to the 'send_confirmation' route with the user's email on successful POST requests.
     """
     if request.method == 'POST':
         email = request.form.get('email')
@@ -118,19 +125,20 @@ def forgot_password():
 @auth_bp.route('/reg_confirmation', methods=['GET', 'POST'])
 def reg_confirmation():
     """
-    Handles the email confirmation process for user registration.
+    Handles the email confirmation process for new user registrations.
 
-    On GET requests, it renders a form where users can enter their email address
-       to receive a confirmation link for registration.
-    
-    On POST requests, it generates a secure token using the provided email address
-       and the application's secret key. It then constructs a confirmation URL containing
-       the token and sends an email with this URL to the specified email address. A success
-       message is flashed to the user and the user is redirected back to the confirmation page.
+    This function operates differently based on the HTTP request method:
+      - GET: Renders a form for users to submit their email address to receive a registration confirmation link.
+      - POST: Takes the provided email from the form, generates a secure token using the application's secret key,
+              constructs a URL for registration confirmation with the token, and sends an email to the user with this link.
+              Upon successfully sending the email, it flashes a success message and redirects the user back to the 
+              confirmation page.
 
     Returns:
-        Response: Renders the email confirmation form template on GET requests.
-        Response: Redirects to same page with a success message on POST requests.
+        Response:
+            - On GET requests: Renders the 'reg_email.html' template where users can enter their email.
+            - On POST requests: After sending the email, redirects back to the 'reg_confirmation' page with a success message,
+              indicating that the email has been sent.
     """
     if request.method == 'POST':
         email = request.form.get("reg_email")
@@ -150,27 +158,31 @@ def reg_confirmation():
 @auth_bp.route("/register/<token>", methods=["GET", "POST"])
 def register(token):
     """
-    Handles the user registration process.
+    Handles the user registration process through a token-verified email confirmation link.
 
-    This function processes user registration through an email confirmation link. It verifies 
-    the provided token to confirm the email address. If the token is valid and the user is 
-    not authenticated, it renders a registration form on GET requests. On POST requests, 
-    it attempts to register the user with the provided username and password.
+    This function checks the validity of a provided token to confirm the user's email address. If the token
+    is valid, it:
+      - Renders a registration form on GET requests.
+      - Registers the user using the provided details from the form on POST requests.
+    If the token is invalid or expired, it redirects to the email confirmation page with an error message.
+    Additional checks ensure:
+      - Users with an existing username are notified via an error message.
+      - Already authenticated users are redirected to the home page.
 
     Args:
-        token (str): The token used to verify the email confirmation request.
+        token (str, optional): The token used to verify the email confirmation request.
 
     Returns:
-        Response: 
-            - Renders the registration template on GET requests.
-            - Redirects to the email confirmation page with an error message if the token is invalid or expired.
-            - Redirects to the login page with an error message if the username already exists.
-            - Redirects to the profile page with a success message after successful registration and login.
-            - Redirects to the home page if the user is already authenticated.
+        Response:
+            - Renders the 'register.html' template on valid GET requests.
+            - Redirects to the 'reg_confirmation' page with an error on token issues.
+            - Redirects to the 'login' page on username conflict.
+            - Redirects to the 'profile' page on successful registration.
+            - Redirects to the 'home' page if the user is already authenticated.
 
     Raises:
-        SignatureExpired: If the token has expired.
-        BadSignature: If the token is invalid.
+        SignatureExpired: If the token has expired, indicating a timeout for the registration link.
+        BadSignature: If the token is invalid, indicating a potentially tampered or incorrect link.
     """
     if token:
         try:
@@ -208,20 +220,19 @@ def register(token):
 @auth_bp.route("/login", methods=["GET", "POST"])
 def login():
     """
-    Handles the user login process.
+    Manages the user login process via a web form.
 
-    This function handles the GET and POST requests for user login. On a GET request,
-    it renders the login template. On a POST request, it processes the login form data,
-    verifies the username and password, logs the user in if the credentials are correct,
-    and redirects them to their profile page.
-
-    If the user is already authenticated, they are redirected to the questions page.
+    This function supports both GET and POST requests for handling user authentication:
+      - GET: Renders the login form.
+      - POST: Accepts and processes the login form data. It verifies the username and password, logs the user in if the credentials are verified, and then redirects them to their profile page.
+    If the user is already authenticated, they are redirected to the questions page immediately, regardless of the request method.
 
     Returns:
-        Response: Renders the login template on GET requests.
-        Response: Redirects to the questions page if the user is already authenticated.
-        Response: Redirects to the profile page after successful login.
-        Response: Redirects to the login page with an error message if the credentials are incorrect.
+        Response:
+            - Renders the 'login.html' template on GET requests.
+            - Redirects to the Posts page if the user is already authenticated.
+            - Redirects to the Profile page with a welcome message upon successful login.
+            - Redirects back to the Log In page with an error message if the credentials are incorrect.
     """
     if current_user.is_authenticated:
         return redirect(url_for('posts.get_posts'))
@@ -269,16 +280,24 @@ def logout():
 @login_required
 def profile(username):
     """
-    Displays the profile page for the specified user.
+    Displays the profile page for a specified or currently authenticated user.
 
-    This function retrieves the user's profile information and their associated questions
-    based on the provided username. It then renders the profile page template with this data.
+    If a username is provided, the function retrieves and displays the profile of that user 
+    along with posts that they have made. If no username is provided, or if the specified 
+    username does not match any existing user, the function defaults to the profile of 
+    the currently authenticated user. In the case of an incorrect or missing username, a 
+    flash message is displayed and the user is redirected to their own profile.
 
     Args:
-        username (str): The username of the user whose profile is to be displayed.
+        username (str, optional): The username of the user whose profile is to be displayed.
+                                  If not provided, the profile of the current user is used.
 
     Returns:
-        Response: Renders the profile template with the user's information and questions.
+        Response: 
+            - Renders the 'profile.html' template with the user's information and their 
+              associated posts, if the username is valid.
+            - Redirects to the profile page of the current user with an appropriate message 
+              if the username is incorrect or not specified.
     """
     if username:
         posts = Post.get_list_by_username(username)
@@ -294,6 +313,23 @@ def profile(username):
 
 
 def user_owns_profile_or_admin(f):
+    """
+    Decorator to verify if the current user is the owner of the profile or an admin.
+
+    This decorator checks if the current user's username matches the username specified 
+    in the route parameter or if the current user has an "Admin" role. If neither condition 
+    is met, the decorator flashes an error message about unauthorized access and redirects 
+    the user to their own profile page.
+
+    This is useful for protecting views that should only be accessible by the user themselves 
+    or administrators.
+
+    Args:
+        f (function): The view function that this decorator is applied to.
+
+    Returns:
+        function: The wrapped view function which includes the authorization check.
+    """
     @wraps(f)
     def wrapper(*args, **kwargs):
         username = kwargs.get('username')
@@ -312,20 +348,19 @@ def edit_profile(username):
     """
     Handles the editing of a user's profile.
 
+    On a GET request, renders the edit_profile template, pre-filled with existing user data.
     On a POST request, it updates the user's profile with the provided data.
 
     The function prevents the submission of an email address that is already in use.
-
-    Only the profile owner or an Admin can edit the profile.
 
     Args:
         username (str): The username of the user whose profile is to be edited.
 
     Returns:
         Response: Renders the edit_profile template on GET requests.
-        Response: Redirects to the edit_profile page if the email address is already in use.
+        Response: Redirects to user's profile page if the email address is already in use.
         Response: Redirects to the user's profile page after successful profile update.
-        Response: Redirects to the users view page if the current user is an Admin.
+        Response: Redirects to the Users page if the current user is an Admin.
         Response: Redirects to the current user's profile page if they are not authorized to edit the profile.
     """
     if username:
