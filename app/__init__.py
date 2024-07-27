@@ -8,7 +8,6 @@ if os.path.exists("env.py"):
     import env
 
 mongo = PyMongo()
-# login_manager = LoginManager(app)
 login_manager = LoginManager()
 mail = Mail()
 
