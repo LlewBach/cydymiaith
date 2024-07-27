@@ -8,15 +8,15 @@
 
 <div class="card">
   <div class="card-body">
-    <form method="POST" action="{{ url_for('questions.edit_post', question_id=question._id) }}">
+    <form method="POST" action="{{ url_for('posts.edit_post', post_id=post._id) }}">
       <div class="container">
         <div class="row">
           <div class="col-sm-6 mb-2">
             <label for="category" class="form-label">Category</label>
             <select id="category" name="category" class="form-select" aria-label="Default select example" required>
-              <option value="" disabled {% if not question.category %}selected{% endif %}>Choose Category</option>
+              <option value="" disabled {% if not post.category %}selected{% endif %}>Choose Category</option>
               {% for category in categories %}
-              {% if category.category_name == question.category %}
+              {% if category.category_name == post.category %}
               <option value="{{ category.category_name }}" selected>{{ category.category_name }}</option>
               {% else %}
               <option value="{{ category.category_name }}">{{ category.category_name }}</option>
@@ -27,9 +27,9 @@
           <div class="col-sm-6 mb-2">
             <label for="group" class="form-label">For All or Group?</label>
             <select id="group" name="group" class="form-select" aria-label="Default select example">
-              <option value="" {% if not question.group_id %}selected{% endif %}>All</option>
+              <option value="" {% if not post.group_id %}selected{% endif %}>All</option>
               {% for group in groups %}
-              {% if group._id|string == question.group_id|string %}
+              {% if group._id|string == post.group_id|string %}
               <option value="{{ group._id }}" selected>{{ group.weekday }}, {{ group.provider }}, {{ group.level }}
               </option>
               {% else %}
@@ -41,12 +41,12 @@
           <div class="col-12 mb-2">
             <label for="title" class="form-label">Title</label>
             <input type="text" class="form-control" id="title" name="title" placeholder="Max 50 characters"
-              minlength="1" maxlength="50" required value="{{ question.title }}">
+              minlength="1" maxlength="50" required value="{{ post.title }}">
           </div>
           <div class="col-12 mb-2">
             <label for="description" class="form-label">Description</label>
             <textarea class="form-control" id="description" name="description" rows="3" maxlength="500"
-              required>{{ question.description }}</textarea>
+              required>{{ post.description }}</textarea>
           </div>
           <div class="col-12 mt-2 mb-2 d-flex justify-content-center">
             <button type="submit" class="btn btn-outline-warning">Submit</button>

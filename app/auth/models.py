@@ -1,8 +1,8 @@
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import mongo, login_manager
-from app.questions.models import Question
-from app.answers.models import Answer
+from app.posts.models import Post
+from app.comments.models import Comment
 
 
 # Docstrings written by GPT4o and edited by myself.
@@ -176,10 +176,10 @@ class User(UserMixin):
             "username": username.lower(),
             "password": generate_password_hash(password),
             "role": "Student",
-            "level": None,
-            "provider": None,
-            "location": None,
-            "bio": None
+            "level": "",
+            "provider": "",
+            "location": "",
+            "bio": ""
         }
         try:
             mongo.db.users.insert_one(registrant)
@@ -322,18 +322,18 @@ class User(UserMixin):
             and an error message is printed.
         """
         try:
-            answers_to_delete = list(mongo.db.answers.find({"username": username}))
-            for answer in answers_to_delete:
-                answer_id = answer["_id"]
-                question_id = Answer.find_question_id(answer_id)
-                Question.decrease_answer_count(question_id)
-                Answer.delete_answer(answer_id)
+            comments_to_delete = list(mongo.db.comments.find({"username": username}))
+            for comment in comments_to_delete:
+                comment_id = comment["_id"]
+                post_id = Comment.find_post_id(comment_id)
+                Post.decrease_comment_count(post_id)
+                Comment.delete_comment(comment_id)
 
-            questions_to_delete = list(mongo.db.questions.find({"username": username}))
-            for question in questions_to_delete:
-                question_id = question["_id"]
-                mongo.db.answers.delete_many({"question_id": question_id})
-                mongo.db.questions.delete_one({"_id": question_id})
+            posts_to_delete = list(mongo.db.posts.find({"username": username}))
+            for post in posts_to_delete:
+                post_id = post["_id"]
+                mongo.db.comments.delete_many({"post_id": post_id})
+                mongo.db.posts.delete_one({"_id": post_id})
    
             mongo.db.groups.delete_many({"tutor": username})  
 

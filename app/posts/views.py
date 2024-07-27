@@ -1,15 +1,15 @@
 from functools import wraps
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import current_user, login_required
-from app.questions.models import Question
+from app.posts.models import Post
 from app.groups.models import Group
 
 
-questions_bp = Blueprint('questions', __name__, template_folder='../templates')
+posts_bp = Blueprint('posts', __name__, template_folder='../templates')
 
 
 # Docstrings written by GPT4o and edited by myself.
-@questions_bp.route("/get_posts", methods=["GET", "POST"])
+@posts_bp.route("/get_posts", methods=["GET", "POST"])
 def get_posts():
     """
     Renders the questions template showing a list of all questions or filtered questions.
@@ -23,19 +23,19 @@ def get_posts():
     Returns:
         Response: Renders the questions.html template with the list of questions, categories, and groups.
     """
-    categories = Question.get_categories()
-    questions, query = Question.get_list(None, None)
+    categories = Post.get_categories()
+    posts, query = Post.get_list(None, None)
     groups = Group.get_groups_by_role(current_user.role, current_user.username) if current_user.is_authenticated else []
 
     if request.method == "POST":
         category = request.form.get("category")
         group_id = request.form.get("group")
-        questions, query = Question.get_list(category, group_id)
+        posts, query = Post.get_list(category, group_id)
 
-    return render_template("questions.html", questions=questions, categories=categories, groups=groups, query=query)
+    return render_template("posts.html", posts=posts, categories=categories, groups=groups, query=query)
 
 
-@questions_bp.route("/make_post", methods=["GET", "POST"])
+@posts_bp.route("/make_post", methods=["GET", "POST"])
 @login_required
 def make_post():
     """
@@ -58,35 +58,35 @@ def make_post():
         group_id = request.form.get("group")
         title = request.form.get("title")
         description = request.form.get("description")
-        Question.insert_question(username, category, group_id, title, description)
+        Post.insert_post(username, category, group_id, title, description)
         flash("Post Published")
-        return redirect(url_for('questions.get_posts'))
+        return redirect(url_for('posts.get_posts'))
 
     groups = Group.get_groups_by_role(current_user.role, current_user.username)
-    categories = Question.get_categories()
-    return render_template("ask_question.html", categories=categories, groups=groups)
+    categories = Post.get_categories()
+    return render_template("make_post.html", categories=categories, groups=groups)
 
 
-def user_owns_question_or_admin(f):
+def user_owns_post_or_admin(f):
     @wraps(f)
     def wrapper(*args, **kwargs):
-        question_id = kwargs.get('question_id')
-        question = Question.find_by_id(question_id)
-        if question == None:
+        post_id = kwargs.get('post_id')
+        post = Post.find_by_id(post_id)
+        if post == None:
             flash("Post not specified.", "error")
-            return redirect(url_for('questions.get_posts'))
-        if current_user.username != question['username'] and current_user.role != 'Admin':
+            return redirect(url_for('posts.get_posts'))
+        if current_user.username != post['username'] and current_user.role != 'Admin':
             flash("You are not authorized to do this.", "error")
             return redirect(url_for('auth.profile', username=current_user.username))
         return f(*args, **kwargs)
     return wrapper
 
 
-@questions_bp.route("/edit_post", defaults={"question_id": None})
-@questions_bp.route("/edit_post/<question_id>", methods=["GET", "POST"])
+@posts_bp.route("/edit_post", defaults={"post_id": None})
+@posts_bp.route("/edit_post/<post_id>", methods=["GET", "POST"])
 @login_required
-@user_owns_question_or_admin
-def edit_post(question_id):
+@user_owns_post_or_admin
+def edit_post(post_id):
     """
     Handles the editing of an existing question and renders the edit_question template.
 
@@ -107,21 +107,21 @@ def edit_post(question_id):
         group_id = request.form.get("group")
         title = request.form.get("title")
         description = request.form.get("description")
-        Question.update_question(question_id, username, category, group_id, title, description)
+        Post.update_post(post_id, username, category, group_id, title, description)
         flash("Post Updated")
-        return redirect(url_for('questions.get_posts'))
+        return redirect(url_for('posts.get_posts'))
     
     groups = Group.get_groups_by_role(current_user.role, current_user.username)
-    categories = Question.get_categories()
-    question = Question.find_by_id(question_id)
-    return render_template("edit_question.html", question=question, groups=groups, categories=categories)
+    categories = Post.get_categories()
+    post = Post.find_by_id(post_id)
+    return render_template("edit_post.html", post=post, groups=groups, categories=categories)
 
 
-@questions_bp.route("/delete_post", defaults={"question_id": None})
-@questions_bp.route("/delete_post/<question_id>")
+@posts_bp.route("/delete_post", defaults={"post_id": None})
+@posts_bp.route("/delete_post/<post_id>")
 @login_required
-@user_owns_question_or_admin
-def delete_post(question_id):
+@user_owns_post_or_admin
+def delete_post(post_id):
     """
     Deletes a question from the database and redirects to the get_posts view.
 
@@ -134,6 +134,6 @@ def delete_post(question_id):
     Returns:
         Response: Redirects to the get_posts view after deleting the question.
     """
-    Question.delete_question(question_id)
+    Post.delete_post(post_id)
     flash("Post Deleted")
-    return redirect(url_for("questions.get_posts"))
+    return redirect(url_for("posts.get_posts"))

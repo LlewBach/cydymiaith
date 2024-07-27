@@ -5,7 +5,7 @@ from flask_mail import Message
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
 from app import mail
 from app.auth.models import User
-from app.questions.models import Question
+from app.posts.models import Post
 from app.groups.models import Group
 
 auth_bp = Blueprint('auth', __name__, template_folder='../templates')
@@ -224,7 +224,7 @@ def login():
         Response: Redirects to the login page with an error message if the credentials are incorrect.
     """
     if current_user.is_authenticated:
-        return redirect(url_for('questions.get_posts'))
+        return redirect(url_for('posts.get_posts'))
     
     if request.method == "POST":
         existing_user = User.find_by_username(request.form.get("username"))
@@ -281,13 +281,13 @@ def profile(username):
         Response: Renders the profile template with the user's information and questions.
     """
     if username:
-        questions = Question.get_list_by_username(username)
+        posts = Post.get_list_by_username(username)
         user = User.find_by_username(username, True)
         if user == None:
             flash("User Not Found")
             return redirect(url_for("auth.profile", username=current_user.username))
 
-        return render_template("profile.html", user=user, questions=questions)
+        return render_template("profile.html", user=user, posts=posts)
     else:
         flash("Username Not Specified")
         return redirect(url_for("auth.profile", username=current_user.username))

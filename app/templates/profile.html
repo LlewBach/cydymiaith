@@ -84,42 +84,42 @@
   {% endif %}
 </div>
 
-{% if questions %}
+{% if posts %}
 <h2 class="text-center">Posts by {{ user.username }}</h2>
 {% endif %}
 
-{% for question in questions %}
+{% for post in posts %}
 
 <div class="card">
   <div class="card-body">
     <div class="d-flex justify-content-between">
-      <p><a class="highlight1" href="{{ url_for('auth.profile', username=question.username) }}">{{ question.username
+      <p><a class="highlight1" href="{{ url_for('auth.profile', username=post.username) }}">{{ post.username
           }}</a> <em class="secondary-text">{{
-          question.time_ago }}</em>
+          post.time_ago }}</em>
       </p>
-      <p class="highlight2"><em>{{ question.category }}</em></p>
+      <p class="highlight2"><em>{{ post.category }}</em></p>
     </div>
 
-    <p class="card-title">{{ question.title }}</p>
-    <p class="secondary-text">{{ question.description }}</p>
+    <p class="card-title">{{ post.title }}</p>
+    <p class="secondary-text">{{ post.description }}</p>
 
   </div>
   <div class="card-footer d-flex justify-content-between">
-    <a href="{{ url_for('answers.view_comments', question_id=question._id) }}" class="card-link">View comments ({{
-      question.answer_count
+    <a href="{{ url_for('comments.view_comments', post_id=post._id) }}" class="card-link">View comments ({{
+      post.comment_count
       }})</a>
-    {% if current_user.username == question.username or current_user.role == 'Admin' %}
+    {% if current_user.username == post.username or current_user.role == 'Admin' %}
     <div>
-      <a href="{{ url_for('questions.edit_post', question_id=question._id) }}" class="card-link">Edit</a>
-      <a href="#" class="card-link" data-bs-toggle="modal" data-bs-target="#{{ question._id }}">Delete</a>
+      <a href="{{ url_for('posts.edit_post', post_id=post._id) }}" class="card-link">Edit</a>
+      <a href="#" class="card-link" data-bs-toggle="modal" data-bs-target="#{{ post._id }}">Delete</a>
 
       <!-- Modal -->
-      <div class="modal fade" id="{{ question._id }}" tabindex="-1" aria-labelledby="modalLabel{{ question._id }}"
+      <div class="modal fade" id="{{ post._id }}" tabindex="-1" aria-labelledby="modalLabel{{ post._id }}"
         aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="modalLabel{{ question._id }}">Are you sure?</h1>
+              <h1 class="modal-title fs-5" id="modalLabel{{ post._id }}">Are you sure?</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -127,8 +127,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-              <a href="{{ url_for('questions.delete_post', question_id=question._id) }}"
-                class="btn btn-outline-danger">Confirm</a>
+              <a href="{{ url_for('posts.delete_post', post_id=post._id) }}" class="btn btn-outline-danger">Confirm</a>
             </div>
           </div>
         </div>

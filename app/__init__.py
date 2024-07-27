@@ -35,25 +35,16 @@ def create_app():
 
     from .core.views import core_bp
     from .auth.views import auth_bp
-    from .questions.views import questions_bp
-    # from .profiles.views import profiles_bp
-    from .answers.views import answers_bp
+    from .posts.views import posts_bp
+    from .comments.views import comments_bp
     from .groups.views import groups_bp
     from .errors.handlers import errors_bp
 
     app.register_blueprint(core_bp)
     app.register_blueprint(auth_bp)
-    app.register_blueprint(questions_bp)
-    # app.register_blueprint(profiles_bp)
-    app.register_blueprint(answers_bp)
+    app.register_blueprint(posts_bp)
+    app.register_blueprint(comments_bp)
     app.register_blueprint(groups_bp)
     app.register_blueprint(errors_bp)
-
-    # @login_manager.user_loader
-    # def load_user(user_id):
-    #     from .auth.models import User
-    #     return User.find_by_username(user_id)
-
-    # app.mongo = mongo
 
     return app

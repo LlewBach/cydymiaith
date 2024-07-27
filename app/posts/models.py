@@ -4,7 +4,7 @@ import pytz
 from bson.objectid import ObjectId
 from app import mongo
 
-class Question:
+class Post:
     # Docstrings written by GPT4o and edited by myself.
     @staticmethod
     def get_categories():
@@ -28,7 +28,7 @@ class Question:
 
 
     @staticmethod
-    def find_by_id(question_id):
+    def find_by_id(post_id):
         """
         Retrieves a question from the database by its ID.
 
@@ -44,8 +44,8 @@ class Question:
             Exception: If there is an issue with the database query, the exception is caught and an error message is printed.
         """
         try:
-            question = mongo.db.questions.find_one({"_id": ObjectId(question_id)})
-            return question
+            post = mongo.db.posts.find_one({"_id": ObjectId(post_id)})
+            return post
         except Exception as e:
             print(f"Error in find_by_id method: {e}")
             return None
@@ -78,12 +78,12 @@ class Question:
             query['group_id'] = group_id
         try:
             if query:
-                questions = list(mongo.db.questions.find(query).sort("_id", -1))
+                posts = list(mongo.db.posts.find(query).sort("_id", -1))
             else:
-                questions = list(mongo.db.questions.find().sort("_id", -1))
-            for question in questions:
-                Question.set_time_ago(question)
-            return questions, query
+                posts = list(mongo.db.posts.find().sort("_id", -1))
+            for post in posts:
+                Post.set_time_ago(post)
+            return posts, query
         except Exception as e:
             print(f"Error in get_list method: {e}")
             return []
@@ -109,17 +109,17 @@ class Question:
             Exception: If there is an issue with the database query, the exception is caught and an error message is printed.
         """
         try:
-            questions = list(mongo.db.questions.find({"username": username}).sort("_id, -1"))
-            for question in questions:
-                Question.set_time_ago(question)
-            return questions
+            posts = list(mongo.db.posts.find({"username": username}).sort("_id, -1"))
+            for post in posts:
+                Post.set_time_ago(post)
+            return posts
         except Exception as e:
             print(f"Error in get_list_by_username method: {e}")
             return []
     
 
     @staticmethod
-    def set_time_ago(question):
+    def set_time_ago(post):
         """
         Calculates and sets the 'time_ago' property for a question based on its creation time.
 
@@ -134,14 +134,14 @@ class Question:
             Exception: If there is an issue with calculating the 'time_ago' property, the exception is caught and an error message is printed.
         """
         try:
-            creation_time = question['_id'].generation_time.replace(tzinfo=pytz.utc)
-            question['time_ago'] = humanize.naturaltime(datetime.now(pytz.utc) - creation_time)
+            creation_time = post['_id'].generation_time.replace(tzinfo=pytz.utc)
+            post['time_ago'] = humanize.naturaltime(datetime.now(pytz.utc) - creation_time)
         except Exception as e:
             print(f"Error in set_time_ago method: {e}")
 
     
     @staticmethod
-    def increase_answer_count(question_id):
+    def increase_comment_count(post_id):
         """
         Increases the answer_count property of a question by one.
 
@@ -154,13 +154,13 @@ class Question:
             Exception: If there is an issue with updating the question in the database, the exception is caught and an error message is printed.
         """
         try:
-            mongo.db.questions.update_one({'_id': ObjectId(question_id)}, {'$inc': {'answer_count': 1}})
+            mongo.db.posts.update_one({'_id': ObjectId(post_id)}, {'$inc': {'comment_count': 1}})
         except Exception as e:
-            print(f"Error in increase_answer_count method: {e}")
+            print(f"Error in increase_comment_count method: {e}")
 
 
     @staticmethod
-    def decrease_answer_count(question_id):
+    def decrease_comment_count(post_id):
         """
         Decreases the answer_count property of a question by one.
 
@@ -173,13 +173,13 @@ class Question:
             Exception: If there is an issue with updating the question in the database, the exception is caught and an error message is printed.
         """
         try:
-            mongo.db.questions.update_one({'_id': ObjectId(question_id)}, {'$inc': {'answer_count': -1}})
+            mongo.db.posts.update_one({'_id': ObjectId(post_id)}, {'$inc': {'comment_count': -1}})
         except Exception as e:
-            print(f"Error in decrease_answer_count method: {e}")
+            print(f"Error in decrease_comment_count method: {e}")
 
 
     @staticmethod
-    def insert_question(username, category, group_id, title, description):
+    def insert_post(username, category, group_id, title, description):
         """
         Inserts a new question into the database.
 
@@ -199,21 +199,21 @@ class Question:
             is caught and an error message is printed.
         """
         try:
-            question = {
+            post = {
                 "username": username,
                 "category": category,
                 "group_id": group_id,
                 "title": title,
                 "description": description,
-                "answer_count": 0
+                "comment_count": 0
             }
-            mongo.db.questions.insert_one(question)
+            mongo.db.posts.insert_one(post)
         except Exception as e:
-            print(f"Error in insert_question method: {e}")
+            print(f"Error in insert_post method: {e}")
 
     
     @staticmethod
-    def get_answer_count(question_id):
+    def get_comment_count(post_id):
         """
         Retrieves the answer_count associated with a specific question.
 
@@ -229,15 +229,15 @@ class Question:
             Exception: If there is an issue with retrieving the question from the database, the exception is caught and an error message is printed.
         """
         try:
-            count = Question.find_by_id(question_id)["answer_count"]
+            count = Post.find_by_id(post_id)["comment_count"]
             return count
         except Exception as e:
-            print(f"Error in get_answer_count method: {e}")
+            print(f"Error in get_comment_count method: {e}")
             return 0
 
 
     @staticmethod
-    def update_question(question_id, username, category, group_id, title, description):
+    def update_post(post_id, username, category, group_id, title, description):
         """
         Updates the details of a specific question in the database.
 
@@ -254,22 +254,22 @@ class Question:
             Exception: If there is an issue with updating the question in the database, the exception is caught and an error message is printed.
         """
         try:
-            current_answer_count = Question.get_answer_count(question_id)
+            current_comment_count = Post.get_comment_count(post_id)
             submit = {
                 "username": username,
                 "category": category,
                 "group_id": group_id,
                 "title": title,
                 "description": description,
-                "answer_count": current_answer_count
+                "comment_count": current_comment_count
             }
-            mongo.db.questions.update_one({"_id": ObjectId(question_id)}, {"$set": submit})
+            mongo.db.posts.update_one({"_id": ObjectId(post_id)}, {"$set": submit})
         except Exception as e:
             print(f"Error in update_question method: {e}")
 
 
     @staticmethod
-    def delete_question(question_id):
+    def delete_post(post_id):
         """
         Deletes a question and its associated answers from the database.
 
@@ -284,7 +284,7 @@ class Question:
             the exception is caught and an error message is printed.
         """
         try:
-            mongo.db.answers.delete_many({"question_id": ObjectId(question_id)})
-            mongo.db.questions.delete_one({"_id": ObjectId(question_id)})
+            mongo.db.comments.delete_many({"post_id": ObjectId(post_id)})
+            mongo.db.posts.delete_one({"_id": ObjectId(post_id)})
         except Exception as e:
-            print(f"Error in delete_question method: {e}")
+            print(f"Error in delete_post method: {e}")

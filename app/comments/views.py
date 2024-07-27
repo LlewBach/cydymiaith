@@ -2,17 +2,17 @@ from functools import wraps
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
 from bson.objectid import ObjectId
-from app.answers.models import Answer
-from app.questions.models import Question
+from app.comments.models import Comment
+from app.posts.models import Post
 
 
-answers_bp = Blueprint('answers', __name__, template_folder='../templates')
+comments_bp = Blueprint('comments', __name__, template_folder='../templates')
 
 
 # Docstrings written by GPT4o and edited by myself.
-@answers_bp.route("/view_comments", defaults={"question_id": None})
-@answers_bp.route("/view_comments/<question_id>")
-def view_comments(question_id):
+@comments_bp.route("/view_comments", defaults={"post_id": None})
+@comments_bp.route("/view_comments/<post_id>")
+def view_comments(post_id):
     """
     Renders the view_answers template for a specific question.
 
@@ -26,25 +26,25 @@ def view_comments(question_id):
     Returns:
         Response: Renders the view_answers.html template with the question, answers, and the count of answers.
     """
-    if question_id:
-        question = Question.find_by_id(question_id)
-        if question == None:
+    if post_id:
+        post = Post.find_by_id(post_id)
+        if post == None:
             flash("Post Not Found")
-            return redirect(url_for("questions.get_posts"))
-        Question.set_time_ago(question)
-        answers = Answer.find_answers_by_question_id(question_id)
-        answer_count = Answer.count_answers(answers)
+            return redirect(url_for("posts.get_posts"))
+        Post.set_time_ago(post)
+        comments = Comment.find_comments_by_post_id(post_id)
+        comment_count = Comment.count_comments(comments)
 
-        return render_template("view_answers.html", question=question, answers=answers, answer_count=answer_count)
+        return render_template("view_comments.html", post=post, comments=comments, comment_count=comment_count)
     else:
         flash("Post Not Specified")
-        return redirect(url_for("questions.get_posts"))
+        return redirect(url_for("posts.get_posts"))
 
 
-@answers_bp.route("/answer", defaults={"question_id": None})
-@answers_bp.route("/answer/<question_id>", methods=["GET", "POST"])
+@comments_bp.route("/comment", defaults={"post_id": None})
+@comments_bp.route("/comment/<post_id>", methods=["GET", "POST"])
 @login_required
-def answer(question_id):
+def comment(post_id):
     """
     Adds an answer to a specific question and updates the database.
 
@@ -56,45 +56,45 @@ def answer(question_id):
     Returns:
         Response: Redirects to the view_answers template to display the updated list of answers.
     """
-    if question_id:
-        found_post = Question.find_by_id(question_id)
+    if post_id:
+        found_post = Post.find_by_id(post_id)
         if not found_post:
             flash("No Post Found")
-            return redirect(url_for("questions.get_posts"))
+            return redirect(url_for("posts.get_posts"))
 
         if request.method == "POST":
             text = request.form.get("text")
             username = current_user.username
-            Answer.insert_answer(question_id, text, username)
-            Question.increase_answer_count(question_id)
+            Comment.insert_comment(post_id, text, username)
+            Post.increase_comment_count(post_id)
             flash("Comment added")
 
-            return redirect(url_for("answers.view_comments", question_id=question_id))
+            return redirect(url_for("comments.view_comments", post_id=post_id))
     else:
         flash("Post Not Specified")
-        return redirect(url_for("questions.get_posts"))
+        return redirect(url_for("posts.get_posts"))
     
 
-def user_owns_answer_or_admin(f):
+def user_owns_comment_or_admin(f):
     @wraps(f)
     def wrapper(*args, **kwargs):
-        answer_id = kwargs.get('answer_id')
-        answer = Answer.find_by_id(answer_id)
-        if answer is None:
+        comment_id = kwargs.get('comment_id')
+        comment = Comment.find_by_id(comment_id)
+        if comment is None:
             flash("Comment Not Specified", "error")
-            return redirect(url_for('questions.get_posts'))
-        if current_user.username != answer['username'] and current_user.role != 'Admin':
+            return redirect(url_for('posts.get_posts'))
+        if current_user.username != comment['username'] and current_user.role != 'Admin':
             flash("You are not authorized to do this.", "error")
             return redirect(url_for('auth.profile', username=current_user.username))
         return f(*args, **kwargs)
     return wrapper
 
 
-@answers_bp.route("/edit_comment", defaults={"answer_id": None})
-@answers_bp.route("/edit_comment/<answer_id>", methods=["GET", "POST"])
+@comments_bp.route("/edit_comment", defaults={"comment_id": None})
+@comments_bp.route("/edit_comment/<comment_id>", methods=["GET", "POST"])
 @login_required
-@user_owns_answer_or_admin
-def edit_comment(answer_id):
+@user_owns_comment_or_admin
+def edit_comment(comment_id):
     """
     Handles the editing of an existing answer and updates the database.
 
@@ -108,27 +108,27 @@ def edit_comment(answer_id):
         Response: Renders the edit_answer.html template with the current answer details on a GET request.
         Response: Redirects to the view_answers template to display the updated list of answers on a POST request.
     """
-    question_id = Answer.find_question_id(answer_id)
+    post_id = Comment.find_post_id(comment_id)
 
     if request.method == "POST":
         text = request.form.get("text")
         username = current_user.username
-        Answer.edit_answer(answer_id, question_id, text, username)
+        Comment.edit_comment(comment_id, post_id, text, username)
         flash("Comment Edited")
 
-        return redirect(url_for("answers.view_comments", question_id=question_id))
+        return redirect(url_for("comments.view_comments", post_id=post_id))
     
-    question = Question.find_by_id(question_id)
-    answers = Answer.find_answers_by_question_id(question_id)
+    post = Post.find_by_id(post_id)
+    comments = Comment.find_comments_by_post_id(post_id)
 
-    return render_template("edit_answer.html", question=question, answers=answers, answer_id=ObjectId(answer_id))
+    return render_template("edit_comment.html", post=post, comments=comments, comment_id=ObjectId(comment_id))
 
 
-@answers_bp.route("/delete_answer", defaults={"answer_id": None})
-@answers_bp.route("/delete_answer/<answer_id>")
+@comments_bp.route("/delete_comment", defaults={"comment_id": None})
+@comments_bp.route("/delete_comment/<comment_id>")
 @login_required
-@user_owns_answer_or_admin
-def delete_answer(answer_id):
+@user_owns_comment_or_admin
+def delete_comment(comment_id):
     """
     Deletes a specific answer from the database and updates the associated question's answer count.
 
@@ -141,9 +141,9 @@ def delete_answer(answer_id):
     Returns:
         Response: Redirects to the view_answers template to display the updated list of answers.
     """
-    question_id = Answer.find_question_id(answer_id)
-    Question.decrease_answer_count(question_id)
-    Answer.delete_answer(answer_id)
+    post_id = Comment.find_post_id(comment_id)
+    Post.decrease_comment_count(post_id)
+    Comment.delete_comment(comment_id)
     flash("Comment Deleted")
     
-    return redirect(url_for("answers.view_comments", question_id=question_id))
+    return redirect(url_for("comments.view_comments", post_id=post_id))

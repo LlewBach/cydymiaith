@@ -1,6 +1,6 @@
 from bson.objectid import ObjectId
 from app import mongo
-from app.questions.models import Question
+from app.posts.models import Post
 
 
 class Group:
@@ -203,10 +203,9 @@ class Group:
             Exception: If there is an issue with deleting the group in the database, the exception is caught and an error message is printed.
         """
         try:
-            question = mongo.db.questions.find_one({"group_id": ObjectId(group_id)})
-            if question:
-                Question.delete_question(question._id)
+            post = mongo.db.posts.find_one({"group_id": ObjectId(group_id)})
+            if post:
+                Post.delete_post(post._id)
             mongo.db.groups.delete_one({"_id": ObjectId(group_id)})
         except Exception as e:
             print(f"Error in delete_group method: {e}")
-

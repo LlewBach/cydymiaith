@@ -5,10 +5,10 @@ from bson.objectid import ObjectId
 from app import mongo
 
 
-class Answer:
+class Comment:
     # Docstrings written by GPT4o and edited by myself.
     @staticmethod
-    def find_by_id(answer_id):
+    def find_by_id(comment_id):
         """
         Retrieves an answer from the database by its ID.
 
@@ -24,15 +24,15 @@ class Answer:
             Exception: If there is an issue with the database query, the exception is caught and an error message is printed.
         """
         try:
-            answer = mongo.db.answers.find_one({"_id": ObjectId(answer_id)})
-            return answer
+            comment = mongo.db.comments.find_one({"_id": ObjectId(comment_id)})
+            return comment
         except Exception as e:
             print(f"Error in find_by_id method: {e}")
             return None
 
 
     @staticmethod
-    def find_answers_by_question_id(question_id):
+    def find_comments_by_post_id(post_id):
         """
         Retrieves answers from the database associated with the given question ID and adds a time_ago property to each answer.
 
@@ -48,17 +48,17 @@ class Answer:
             Exception: If there is an issue with the database query, the exception is caught, an error message is printed, and an empty list is returned.
         """
         try:
-            answers = list(mongo.db.answers.find({"question_id": ObjectId(question_id)}))
-            for answer in answers:
-                Answer.set_time_ago(answer)
-            return answers
+            comments = list(mongo.db.comments.find({"post_id": ObjectId(post_id)}))
+            for comment in comments:
+                Comment.set_time_ago(comment)
+            return comments
         except Exception as e:
-            print(f"Error in find_answers_by_question_id method: {e}")
+            print(f"Error in find_comments_by_post_id method: {e}")
             return []
     
 
     @staticmethod
-    def set_time_ago(answer):
+    def set_time_ago(comment):
         """
         Calculates and sets the time_ago property for an answer.
 
@@ -73,14 +73,14 @@ class Answer:
             the exception is caught and an error message is printed.
         """
         try:
-            creation_time = answer['_id'].generation_time.replace(tzinfo=pytz.utc)
-            answer['time_ago'] = humanize.naturaltime(datetime.now(pytz.utc) - creation_time)
+            creation_time = comment['_id'].generation_time.replace(tzinfo=pytz.utc)
+            comment['time_ago'] = humanize.naturaltime(datetime.now(pytz.utc) - creation_time)
         except Exception as e:
             print(f"Error in set_time_ago method: {e}")
 
     
     @staticmethod
-    def count_answers(answers):
+    def count_comments(comments):
         """
         Returns the number of answers in the provided list.
 
@@ -98,14 +98,14 @@ class Answer:
             and an error message is printed.
         """
         try:
-            return len(answers)   
+            return len(comments)   
         except Exception as e:
-            print(f"Error in count_answers method: {e}")
+            print(f"Error in count_comments method: {e}")
             return 0 
     
 
     @staticmethod
-    def find_question_id(answer_id):
+    def find_post_id(comment_id):
         """
         Retrieves the ID of the question associated with a given answer.
 
@@ -123,15 +123,15 @@ class Answer:
             and an error message is printed.
         """
         try:
-            question_id = mongo.db.answers.find_one({"_id": ObjectId(answer_id)})["question_id"]
-            return question_id
+            post_id = mongo.db.comments.find_one({"_id": ObjectId(comment_id)})["post_id"]
+            return post_id
         except Exception as e:
             print(f"Error in find_question_id method: {e}")
             return None
     
 
     @staticmethod
-    def insert_answer(question_id, text, username):
+    def insert_comment(post_id, text, username):
         """
         Inserts a new answer into the answers collection in the database.
 
@@ -149,18 +149,18 @@ class Answer:
             is caught and an error message is printed.
         """
         try:
-            answer = {
-                "question_id": ObjectId(question_id),
+            comment = {
+                "post_id": ObjectId(post_id),
                 "text": text,
                 "username": username
             }
-            mongo.db.answers.insert_one(answer)
+            mongo.db.comments.insert_one(comment)
         except Exception as e:
-            print(f"Error in insert_answer method: {e}")
+            print(f"Error in insert_comment method: {e}")
 
 
     @staticmethod
-    def edit_answer(answer_id, question_id, text, username):
+    def edit_comment(comment_id, post_id, text, username):
         """
         Updates an existing answer in the database.
 
@@ -178,18 +178,18 @@ class Answer:
             is caught and an error message is printed.
         """
         try:
-            answer = {
-                "question_id": question_id,
+            comment = {
+                "post_id": post_id,
                 "text": text,
                 "username": username
             }
-            mongo.db.answers.update_one({"_id": ObjectId(answer_id)}, {"$set": answer})
+            mongo.db.comments.update_one({"_id": ObjectId(comment_id)}, {"$set": comment})
         except Exception as e:
-            print(f"Error in edit_answer method: {e}")
+            print(f"Error in edit_comment method: {e}")
 
     
     @staticmethod
-    def delete_answer(answer_id):
+    def delete_comment(comment_id):
         """
         Deletes an answer from the database.
 
@@ -204,6 +204,6 @@ class Answer:
             is caught and an error message is printed.
         """
         try:
-            mongo.db.answers.delete_one({"_id": ObjectId(answer_id)})
+            mongo.db.comments.delete_one({"_id": ObjectId(comment_id)})
         except Exception as e:
-            print(f"Error in delete_answer method: {e}")
+            print(f"Error in delete_comment method: {e}")
