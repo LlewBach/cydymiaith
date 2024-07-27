@@ -82,12 +82,12 @@ class User(UserMixin):
             print(f'Error in set_password method: {e}')
 
 
-    @classmethod #Should be class method?
+    @classmethod
     def find_by_email(cls, email):
         """
         Finds a user by their email address.
 
-        This class method queries the database for a user document with the specified email address.
+        This method queries the database for a user document with the specified email address.
         If a user is found, it returns an instance of the User class. If no user is found or an 
         exception occurs, it returns None.
 
@@ -118,7 +118,7 @@ class User(UserMixin):
         """
         Retrieves a user from the database by username.
 
-        This class method queries the database for a user document with the specified username.
+        This method queries the database for a user document with the specified username.
         If a user is found, it returns an instance of the User class or a dictionary representation 
         of the user depending on the value of the as_dict parameter. If no user is found or an 
         exception occurs, it returns None.
