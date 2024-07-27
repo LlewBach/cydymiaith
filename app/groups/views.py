@@ -8,7 +8,22 @@ from app.auth.models import User
 groups_bp = Blueprint('groups', __name__, template_folder='../templates')
 
 
+# Docstrings written by GPT4o and edited by myself.
 def must_be_tutor_or_admin(f):
+    """
+    Decorator to ensure that the current user has either 'Tutor' or 'Admin' role.
+
+    This decorator is used to restrict access to certain view functions only to users with specific roles.
+    If the current user does not have the 'Tutor' or 'Admin' role, it flashes an unauthorized access message and
+    redirects the user to their profile page. This is useful for protecting endpoints that should be accessible 
+    only by users in these roles.
+
+    Args:
+        f (function): The view function to wrap.
+
+    Returns:
+        function: The wrapped function with added role-based access control.
+    """
     @wraps(f)
     def wrapper(*args, **kwargs):
         if current_user.role not in ["Admin", "Tutor"]:
@@ -18,7 +33,6 @@ def must_be_tutor_or_admin(f):
     return wrapper
 
 
-# Docstrings written by GPT4o and edited by myself.
 @groups_bp.route("/get_groups")
 @login_required
 @must_be_tutor_or_admin
@@ -44,7 +58,8 @@ def add_group():
     Handles the creation of a new group and renders the add_group template.
 
     On a GET request, this function renders the add_group template with the necessary 
-    data for creating a group. On a POST request, it inserts a new group into the database
+    data for creating a group. 
+    On a POST request, it inserts a new group into the database
     using the provided form data, flashes a success message to the user, and redirects to the get_groups view.
 
     Returns:
@@ -74,15 +89,15 @@ def add_group():
 @must_be_tutor_or_admin
 def add_student(username):
     """
-    Adds a student to a group's students list and redirects to the groups view.
+    Adds a student to a specific group based on form submissions and redirects to the group management view.
 
-    On a POST request, this function retrieves the group ID from the form data and adds the specified student (by username) to the group's students list in the database. It then flashes a success message to the user and redirects to the get_groups view.
+    This function is accessible via POST request where it processes the inclusion of a specified student into a designated group. If a username is provided, the function attempts to find the user and, subsequently, the group ID from the form data. If both the user and the group are validated, the student is added to the group's students list in the database. The function handles different scenarios such as missing user, missing group ID, or unspecified student by flashing appropriate messages and redirecting accordingly.
 
     Args:
-        username (str): The username of the student to be added to the group.
+        username (str, optional): The username of the student to be added to the group.
 
     Returns:
-        Response: Redirects to the get_groups view.
+        Response: Redirects to the groups management view, flashing success or error messages based on the outcome of the operation.
     """
     if username:
         user_search = User.find_by_username(username, True)
@@ -109,17 +124,16 @@ def add_student(username):
 @must_be_tutor_or_admin
 def remove_student(group_id, username):
     """
-    Removes a student from a group's students list and redirects to the groups view.
+    Removes a student from a specific group based on the provided group ID and student username.
 
-    This function removes the specified student (by username) from the group's students list
-    in the database. It then flashes a success message to the user and redirects to the get_groups view.
+    This function is responsible for removing a specified student from a designated group's student list. It validates the presence of both a group ID and a student username. If both are provided, it proceeds to remove the student from the group. A success message is flashed to the user upon successful removal. If either the group ID or username is missing, it flashes an error message indicating that both pieces of information are necessary.
 
     Args:
-        group_id (str): The ID of the group from which the student is to be removed.
-        username (str): The username of the student to be removed from the group.
+        group_id (str, optional): The ID of the group from which the student is to be removed. Required for the operation to proceed.
+        username (str, optional): The username of the student to be removed from the group. Required for the operation to proceed.
 
     Returns:
-        Response: Redirects to the get_groups view.
+        Response: Redirects to the groups management view, flashing messages based on the success or failure of the student removal operation.
     """
     if group_id and username:
         Group.remove_student(group_id, username)
@@ -135,6 +149,24 @@ def remove_student(group_id, username):
 @login_required
 @must_be_tutor_or_admin
 def edit_group(group_id):
+    """
+    Manages the editing of an existing group's details.
+
+    This function handles both GET and POST requests for a specific group based on the group ID provided.
+    - On a GET request, it retrieves the group's details and displays them in a form for editing.
+    - On a POST request, it updates the group with the data provided in the form and then redirects to the group management view.
+    
+    If no group ID is provided, or if the specified group cannot be found, it flashes an appropriate error message and redirects to the group listing page.
+
+    Args:
+        group_id (str, optional): The ID of the group to be edited. If not provided, the function will return to the group listing.
+
+    Returns:
+        Response:
+            - On GET requests: Renders the 'edit_group.html' template with the current group details, providers, and levels available for selection.
+            - On POST requests: Saves the changes and redirects to the group management view with a success message.
+            - On missing or not found group_id: Redirects to the group management view with an error message.
+    """
     if group_id:
         group = Group.get_group_by_id(group_id)
         if group == None:
@@ -167,17 +199,20 @@ def edit_group(group_id):
 @must_be_tutor_or_admin
 def delete_group(group_id):
     """
-    Deletes a group and redirects to the groups list view.
+    Deletes a specific group from the database and redirects to the group management view.
 
-    This route handles the deletion of a group specified by the group_id.
-    It calls the Group.delete_group method to perform the deletion, flashes
-    a success message to the user, and redirects to the 'get_groups' view.
+    This function checks if a valid group ID is provided and verifies if the group exists. If the group exists,
+    it proceeds with deletion using the Group.delete_group method. Upon successful deletion, a success message 
+    is flashed. If no group is found or if no group ID is provided, it flashes an error message accordingly.
 
     Args:
-        group_id (str): The unique identifier of the group to be deleted.
+        group_id (str, optional): The unique identifier of the group to be deleted. If not provided,
+                                  the function will flash an error and redirect.
 
     Returns:
-        Response: A redirect response to the 'get_groups' view.
+        Response: Redirects to the 'get_groups' view after attempting to delete a group. The redirect is
+                  accompanied by either a success message (if deletion is successful) or an error message
+                  (if the group is not found or the group ID is not specified).
     """
     if group_id:
         group = Group.get_group_by_id(group_id)
