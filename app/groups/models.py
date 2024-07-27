@@ -174,6 +174,25 @@ class Group:
 
     @staticmethod
     def edit_group(group_id, tutor, provider, level, year, weekday, students):
+        """
+        Updates the details of an existing group in the database.
+
+        This method accepts several parameters that define a group's characteristics and uses them to update 
+        the corresponding group document in the database. It modifies the group's tutor, provider, level, year, 
+        weekday, and list of students with the provided values.
+
+        Args:
+            group_id (str): The MongoDB ObjectId string of the group to be updated.
+            tutor (str): The username of the tutor associated with the group.
+            provider (str): The education provider or institution associated with the group.
+            level (str): The academic level or grade of the group.
+            year (int): The academic year during which the group is active.
+            weekday (str): The day of the week on which the group meets.
+            students (list): A list of usernames representing the students in the group.
+
+        Raises:
+            Exception: Captures and logs any exceptions that occur during the database update process.
+        """
         try:
             group = {
                 "tutor": tutor,
