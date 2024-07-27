@@ -1,6 +1,7 @@
 from functools import wraps
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import current_user, login_required
+from app.core.models import Core
 from app.posts.models import Post
 from app.groups.models import Group
 
@@ -25,7 +26,7 @@ def get_posts():
         Response: Renders the 'posts.html' template with variables for the list of posts, categories, and 
         groups available to the user, as well as any active query parameters used for filtering.
     """
-    categories = Post.get_categories()
+    categories = Core.get_categories()
     posts, query = Post.get_list(None, None)
     groups = Group.get_groups_by_role(current_user.role, current_user.username) if current_user.is_authenticated else []
 
@@ -68,7 +69,7 @@ def make_post():
         return redirect(url_for('posts.get_posts'))
 
     groups = Group.get_groups_by_role(current_user.role, current_user.username)
-    categories = Post.get_categories()
+    categories = Core.get_categories()
     return render_template("make_post.html", categories=categories, groups=groups)
 
 
@@ -129,7 +130,7 @@ def edit_post(post_id):
         return redirect(url_for('posts.get_posts'))
     
     groups = Group.get_groups_by_role(current_user.role, current_user.username)
-    categories = Post.get_categories()
+    categories = Core.get_categories()
     post = Post.find_by_id(post_id)
     return render_template("edit_post.html", post=post, groups=groups, categories=categories)
 

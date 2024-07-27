@@ -215,48 +215,6 @@ class User(UserMixin):
             bool: True if the provided password matches the stored hash, False otherwise.
         """
         return check_password_hash(self.password, password)
-    
-
-    @staticmethod
-    def get_roles():
-        """
-        Retrieves a list of all roles from the database.
-
-        This static method queries the database for all documents in the 'roles' collection
-        and returns them as a list.
-
-        Returns:
-            list: A list of all roles from the database.
-        """
-        return list(mongo.db.roles.find())
-
-
-    @staticmethod
-    def get_levels():
-        """
-        Retrieves a list of all levels from the database.
-
-        This static method queries the database for all documents in the 'levels' collection
-        and returns them as a list.
-
-        Returns:
-            list: A list of all levels from the database.
-        """
-        return list(mongo.db.levels.find())
-    
-
-    @staticmethod
-    def get_providers():
-        """
-        Retrieves a list of all providers from the database.
-
-        This static method queries the database for all documents in the 'providers' collection
-        and returns them as a list.
-
-        Returns:
-            list: A list of all providers from the database.
-        """
-        return list(mongo.db.providers.find())
 
 
     @staticmethod

@@ -148,28 +148,6 @@ class Group:
             
         except Exception as e:
             print(f"Error in insert_group method: {e}")
-
-    
-    @staticmethod
-    def get_levels():
-        """
-        Retrieves a list of levels from the database.
-
-        Returns:
-            list: A list of level documents from the levels collection.
-        """
-        return list(mongo.db.levels.find())
-    
-
-    @staticmethod
-    def get_providers():
-        """
-        Retrieves a list of providers from the database.
-
-        Returns:
-            list: A list of provider documents from the providers collection.
-        """
-        return list(mongo.db.providers.find())
     
 
     @staticmethod

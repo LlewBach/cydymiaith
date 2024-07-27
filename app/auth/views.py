@@ -4,6 +4,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 from flask_mail import Message
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
 from app import mail
+from app.core.models import Core
 from app.auth.models import User
 from app.posts.models import Post
 from app.groups.models import Group
@@ -387,9 +388,9 @@ def edit_profile(username):
         if user == None:
             flash("User Not Found")
             return redirect(url_for("auth.profile", username=current_user.username))
-        roles = User.get_roles()
-        levels = User.get_levels()
-        providers = User.get_providers()
+        roles = Core.get_roles()
+        levels = Core.get_levels()
+        providers = Core.get_providers()
 
         return render_template("edit_profile.html", user=user,roles=roles, levels=levels, providers=providers) 
     
@@ -462,8 +463,8 @@ def view_users():
         users, query = User.get_users(level, provider, username, email, location)
     
     groups = Group.get_groups_by_role(current_user.role, current_user.username)
-    levels = User.get_levels()
-    providers = User.get_providers()
+    levels = Core.get_levels()
+    providers = Core.get_providers()
 
     return render_template("users.html", users=users, query=query, groups=groups, levels=levels, providers=providers)
 

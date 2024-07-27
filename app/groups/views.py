@@ -1,6 +1,7 @@
 from functools import wraps
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import current_user, login_required
+from app.core.models import Core
 from app.groups.models import Group
 from app.auth.models import User
 
@@ -77,8 +78,8 @@ def add_group():
         flash("Group Created")
         return redirect(url_for('groups.get_groups'))
 
-    providers = Group.get_providers()
-    levels = Group.get_levels()
+    providers = Core.get_providers()
+    levels = Core.get_levels()
 
     return render_template("add_group.html", providers=providers, levels=levels)
 
@@ -183,8 +184,8 @@ def edit_group(group_id):
             flash("Group Edited")
             return redirect(url_for('groups.get_groups'))
 
-        providers = Group.get_providers()
-        levels = Group.get_levels()
+        providers = Core.get_providers()
+        levels = Core.get_levels()
 
         return render_template("edit_group.html", group=group, providers=providers, levels=levels)
     
