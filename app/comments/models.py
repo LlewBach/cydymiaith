@@ -10,18 +10,18 @@ class Comment:
     @staticmethod
     def find_by_id(comment_id):
         """
-        Retrieves an answer from the database by its ID.
+        Retrieves a comment from the database by its ID.
 
-        This method queries the database to find a answer document that matches the provided answer ID.
+        This method queries the database to find a comment document that matches the provided comment ID.
 
         Args:
-            answer_id (str): The ID of the question to be retrieved.
+            comment_id (str): The ID of the comment to be retrieved.
 
         Returns:
-            dict: The answer document matching the provided ID, or None if an exception occurs.
+            dict: The comment document matching the provided ID, or None if not found or an error occurs.
 
         Raises:
-            Exception: If there is an issue with the database query, the exception is caught and an error message is printed.
+            Exception: If there is an issue with the database query, the exception is caught and an error message is printed, returning None.
         """
         try:
             comment = mongo.db.comments.find_one({"_id": ObjectId(comment_id)})
@@ -34,15 +34,15 @@ class Comment:
     @staticmethod
     def find_comments_by_post_id(post_id):
         """
-        Retrieves answers from the database associated with the given question ID and adds a time_ago property to each answer.
+        Retrieves comments from the database associated with the given post ID and adds a time_ago property to each comment.
 
-        This method queries the database for all answers associated with the specified question ID. For each answer retrieved, it adds a time_ago property to indicate how long ago the answer was posted.
+        This method queries the database for all comments associated with the specified post ID. For each comment retrieved, it adds a time_ago property to indicate how long ago the comment was posted. This helps provide context about the recency of comments when displaying them to users.
 
         Args:
-            question_id (str): The ID of the question whose answers are to be retrieved.
+            post_id (str): The ID of the post whose comments are to be retrieved.
 
         Returns:
-            list: A list of answer documents, each with an added time_ago property. If an exception occurs, an empty list is returned.
+            list: A list of comment documents, each with an added time_ago property. If an exception occurs, an empty list is returned.
 
         Raises:
             Exception: If there is an issue with the database query, the exception is caught, an error message is printed, and an empty list is returned.
@@ -60,17 +60,15 @@ class Comment:
     @staticmethod
     def set_time_ago(comment):
         """
-        Calculates and sets the time_ago property for an answer.
+        Calculates and sets the 'time_ago' property for a comment based on its creation time.
 
-        This method determines the creation time of an answer based on its generated ID, calculates the difference between the creation time and the current time, and uses the humanize library to create a human-readable time_ago figure. It then
-        sets this time_ago value as a property of the answer.
+        This method extracts the creation time of the comment from its MongoDB ObjectId, calculates the time elapsed since its creation, and uses the 'humanize' library to generate a human-readable 'time_ago' description. It then sets this 'time_ago' value as a property of the comment document.
 
         Args:
-            answer (dict): The answer document to update with a time_ago property.
+            comment (dict): The comment document to update with a 'time_ago' property.
 
         Raises:
-            Exception: If there is an issue with calculating or setting the time_ago property,
-            the exception is caught and an error message is printed.
+            Exception: If there is an issue with calculating or setting the 'time_ago' property, the exception is caught and an error message is printed. This ensures that the method gracefully handles errors while processing dates.
         """
         try:
             creation_time = comment['_id'].generation_time.replace(tzinfo=pytz.utc)
@@ -82,19 +80,19 @@ class Comment:
     @staticmethod
     def count_comments(comments):
         """
-        Returns the number of answers in the provided list.
+        Returns the number of comments in the provided list.
 
-        This method calculates the length of the provided list of answers and returns it. 
-        If an exception occurs, it catches the exception, prints an error message, and returns 0.
+        This method calculates the length of the provided list of comments and returns it.
+        If an exception occurs during the process, the method catches the exception, prints an error message, and returns 0. This ensures robust error handling during comment count operations.
 
         Args:
-            answers (list): A list of answer documents to count.
+            comments (list): A list of comment documents to count.
 
         Returns:
-            int: The number of answers in the provided list. Returns 0 if an exception occurs.
+            int: The number of comments in the provided list. Returns 0 if an exception occurs.
 
         Raises:
-            Exception: If there is an issue with counting the answers, the exception is caught
+            Exception: If there is an issue with counting the comments, the exception is caught
             and an error message is printed.
         """
         try:
@@ -107,20 +105,20 @@ class Comment:
     @staticmethod
     def find_post_id(comment_id):
         """
-        Retrieves the ID of the question associated with a given answer.
+        Retrieves the ID of the post associated with a given comment.
 
-        This method queries the database to find the question ID associated with the specified answer ID.
+        This method queries the database to find the post ID associated with the specified comment ID.
         If an exception occurs, it catches the exception, prints an error message, and returns None.
 
         Args:
-            answer_id (str): The ID of the answer for which the associated question ID is to be retrieved.
+            comment_id (str): The ID of the comment for which the associated post ID is to be retrieved.
 
         Returns:
-            str: The ID of the question associated with the given answer. Returns None if an exception occurs.
+            str: The ID of the post associated with the given comment. Returns None if an exception occurs or if the comment does not exist or does not have an associated post ID.
 
         Raises:
             Exception: If there is an issue with the database query, the exception is caught
-            and an error message is printed.
+            and an error message is printed, providing clear feedback for troubleshooting.
         """
         try:
             post_id = mongo.db.comments.find_one({"_id": ObjectId(comment_id)})["post_id"]
@@ -133,19 +131,19 @@ class Comment:
     @staticmethod
     def insert_comment(post_id, text, username):
         """
-        Inserts a new answer into the answers collection in the database.
+        Inserts a new comment into the comments collection in the database.
 
-        This method creates an answer document with the provided question ID, answer text, and username,
-        and inserts it into the answers collection in the database. If an exception occurs, it catches
-        the exception and prints an error message.
+        This method creates a comment document with the provided post ID, comment text, and username,
+        and inserts it into the comments collection in the database. If an exception occurs during this
+        process, it catches the exception and prints an error message.
 
         Args:
-            question_id (str): The ID of the question to which the answer is associated.
-            text (str): The text content of the answer.
-            username (str): The username of the user who provided the answer.
+            post_id (str): The ID of the post to which the comment is associated.
+            text (str): The text content of the comment.
+            username (str): The username of the user who provided the comment.
 
         Raises:
-            Exception: If there is an issue with inserting the answer into the database, the exception
+            Exception: If there is an issue with inserting the comment into the database, the exception
             is caught and an error message is printed.
         """
         try:
@@ -162,19 +160,19 @@ class Comment:
     @staticmethod
     def edit_comment(comment_id, post_id, text, username):
         """
-        Updates an existing answer in the database.
+        Updates an existing comment in the database.
 
-        This method updates the content of an existing answer in the database based on the provided answer ID.
-        It sets the new question ID, text, and username for the answer. If an exception occurs, it catches the exception and prints an error message.
+        This method updates the content of an existing comment in the database based on the provided comment ID.
+        It sets the new post ID, text, and username for the comment. If an exception occurs, it catches the exception and prints an error message.
 
         Args:
-            answer_id (str): The ID of the answer to be updated.
-            question_id (str): The ID of the question to which the answer is associated.
-            text (str): The updated text content of the answer.
-            username (str): The username of the user who provided the answer.
+            comment_id (str): The ID of the comment to be updated.
+            post_id (str): The ID of the post to which the comment is associated.
+            text (str): The updated text content of the comment.
+            username (str): The username of the user who provided the comment.
 
         Raises:
-            Exception: If there is an issue with updating the answer in the database, the exception
+            Exception: If there is an issue with updating the comment in the database, the exception
             is caught and an error message is printed.
         """
         try:
@@ -191,16 +189,16 @@ class Comment:
     @staticmethod
     def delete_comment(comment_id):
         """
-        Deletes an answer from the database.
+        Deletes a comment from the database.
 
-        This method removes an answer from the database based on the provided answer ID.
+        This method removes a comment from the database based on the provided comment ID.
         If an exception occurs, it catches the exception and prints an error message.
 
         Args:
-            answer_id (str): The ID of the answer to be deleted.
+            comment_id (str): The ID of the comment to be deleted.
 
         Raises:
-            Exception: If there is an issue with deleting the answer from the database, the exception
+            Exception: If there is an issue with deleting the comment from the database, the exception
             is caught and an error message is printed.
         """
         try:
