@@ -14,17 +14,23 @@ comments_bp = Blueprint('comments', __name__, template_folder='../templates')
 @comments_bp.route("/view_comments/<post_id>")
 def view_comments(post_id):
     """
-    Renders the view_answers template for a specific question.
+    Renders the view_comments template for a specific post.
 
-    This function retrieves the question and its associated answers from the database,
-    sets the time ago for the question, counts the number of answers, and then renders
-    the view_answers template with this data.
+    This function retrieves a post and its associated comments from the database. It also 
+    sets the relative time since the post was created and counts the number of comments. 
+    If the post exists, it renders the view_comments template with the post, comments, and 
+    the total comment count. If no post_id is provided or if the post does not exist, it 
+    redirects to a general posts page with an appropriate error message.
 
     Args:
-        question_id (str): The ID of the question for which answers are to be viewed.
+        post_id (str, optional): The ID of the post for which comments are to be viewed.
 
     Returns:
-        Response: Renders the view_answers.html template with the question, answers, and the count of answers.
+        Response:
+            - Renders the 'view_comments.html' template with the post, its comments, and 
+              the count of comments if the post is found.
+            - Redirects to the 'posts.get_posts' page with an error message if the post is not found 
+              or the post_id is not specified.
     """
     if post_id:
         post = Post.find_by_id(post_id)
@@ -46,15 +52,17 @@ def view_comments(post_id):
 @login_required
 def comment(post_id):
     """
-    Adds an answer to a specific question and updates the database.
+    Manages the addition of comments to a specific post.
 
-    On a POST request, it retrieves the answer text from the form, inserts the answer into the database, increases the answer count for the question, flashes a success message to the user, and redirects to the view_answers template to display the updated list of answers.
+    On POST requests, it retrieves the comment text from the form, saves the new comment in the database associated with the post, and updates the comment count for the post. A success message is then flashed to the user, and they are redirected to the view_comments page to see their new comment and all others.
 
     Args:
-        question_id (str): The ID of the question to which the answer is to be added.
+        post_id (str, optional): The ID of the post to which the comment is to be added. If not provided, a message is flashed, and the user is redirected.
 
     Returns:
-        Response: Redirects to the view_answers template to display the updated list of answers.
+        Response:
+            - Redirects to the view_comments page for the specified post_id to display the newly added comment and existing comments.
+            - Redirects to the posts overview page with an error message if no post is found or the post_id is not specified.
     """
     if post_id:
         found_post = Post.find_by_id(post_id)
@@ -76,6 +84,19 @@ def comment(post_id):
     
 
 def user_owns_comment_or_admin(f):
+    """
+    Decorator to check if the current user is authorized to perform actions on a specific comment.
+
+    This decorator verifies that the current user either owns the comment or has an 'Admin' role before allowing access to the target function. If the comment does not exist or if the user does not have the appropriate permissions, it flashes an error message and redirects the user accordingly.
+
+    It first checks if the comment exists based on a 'comment_id' extracted from the route parameters. If the comment exists, it then checks if the current user is the owner of the comment or an admin. If neither condition is met, it prevents access by redirecting the user with an error message.
+
+    Args:
+        f (function): The wrapped view function.
+
+    Returns:
+        function: The wrapped function with added authorization checks, or redirections if checks fail.
+    """
     @wraps(f)
     def wrapper(*args, **kwargs):
         comment_id = kwargs.get('comment_id')
@@ -96,17 +117,18 @@ def user_owns_comment_or_admin(f):
 @user_owns_comment_or_admin
 def edit_comment(comment_id):
     """
-    Handles the editing of an existing answer and updates the database.
+    Handles the editing of an existing comment and updates the database.
 
-    On a GET request, it renders the edit_answer template with the current answer details. On a POST request, it updates the answer in the database with the provided text, flashes a success message to the user, and redirects
-    to the view_answers template to display the updated list of answers.
+    On a GET request, it renders the edit_comment template with the current comment details. On a POST request, it updates the comment in the database with the provided text, flashes a success message to the user, and redirects
+    to the view_comments template to display the post with the updated list of comments.
 
     Args:
-        answer_id (str): The ID of the answer to be edited.
+        comment_id (str): The ID of the comment to be edited.
 
     Returns:
-        Response: Renders the edit_answer.html template with the current answer details on a GET request.
-        Response: Redirects to the view_answers template to display the updated list of answers on a POST request.
+        Response:
+            - Renders the edit_comment.html template with the current comment details on a GET request.
+            - Redirects to the view_comments template to display the post with the updated comment on a POST request.
     """
     post_id = Comment.find_post_id(comment_id)
 
@@ -130,16 +152,16 @@ def edit_comment(comment_id):
 @user_owns_comment_or_admin
 def delete_comment(comment_id):
     """
-    Deletes a specific answer from the database and updates the associated question's answer count.
+    Deletes a specific comment from the database and updates the associated post's comment count.
 
-    This function deletes an answer from the database, decreases the answer count of the associated question, flashes a success message to the user, and redirects to the view_answers template to display the updated list
-    of answers.
+    This function deletes a comment from the database, decreases the comment count of the associated post, flashes a success message to the user, and redirects to the view_comments template to display the updated list
+    of comments.
 
     Args:
-        answer_id (str): The ID of the answer to be deleted.
+        comment_id (str): The ID of the comment to be deleted.
 
     Returns:
-        Response: Redirects to the view_answers template to display the updated list of answers.
+        Response: Redirects to the view_comments template to display the updated list of comments.
     """
     post_id = Comment.find_post_id(comment_id)
     Post.decrease_comment_count(post_id)
