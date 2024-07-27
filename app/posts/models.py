@@ -30,15 +30,15 @@ class Post:
     @staticmethod
     def find_by_id(post_id):
         """
-        Retrieves a question from the database by its ID.
+        Retrieves a post from the database by its ID.
 
-        This method queries the database to find a question document that matches the provided question ID.
+        This method queries the database to find a post document that matches the provided post ID.
 
         Args:
-            question_id (str): The ID of the question to be retrieved.
+            post_id (str): The ID of the post to be retrieved.
 
         Returns:
-            dict: The question document matching the provided ID, or None if an exception occurs.
+            dict: The post document matching the provided ID, or None if no post is found or if an exception occurs.
 
         Raises:
             Exception: If there is an issue with the database query, the exception is caught and an error message is printed.
@@ -54,19 +54,22 @@ class Post:
     @staticmethod
     def get_list(category, group_id):
         """
-        Retrieves a list of questions from the database filtered by category and/or group.
+        Retrieves a list of posts from the database filtered by category and/or group.
 
-        This method queries the database to find questions that match the provided category and/or group ID.
-        If neither category nor group ID is provided, it retrieves all questions. The questions are sorted
-        in descending order by their ID. For each question, it calculates and adds the time_ago property.
+        This method queries the database to find posts that match the provided category and/or group ID.
+        If neither category nor group ID is provided, it retrieves all posts. The posts are sorted
+        in descending order by their ID. For each post, it calculates and adds the time_ago property
+        to enhance readability regarding when the post was created.
 
         Args:
-            category (str, optional): The category to filter questions by.
-            group_id (str, optional): The group ID to filter questions by.
+            category (str, optional): The category to filter posts by.
+            group_id (str, optional): The group ID to filter posts by.
 
         Returns:
-            list: A list of question documents matching the provided filters, with the time_ago property added.
-            If an exception occurs, returns an empty list.
+            tuple:
+                - list: A list of post documents matching the provided filters, each with the time_ago property added.
+                - dict: The query dictionary used to retrieve the posts.
+                If an exception occurs, returns an empty list and the query used.
 
         Raises:
             Exception: If there is an issue with the database query, the exception is caught and an error message is printed.
@@ -92,17 +95,17 @@ class Post:
     @staticmethod
     def get_list_by_username(username):
         """
-        Retrieves a list of questions from the database associated with a specific username.
+        Retrieves a list of posts from the database associated with a specific username.
 
-        This method queries the database to find all questions that are associated with the provided username.
-        The questions are sorted in descending order by their ID. For each question, it calculates and adds
-        the time_ago property.
+        This method queries the database to find all posts that are associated with the provided username.
+        The posts are sorted in descending order by their ID to display the most recent posts first. For each post, 
+        it calculates and adds the 'time_ago' property to provide context on how long ago the post was created.
 
         Args:
-            username (str): The username to filter questions by.
+            username (str): The username to filter posts by. This is typically the author of the posts.
 
         Returns:
-            list: A list of question documents associated with the provided username, with the time_ago property added.
+            list: A list of post documents associated with the provided username, each enhanced with the 'time_ago' property.
             If an exception occurs, returns an empty list.
 
         Raises:
@@ -121,14 +124,14 @@ class Post:
     @staticmethod
     def set_time_ago(post):
         """
-        Calculates and sets the 'time_ago' property for a question based on its creation time.
+        Calculates and sets the 'time_ago' property for a post based on its creation time.
 
-        This method calculates the creation time of the question using the generation time of its ID.
+        This method calculates the creation time of the post using the generation time of its ID.
         It then computes the 'time_ago' property using the humanize library to provide a human-readable
         relative time (e.g., "3 days ago").
 
         Args:
-            question (dict): The question document for which the 'time_ago' property will be calculated and set.
+            question (dict): The post document for which the 'time_ago' property will be calculated and set.
 
         Raises:
             Exception: If there is an issue with calculating the 'time_ago' property, the exception is caught and an error message is printed.
@@ -143,15 +146,15 @@ class Post:
     @staticmethod
     def increase_comment_count(post_id):
         """
-        Increases the answer_count property of a question by one.
+        Increases the comment_count property of a post by one.
 
-        This method updates the specified question in the database, incrementing its answer_count property by one.
+        This method updates the specified post in the database, incrementing its comment_count property by one.
 
         Args:
-            question_id (str): The ID of the question whose answer_count is to be increased.
+            post_id (str): The ID of the post whose comment_count is to be increased.
 
         Raises:
-            Exception: If there is an issue with updating the question in the database, the exception is caught and an error message is printed.
+            Exception: If there is an issue with updating the post in the database, the exception is caught and an error message is printed.
         """
         try:
             mongo.db.posts.update_one({'_id': ObjectId(post_id)}, {'$inc': {'comment_count': 1}})
@@ -162,15 +165,15 @@ class Post:
     @staticmethod
     def decrease_comment_count(post_id):
         """
-        Decreases the answer_count property of a question by one.
+        Decreases the comment_count property of a post by one.
 
-        This method updates the specified question in the database, decrementing its answer_count property by one.
+        This method updates the specified post in the database, decrementing its comment_count property by one.
 
         Args:
-            question_id (str): The ID of the question whose answer_count is to be decreased.
+            post_id (str): The ID of the post whose comment_count is to be decreased.
 
         Raises:
-            Exception: If there is an issue with updating the question in the database, the exception is caught and an error message is printed.
+            Exception: If there is an issue with updating the post in the database, the exception is caught and an error message is printed.
         """
         try:
             mongo.db.posts.update_one({'_id': ObjectId(post_id)}, {'$inc': {'comment_count': -1}})
@@ -181,21 +184,21 @@ class Post:
     @staticmethod
     def insert_post(username, category, group_id, title, description):
         """
-        Inserts a new question into the database.
+        Inserts a new post into the database.
 
-        This method creates a question document with the provided username, category, group ID,
-        title, and description, and inserts it into the questions collection in the database.
-        The answer_count is initialized to 0.
+        This method creates a post document with the provided username, category, group ID,
+        title, and description, and inserts it into the posts collection in the database.
+        The comment_count is initialized to 0.
 
         Args:
-            username (str): The username of the user creating the question.
-            category (str): The category of the question.
-            group_id (str): The ID of the group associated with the question.
-            title (str): The title of the question.
-            description (str): The description of the question.
+            username (str): The username of the user creating the post.
+            category (str): The category of the post.
+            group_id (str): The ID of the group associated with the post.
+            title (str): The title of the post.
+            description (str): The description of the post.
 
         Raises:
-            Exception: If there is an issue with inserting the question into the database, the exception
+            Exception: If there is an issue with inserting the post into the database, the exception
             is caught and an error message is printed.
         """
         try:
@@ -215,18 +218,18 @@ class Post:
     @staticmethod
     def get_comment_count(post_id):
         """
-        Retrieves the answer_count associated with a specific question.
+        Retrieves the comment_count associated with a specific post.
 
-        This method queries the database to find the question by its ID and returns its answer_count property.
+        This method queries the database to find the post by its ID and returns its comment_count property.
 
         Args:
-            question_id (str): The ID of the question whose answer_count is to be retrieved.
+            post_id (str): The ID of the post whose comment_count is to be retrieved.
 
         Returns:
-            int: The answer_count of the question. If an exception occurs, returns 0.
+            int: The comment_count of the post. If an exception occurs, returns 0.
 
         Raises:
-            Exception: If there is an issue with retrieving the question from the database, the exception is caught and an error message is printed.
+            Exception: If there is an issue with retrieving the post from the database, the exception is caught and an error message is printed.
         """
         try:
             count = Post.find_by_id(post_id)["comment_count"]
@@ -239,19 +242,19 @@ class Post:
     @staticmethod
     def update_post(post_id, username, category, group_id, title, description):
         """
-        Updates the details of a specific question in the database.
+        Updates the details of a specific post in the database.
 
-        This method updates the specified question in the database with the provided username, title, and description.
-        The current answer_count is also retrieved and retained during the update.
+        This method updates the specified post in the database with the provided username, title, and description.
+        The current comment_count is also retrieved and retained during the update.
 
         Args:
-            question_id (str): The ID of the question to be updated.
+            post_id (str): The ID of the post to be updated.
             username (str): The username of the user updating the question.
             title (str): The updated title of the question.
             description (str): The updated description of the question.
 
         Raises:
-            Exception: If there is an issue with updating the question in the database, the exception is caught and an error message is printed.
+            Exception: If there is an issue with updating the post in the database, the exception is caught and an error message is printed.
         """
         try:
             current_comment_count = Post.get_comment_count(post_id)
@@ -271,16 +274,16 @@ class Post:
     @staticmethod
     def delete_post(post_id):
         """
-        Deletes a question and its associated answers from the database.
+        Deletes a post and its associated comments from the database.
 
-        This method deletes all answers associated with the specified question from the database,
-        and then deletes the question itself.
+        This method deletes all comments associated with the specified post from the database,
+        and then deletes the post itself.
 
         Args:
-            question_id (str): The ID of the question to be deleted.
+            post_id (str): The ID of the post to be deleted.
 
         Raises:
-            Exception: If there is an issue with deleting the question or its associated answers from the database,
+            Exception: If there is an issue with deleting the post or its associated comments from the database,
             the exception is caught and an error message is printed.
         """
         try:
