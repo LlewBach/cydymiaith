@@ -80,16 +80,6 @@ Test result: Pass
 
 Test result: Pass
 
-#### Reset Password
-
-1) On the Profile page, click 'Reset Password'. A flash message should display "A confirmation email has been sent."
-2) Go to your inbox and look for an email from cydymiaith@gmail.com titled 'Password Reset Request'.
-3) Click the link in the email. The user should be taken to the Reset Password page.
-4) Enter a new password (testuser11). Click 'Reset Password'. The user should be taken to the Log In page, and a flash message should display "Your password has been reset."
-5) Log back in with the new password. The user should be logged in and brought to the Profile page.
-
-Test result: Pass
-
 #### Forgot Password
 
 1) Having logged out, at the bottom of the Log In page, click 'Reset here' beneath 'Forgotten password?'. The user should be taken to the Confirm Email to Reset Password page.
