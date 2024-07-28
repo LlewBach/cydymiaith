@@ -407,6 +407,10 @@ os.environ.setdefault("MAIL_DEFAULT_SENDER", "your own value")
 
 - How to set up Jinja variables for dynamic navbar link highlighting
 
+#### Sentry.io
+
+- [Create a route with optional URL parameters in Flask]()
+
 ### Media
 
 Logo - Created by GPTo

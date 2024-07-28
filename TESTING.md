@@ -80,6 +80,26 @@ Test result: Pass
 
 Test result: Pass
 
+#### Reset Password
+
+1) On the Profile page, click 'Reset Password'. A flash message should display "A confirmation email has been sent."
+2) Go to your inbox and look for an email from cydymiaith@gmail.com titled 'Password Reset Request'.
+3) Click the link in the email. The user should be taken to the Reset Password page.
+4) Enter a new password (testuser11). Click 'Reset Password'. The user should be taken to the Log In page, and a flash message should display "Your password has been reset."
+5) Log back in with the new password. The user should be logged in and brought to the Profile page.
+
+Test result: Pass
+
+#### Forgot Password
+
+1) Having logged out, at the bottom of the Log In page, click 'Reset here' beneath 'Forgotten password?'. The user should be taken to the Confirm Email to Reset Password page.
+2) Enter your email. Having clicked the button to confirm, a flash message should display "A confirmation email has been sent."
+3) In your inbox, click on the link in the email titled "Password Reset Request". The user should be taken to the Reset Password page.
+4) Enter a new password (testuser1). Click 'Reset Password'. The user should be taken to the Log In page and a flash message should display "Your password has been reset".
+5) Log back in with the new password. The user should be logged in successfully.
+
+Test result: Pass
+
 #### Post Creation
 
 1) Having logged in, navigate to Posts. Beneath the Posts title, the button should say 'Make Post'.
@@ -784,9 +804,19 @@ Using this accessibility validator, I saw that the colour contrast of my initial
 
 [Back to top](#cydymiaith-testing-documentation)
 
-- Getting edit post form to remember associated group - I was having trouble handling id vs ObjectId - I consulted GPT4o who advised me how to use jinja filters properly, such as 
+### id vs ObjectId
+
+Getting edit post form to remember associated group - I was having trouble handling id vs ObjectId - I consulted GPT4o who advised me how to use jinja filters properly, such as 
 
 ` {% if group._id|string == post.group_id|string %}`
 
 and this equates the types making them comparable.
+
+### Instantiating User class instances
+
+I had much difficulty instantiating User class instances, with many errors occuring. I got around this by adding a boolean 'as_dict' to the find_by_username classmethod, that would return user info as a dictionary instead of an object, thus avoiding the issues I was having. I later realized that the problem was due to the login_manager load_user function needing to be handled and updated alongside the User class.
+
+### Modals
+
+I had trouble with modals deleting the wrong items or not working. I realized that this was due to multiple generated modals requiring unique IDs, which was fixed by using database IDs passed through the HTML templates.
 
