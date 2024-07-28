@@ -752,7 +752,23 @@ Result: Pass
 
 ### Python Validation
 
+[https://pep8ci.herokuapp.com/](https://pep8ci.herokuapp.com/)
 
+| Python file tested | Test result |
+| :---: | :---: |
+| app/auth/views.py | Pass |
+| app/auth/models.py | Pass |
+| app/comments/views.py | Pass |
+| app/comments/models.py | Pass |
+| app/core/views.py | Pass |
+| app/core/models.py | Pass |
+| app/errors/handlers.py | Pass |
+| app/groups/views.py | Pass |
+| app/groups/models.py | Pass |
+| app/posts/views.py | Pass |
+| app/posts/models.py | Pass |
+| app/init.py| Pass |
+| run.py | Pass |
 
 ### WAVE
 

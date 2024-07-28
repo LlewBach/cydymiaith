@@ -310,6 +310,7 @@ Close thread - The ability to set a post as closed, having been answered or beco
 - [https://validator.w3.org/](https://validator.w3.org/) - HTML validator
 - [https://jigsaw.w3.org/css-validator/](https://jigsaw.w3.org/css-validator/) - CSS validator
 - [https://jshint.com/](https://jshint.com/) - JS validator
+- [CI Python Linter](https://pep8ci.herokuapp.com/)
 - [https://wave.webaim.org/](https://wave.webaim.org/) - 
 - [https://webaim.org/resources/contrastchecker/](https://webaim.org/resources/contrastchecker/) - WAVE contrast checker
 
