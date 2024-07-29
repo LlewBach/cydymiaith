@@ -52,6 +52,7 @@
   </div>
 </div>
 
+{% if current_user.is_authenticated %}
 <!-- Add comment form -->
 <div class="card">
   <div class="card-body">
@@ -70,6 +71,7 @@
     </form>
   </div>
 </div>
+{% endif %}
 
 {% if not comments %}
 
