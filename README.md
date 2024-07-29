@@ -60,15 +60,28 @@ Student's goals...
 
 US1 - "As a visitor to the website, I want to know what the website does, so that I can decide if it would be useful to me'.
 
+AC1 - "A user must be able to identify the website's name and understand its purpose on the first visit."
+
 US2 - "As a potential user, I want the interface to be intuitive and easy to use."
+
+AC2 - "A user should be able to understand how to navigate and interact with the website.
 
 US3 - "As an unregistered user, I want to be able to view content on the site to get a sense of what I could gain from registering".
 
+AC3 - "An unregistered user should be able to see all posts and their comments.
+
 US4 - "As an unregistered user, I want to be able to register an account to which I can log in and enjoy all the features available."
+
+AC4 - "An unregistered user should be able to register an account and log in/out.
 
 US5 - "As a logged in user, I want to be able to make, edit and delete my own posts as well as my comments on the posts of others.
 
+AC5 - "A logged in user should be able to be able to make, edit and delete their own posts, as well as make, edit and delete their comments on any post.
+
 US6 - "As a mobile user, I want to be able to interact with the site with the same degree of functionality via a responsive design."
+
+AC6 - "A user should be able to use the site on mobile devices.
+
 
 
 US1 - "As a Welsh language tutor, I want to be able to communicate with my class."
