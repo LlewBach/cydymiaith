@@ -165,6 +165,10 @@ def reg_confirmation():
     """
     if request.method == 'POST':
         email = request.form.get("reg_email")
+        existing_email_check = User.find_by_email(email)
+        if existing_email_check:
+            flash("That email address is already in use.")
+            return redirect(url_for('auth.reg_confirmation'))
         s = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
         token = s.dumps(email, salt='reg-confirmation-salt')
         confirmation_url = url_for(
