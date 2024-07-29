@@ -436,6 +436,10 @@ This section considers two aspects.
     - **Input**: 50 character string
     - **Expected Result**: The form should not allow any more characters to be added to the above string.
     - **Actual Result**: It is not possible to type any more than the limit of 50 characters. - PASS
+4. **Test Case**: Attempting to register an email that is already in use
+    - **Input**: roepjynamy@hotmail.com
+    - **Expected Result**: The page should refresh and a flash message should display "That email address is already in use".
+    - **Actual Result**: The page refreshes and displays correct flash message. - PASS
 
 #### Registration Form
 1. **Test Case**: Empty Fields
