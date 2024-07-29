@@ -16,7 +16,101 @@ Go to [README.md](README.md)
 
 [Back to top](#cydymiaith-testing-documentation)
 
+US1 - "As a visitor to the website, I want to know what the website does, so that I can decide if it would be useful to me'.
 
+AC1 - "A user must be able to identify the website's name and understand its purpose on the first visit."
+
+1. Navigate to the website in the Chrome browser.
+2. Check that the site name (Cydymiaith) and navbar are clearly visible.
+3) (As a logged out user) check that the header is clearly visible on the Home page, and that it displays the site name and descriptive tag ('your Welsh language learning community').
+4) Check that the About section is visible.
+5) Check that the Features section is visible.
+
+Test result: Pass
+
+US2 - "As a potential user, I want the interface to be intuitive and easy to use."
+
+AC2 - "A user should be able to understand how to navigate and interact with the website.
+
+1) The Home page contains both brief and longer descriptions of the site's purpose.
+2) The navbar links are tested in the [navigation section](#navigation) below.
+3) The Home page header contains clear calls to action, depending on logged in status.
+4) Clickable links and options are distinctly highlighted.
+5) Deletion modals allow the user to confirm their intention to delete an item.
+6) Flash messages provide confirmation or feedback to users in response to their actions.
+7) The user will be redirected to the most appropriate page as a result of their actions.
+8) The view of the site that users have will reflect their level of authorization.
+
+Test result: Pass
+
+US3 - "As an unregistered user, I want to be able to view content on the site to get a sense of what I could gain from registering".
+
+AC3 - "An unregistered user should be able to see all posts and their comments.
+
+1) Unauthenticated users can navigate to the Posts page and view/filter all posts.
+2) Unauthenticated users can view comments on any post.
+
+Test result: Pass
+
+US4 - "As an unregistered user, I want to be able to register an account to which I can log in and enjoy all the features available."
+
+AC4 - "An unregistered user should be able to register an account and log in/out.
+
+1) An unregistered user can navigate to the Register page, and be prompted to enter an email.
+2) The user will then be sent an email containing a link to the main registration page.
+3) The user can then submit a unique username and password to create an account and be logged in.
+4) A user can log out.
+5) A user can log in.
+6) A user can reset password if it's been forgotten.
+
+Test result: Pass
+
+US5 - "As a logged in user, I want to be able to make, edit and delete my own posts as well as my comments on the posts of others.
+
+AC5 - "A logged in user should be able to be able to make, edit and delete their own posts, as well as make, edit and delete their comments on any post.
+
+1) A logged in user is able to navigate to the Posts page and click 'Make Post'.
+2) The user is then able to fill out the post form and submit.
+3) On the user's own post, the options to 'Edit' and 'Delete' will be displayed. The user can edit and delete the post through these.
+4) The user can click 'View Comments on any post and add a comment via the form beneath the post.
+5) On the users, own comments, the options 'Edit' and 'Delete' will be visible. The user can edit and delete the comment via these links.
+
+Test result: Pass
+
+US6 - "As a mobile user, I want to be able to interact with the site with the same degree of functionality via a responsive design."
+
+AC6 - "A user should be able to use the site on mobile devices.
+
+The testing for responsive design can be seen in the [Responsiveness Testing](#responsiveness-testing) section.
+
+Test result: Pass
+
+US7 - "As a Welsh language tutor, I want to be able to communicate with my class."
+
+AC7 - "Tutors and students can post messages that are class-specific and get responses that relate to specific posts."
+
+1) Tutors are able to create a group and add registered students to the group from the Users page.
+2) Tutors and students can then create a post and choose to assign the post to 'All' or a group they own (tutor) or belong to (student) from the dropdown.
+3) Tutors and students of the group can then filter posts by that group.
+
+Test result: Pass
+
+US8 - "As a tutor, I want my students and myself to benefit from what other tutors and students post to the whole community and have access to a wider base of expertise".
+
+AC8 - "Tutors and students can view posts made by other tutors and students from across Wales and beyond".
+
+1) All posts made by any user will appear in the posts feed.
+2) Any registered user can comment on anyone else's post.
+
+Test result: Pass
+
+US9 - "As a student, I want a community to practice my Welsh and connect with others". 
+
+AC9 - "Students can write/read posts of a variety of types, such as blog posts, diary entries, creative writing and get/give feedback on them."
+
+1) The testing for post creation can be seen in the [Post creation](#post-creation) and [Comment creation](#comment-creation) sections below.
+
+Test result: Pass
 
 ## Feature Testing
 

@@ -30,8 +30,6 @@ By Gareth Llewelyn
 
 Cydymiaith is a basic social network for Welsh language tutors and students to share information, practice and connect.
 
-For the assessor - The Group weekday field is a string in order to account for variation such as multiple days and also times if needed to differentiate between similar classes on the same day.
-
 ## UX
 
 [Back to top](#milestone-3-project---cydymiaith)
@@ -82,27 +80,17 @@ US6 - "As a mobile user, I want to be able to interact with the site with the sa
 
 AC6 - "A user should be able to use the site on mobile devices.
 
+US7 - "As a Welsh language tutor, I want to be able to communicate with my class."
 
+AC7 - "Tutors and students can post messages that are class-specific and get responses that relate to specific posts."
 
-US1 - "As a Welsh language tutor, I want to be able to communicate with my class."
+US8 - "As a tutor, I want my students and myself to benefit from what other tutors and students post to the whole community and have access to a wider base of expertise".
 
-AC1 - "Tutors and students can post messages that are class-specific and get responses that relate to specific posts."
+AC8 - "Tutors and students can view posts made by other tutors and students from across Wales and beyond".
 
-US2 - "As a tutor, I want my students and myself to benefit from what other tutors and students post to the whole community and have access to a wider base of expertise".
+US9 - "As a student, I want a community to practice my Welsh and connect with others". 
 
-AC2 - "Tutors and students can view posts made by other tutors and students from across Wales and beyond".
-
-US3 - "As a tutor, I want other tutors to be able to help with answering the questions of my students and with providing feedback on their writing, and vice versa."
-
-AC3 - "Tutors can add comments to posts made by students that aren't their own."
-
-US4 - "As a student, I want a community to practice my Welsh and connect with others". 
-
-AC4 - "Students can write/read posts of a variety of types, such as blog posts, diary entries, creative writing and get/give feedback on them."
-
-US5 - "As a user, I want to be able to register and log in and out securely."
-
-AC5 - "Users can create an account and log in and be sure that others can't see information or use functionality that is solely for them."
+AC9 - "Students can write/read posts of a variety of types, such as blog posts, diary entries, creative writing and get/give feedback on them."
 
 ### Scope
 
@@ -279,6 +267,14 @@ Include Tutor powers plus the following...
 - Comments can be viewed and added on the same page.
 - Flash messages inform the user if comments created, edited and deleted successfully.
 - Adding and deleting comments will change the post's comment count.
+- The user's own comments will right align, and comments by others will left align, in a 'messenger' style.
+
+#### Groups
+
+- A tutor/admin can create, edit and delete groups.
+- Students can be added to groups from the User page.
+- Students can be removed from the appropriate group on the Groups page.
+- The Group weekday field is a string in order to account for variation such as multiple days and also times if needed to differentiate between similar classes on the same day. With more time, this would be made into a checklist of weekdays, and a separate time selector.
 
 #### Profiles
 
