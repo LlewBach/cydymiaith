@@ -153,6 +153,8 @@ The information of Profiles, Posts, Comments, Users and Groups will be displayed
 
 [Back to top](#milestone-3-project---cydymiaith)
 
+#### Wireframes
+
 Home Page Wireframe
 
 ![wireframe1](app/static/wireframes/Home.png)
@@ -160,6 +162,14 @@ Home Page Wireframe
 Posts Page Wireframe
 
 ![wireframe1](app/static/wireframes/Posts.png)
+
+#### Database
+
+Cydymiaith uses MongoDB as a NoSQL document-based database. The project uses eight Collections: Posts, Comments, Categories, Users, Groups, Levels, Providers, Roles.
+
+![Database schema](app/static/captures/schema.PNG)
+
+I decided to opt for a non-relational database for its flexibility. I expected project requirements to evolve slightly during the early stages of development and that a non-relational database schema would easily facilitate this.
 
 ### Surface
 
