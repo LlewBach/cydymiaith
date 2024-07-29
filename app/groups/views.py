@@ -99,8 +99,8 @@ def add_group():
         )
 
 
-@groups_bp.route("/add_student", defaults={"username": None})
-@groups_bp.route("/add_student/<username>")
+@groups_bp.route("/add_student", defaults={"username": None}, methods=['POST'])
+@groups_bp.route("/add_student/<username>", methods=['POST'])
 @login_required
 @must_be_tutor_or_admin
 def add_student(username):
