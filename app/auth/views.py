@@ -149,19 +149,20 @@ def reg_confirmation():
     This function operates differently based on the HTTP request method:
       - GET: Renders a form for users to submit their email address to receive
       a registration confirmation link.
-      - POST: Takes the provided email from the form, generates a secure token
-      using the application's secret key, constructs a URL for registration
-      confirmation with the token, and sends an email to the user with this
-      link. Upon successfully sending the email, it flashes a success message
-      and redirects the user back to the confirmation page.
+      - POST: Takes the provided email from the form, checks if it's already
+      registered, generates a secure token using the application's secret key,
+      constructs a URL for registration confirmation with the token, and sends
+      an email to the user with this link. Upon successfully sending the email,
+      it flashes a success message and redirects the user back to the
+      confirmation page.
 
     Returns:
         Response:
             - On GET requests: Renders the 'reg_email.html' template where
             users can enter their email.
-            - On POST requests: After sending the email, redirects back to the
-            'reg_confirmation' page with a success message,indicating that the
-            email has been sent.
+            - On POST requests: Redirects back to the 'reg_confirmation' page
+            with a success message if the email is not currently in use,
+            otherwise displays an error message.
     """
     if request.method == 'POST':
         email = request.form.get("reg_email")
