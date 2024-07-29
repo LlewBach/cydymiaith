@@ -271,6 +271,7 @@ Include Tutor powers plus the following...
 - Flash message will display when post successfully created, updated and deleted.
 - If the post was made by the user, Edit and Delete links will be visible. 
 - Clicking the delete link will bring up a modal asking for confirmation.
+- Currently, the text boxes do not preserve line breaks for paragraphs. With more time this is a feature that could be added.
 
 #### Comments
 
@@ -290,6 +291,11 @@ Include Tutor powers plus the following...
 
 - Display user info and posts.
 - A user can edit/delete one's own profile
+
+#### Filters
+
+- There are filters on the Posts and Users pages. At present, they require exact text matches. With more time, they could be made more flexible or replaced with a search box.
+- The Clear button resets the filters.
 
 ### Future Feature Considerations
 
