@@ -333,6 +333,7 @@ Close thread - The ability to set a post as closed, having been answered or beco
 - [CI Python Linter](https://pep8ci.herokuapp.com/)
 - [https://wave.webaim.org/](https://wave.webaim.org/) - 
 - [https://webaim.org/resources/contrastchecker/](https://webaim.org/resources/contrastchecker/) - WAVE contrast checker
+- [dbdiagram.io](https://dbdiagram.io/d) - To draw the database schema
 
 ## Testing
 
