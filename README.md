@@ -214,7 +214,7 @@ The fonts used are from Google fonts. The brand name and titles use Outfit, and 
 ##### Log In
 
 - The Log In form requests the user's username and password. 
-- The form validation requires that the email be in a certain format.
+- The form validation requires that the username be in a certain format.
 - The form validation requires that the password has a certain format.
 - If the entered username or password do not correspond to a user in the database, a flash message will display to the user.
 - Entering a username and password that successfully correspond to a user's details in the database will log the user in to that profile.
@@ -271,7 +271,7 @@ Include Tutor powers plus the following...
 
 #### Groups
 
-- A tutor/admin can create, edit and delete groups.
+- A Tutor/Admin can create, edit and delete groups.
 - Students can be added to groups from the User page.
 - Students can be removed from the appropriate group on the Groups page.
 - The Group weekday field is a string in order to account for variation such as multiple days and also times if needed to differentiate between similar classes on the same day. With more time, this would be made into a checklist of weekdays, and a separate time selector.
@@ -279,6 +279,7 @@ Include Tutor powers plus the following...
 #### Profiles
 
 - Display user info and posts.
+- A user can edit/delete one's own profile
 
 ### Future Feature Considerations
 
