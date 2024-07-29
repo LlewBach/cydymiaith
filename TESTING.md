@@ -886,7 +886,49 @@ Using this accessibility validator, I saw that the colour contrast of my initial
 
 ### Lighthouse
 
+#### Desktop
+
+##### Home
+
 ![Lighthouse results](app/static/captures/lighthouse.PNG)
+
+##### Posts
+
+![Lighthouse results](app/static/captures/lighthouse2.PNG)
+
+##### Profile
+
+![Lighthouse results](app/static/captures/lighthouse3.PNG)
+
+##### Users
+
+![Lighthouse results](app/static/captures/lighthouse4.PNG)
+
+##### Groups
+
+![Lighthouse results](app/static/captures/lighthouse5.PNG)
+
+#### Mobile
+
+##### Home
+
+![Lighthouse results](app/static/captures/lighthouse6.PNG)
+
+##### Posts
+
+![Lighthouse results](app/static/captures/lighthouse7.PNG)
+
+##### Profile
+
+![Lighthouse results](app/static/captures/lighthouse8.PNG)
+
+##### Users
+
+![Lighthouse results](app/static/captures/lighthouse9.PNG)
+
+##### Groups
+
+![Lighthouse results](app/static/captures/lighthouse10.PNG)
 
 ## Bugs
 
