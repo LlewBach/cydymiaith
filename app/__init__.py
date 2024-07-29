@@ -1,3 +1,17 @@
+"""
+Cydymiaith - A Full Stack Welsh Language Learning Network
+=========================================================
+
+Cydymiaith is a Full Stack Project that uses HTML, CSS, Python and Flask. It
+aims to provide a platform for Welsh language Students and Tutors to
+communicate and practice.
+
+See https://github.com/LlewBach/cydymiaith/blob/main/README.md for complete
+documentation.
+
+Created by Gareth Llewelyn (LlewBach) 2024.
+"""
+
 from flask import Flask
 from flask_pymongo import PyMongo
 from flask_login import LoginManager
