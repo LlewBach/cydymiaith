@@ -58,6 +58,15 @@
   </div>
 </form>
 
+{% if not users %}
+
+<div class="d-flex flex-column justify-content-center text-center">
+  <h2>No such user found!</h2>
+  <p class="secondary-text">Try adjusting filters</p>
+</div>
+
+{% endif %}
+
 {% for user in users %}
 <div class="card">
   <div class="card-body">
